@@ -78,6 +78,7 @@ public class Cui {
                     // e.printStackTrace();
                     // }
                     System.out.println("Bis zum nächsten mal");
+                    eshopInterface.verbindungsAbbruch();
                     istAktiv = false;
                     break;
                 default:
@@ -316,9 +317,10 @@ public class Cui {
                     break;
                 case "5":
                     // TODO "System.out.print" nur in der CUI Klasse
-                    Rechnung rechnung1 = new Rechnung(kunde, kunde.getWarenkorb().getArtikelImKorb());
-                    rechnung1.rechnungErstellen();
-                    kunde.getWarenkorb().artikelInWarenkorbLeeren();
+                    //Rechnung rechnung1 = new Rechnung(kunde, kunde.getWarenkorb().getArtikelImKorb());
+                    //rechnung1.rechnungErstellen();
+                    eshopInterface.rechnungErstellen(kunde.getPersonID());
+                    //kunde.getWarenkorb().artikelInWarenkorbLeeren();
                     break;
                 case "6":
                     menu = false;
@@ -375,10 +377,10 @@ public class Cui {
             switch (input) {
                 case "1":
                     // TODO "System.out.print" nur in der CUI Klasse
-                    Rechnung rechnung1 = new Rechnung(kunde, kunde.getWarenkorb().getArtikelImKorb());
-                    rechnung1.rechnungErstellen();
-                    eshopInterface.rechnungErstellen();
-                    kunde.getWarenkorb().artikelInWarenkorbLeeren();
+                    //Rechnung rechnung1 = new Rechnung(kunde, kunde.getWarenkorb().getArtikelImKorb());
+                    //rechnung1.rechnungErstellen();
+                    eshopInterface.rechnungErstellen(kunde.getPersonID());
+                    //kunde.getWarenkorb().artikelInWarenkorbLeeren();
                     break;
                 case "2":
                     eshopInterface.artikelInWarenkorbLeeren(kunde.getPersonID());

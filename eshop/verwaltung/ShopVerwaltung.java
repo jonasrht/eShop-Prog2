@@ -153,4 +153,22 @@ public class ShopVerwaltung implements EshopInterface {
         Kunden kunde = kundenVerwaltung.getKundeViaID(id);
         kunde.getWarenkorb().anzahlArtikelAendern(artikel, anzahl);
     }
+
+    public void rechnungErstellen(int persId) {
+        Kunden kunde = kundenVerwaltung.getKundeViaID(persId);
+        Rechnung rechnung1 = new Rechnung(kunde, kunde.getWarenkorb().getArtikelImKorb());
+        rechnung1.rechnungErstellen();
+        kunde.getWarenkorb().artikelInWarenkorbLeeren();
+    }
+
+    public void verbindungsAbbruch() {
+        try {
+            kundenVerwaltung.schreibeDaten(); 
+            mitarbeiterVerwaltung.schreibeDaten();
+            artikelVerwaltung.schreibeDaten();      
+        } catch (IOException e) {
+            //TODO: handle exception
+        }
+       
+    }
 }

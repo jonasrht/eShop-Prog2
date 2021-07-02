@@ -89,7 +89,8 @@ public class EshopFassade implements EshopInterface {
 
     public void artikelBestandAendern(Artikel artikel, int newbestand) {
         out.println("artikelBestandAendern");
-        printArtikel(artikel);
+        out.println(artikel.getProduktID());
+        //printArtikel(artikel);
         out.println(newbestand);
     }
 
@@ -289,4 +290,12 @@ public class EshopFassade implements EshopInterface {
         out.println(anzahl);
     }
 
+    public void rechnungErstellen(int persId) {
+        out.println("rechnungErstellen");
+        out.println(persId);
+    }
+
+    public void verbindungsAbbruch() {
+        out.println("q");
+    }
 }
