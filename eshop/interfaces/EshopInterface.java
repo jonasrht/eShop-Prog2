@@ -62,5 +62,8 @@ public interface EshopInterface {
 
     void anzahlArtikelAendern(int id, Artikel artikel, int anzahl);
 
+    // Rechnung 
     void rechnungErstellen(int id);
+
+    void verbindungsAbbruch();
 }

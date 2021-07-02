@@ -68,6 +68,7 @@ public class ClientEShopRequestProcessor implements Runnable {
             if (input == null) {
                 input = "q";
             } else if (input.equals("q")) { // Client will Ende
+                verbindungsAbbruch();
                 out.println("#"); // Client beenden
             } else if (input.equals("bestandReduzieren")) {
                 bestandReduzieren();
@@ -123,7 +124,10 @@ public class ClientEShopRequestProcessor implements Runnable {
                 artikelInWarenkorbLeeren();
             } else if (input.equals("anzahlArtikelAendern")) {
                 anzahlArtikelAendern();
+            } else if (input.equals("rechnungErstellen")) {
+                rechnungErstellen();
             }
+
 
         } while (!(input.equals("q")));
 
@@ -189,7 +193,8 @@ public class ClientEShopRequestProcessor implements Runnable {
 
     private void artikelBestandAendern() {
         try {
-            Artikel artikel = artikelErstellen();
+            int artId = Integer.parseInt(in.readLine());
+            Artikel artikel = eShop.getArtikelViaID(artId);
             String newbestandStr = in.readLine();
             int newbestand = Integer.parseInt(newbestandStr);
             eShop.artikelBestandAendern(artikel, newbestand);
@@ -385,5 +390,19 @@ public class ClientEShopRequestProcessor implements Runnable {
         } catch (IOException e) {
             // TODO: handle exception
         }
+    }
+
+    private void rechnungErstellen() {
+        try {
+            int persId = Integer.parseInt(in.readLine());
+            eShop.rechnungErstellen(persId);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void verbindungsAbbruch() {
+        eShop.verbindungsAbbruch();
     }
 }
