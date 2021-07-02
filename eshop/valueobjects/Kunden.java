@@ -22,6 +22,7 @@ public class Kunden extends Person {
     //Kunde ohne Guthaben
     public Kunden(String name, String email, String passwort, String adresse){
         super(name, email, passwort);
+        this.warenkorb = new Warenkorb();
         this.adresse = adresse;
     }
     //Getter und Setter Methoden

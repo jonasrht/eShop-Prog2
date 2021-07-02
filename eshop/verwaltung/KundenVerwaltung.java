@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.valueobjects.*;
 import eshop.persistence.FilePersistenceManager;
 import eshop.persistence.PersistenceManager;
+
 /**
  * Klasse zum passivem Verwalten der Kunden.
  *
@@ -15,43 +17,45 @@ import eshop.persistence.PersistenceManager;
  * @extends Person
  */
 public class KundenVerwaltung {
-    //Attribute
-    //Persistenz_Schnittstelle der Kunden in einem Array anlegen
+    // Attribute
+    // Persistenz_Schnittstelle der Kunden in einem Array anlegen
     private List<Kunden> kundenListe = new ArrayList<Kunden>();
     private PersistenceManager pm = new FilePersistenceManager();
+
     /**
-     *Methode zur Erkennung von schon bestehenden Mitarbeitern
+     * Methode zur Erkennung von schon bestehenden Mitarbeitern
      *
      * @throws IOException
      */
     public KundenVerwaltung() {
-        //Fehlerbehandlung
+        // Fehlerbehandlung
         try {
-            //führt Methode aus
+            // führt Methode aus
             liesDaten();
-        //wenn Fehler, dann Fehlerausgabe
+            // wenn Fehler, dann Fehlerausgabe
         } catch (IOException e) {
             e.printStackTrace();
         }
         kundenListe.add(new Kunden("Dabby", "1", "1", "Bremen 1", 5.50));
     }
+
     /**
-     *Methode zur Datenerfassung
+     * Methode zur Datenerfassung
      *
      * @throws IOException
      */
-    public void liesDaten() throws IOException {  //Methode mit Fehlerprüfung
+    public void liesDaten() throws IOException { // Methode mit Fehlerprüfung
         // PersistenzManager für Lesevorgänge öffnen
         pm.openForReading("Kunden.txt");
         Kunden einKunde;
         do {
-            //Artikel-Objekt einlesen
+            // Artikel-Objekt einlesen
             einKunde = pm.ladeKunde();
             if (einKunde != null) {
                 // Artiekl in Liste einfügen
                 kundenListe.add(einKunde);
             }
-        } while (einKunde != null);  //wenn nicht, dann close
+        } while (einKunde != null); // wenn nicht, dann close
     }
 
     /**
@@ -62,86 +66,95 @@ public class KundenVerwaltung {
     public void schreibeDaten() throws IOException {
         // PersistenzManager für Schreibvorgänge öffnen
         pm.openForWriting("Kunden.txt");
-       // Mitarbeiter wird im PersistenzManager gespeichert
+        // Mitarbeiter wird im PersistenzManager gespeichert
         for (Kunden kunde : kundenListe) {
             pm.speichereKunden(kunde);
         }
         // Persistenz-Schnittstelle wieder schließen
         pm.close();
     }
+
     /**
      * Methode zum Einloggen der Kunden
      *
      * @param passwort, Passwort vom Kunden
-     * @param email, E-Mail vom Kunden
+     * @param email,    E-Mail vom Kunden
      * @return erfolgreiches oder gescheitertes Einloggen
      */
     public Kunden logInCustomer(String passwort, String email) throws LoginFehlgeschlagen {
-        //durchläuft die Array-Liste und sucht nach Kunden
+        // durchläuft die Array-Liste und sucht nach Kunden
         for (Kunden kunde : kundenListe) {
-            //prüft, ob die übergebenen Parameter mit den gespeicherten Paramtern übereinstimmen
+            // prüft, ob die übergebenen Parameter mit den gespeicherten Paramtern
+            // übereinstimmen
             if ((email.equals(kunde.getEmail()) && (passwort.equals(kunde.getPasswort())))) {
                 return kunde;
             }
         }
-        throw new LoginFehlgeschlagen();
+        return null;
     }
+
     /**
      * Methode zum Finden der Kunden
      *
      * @param passwort, Passwort vom Kunden
-     * @param email, E-Mail vom Kunden
+     * @param email,    E-Mail vom Kunden
      * @return Mitarbeiter oder nichts
      */
     public Kunden getCustomer(String passwort, String email) {
-        //durchläuft die Array-Liste und sucht nach Kunde
+        // durchläuft die Array-Liste und sucht nach Kunde
         for (Kunden kunde : kundenListe) {
-            //prüft, ob die übergebenen Parameter mit den gespeicherten Paramtern übereinstimmen
+            // prüft, ob die übergebenen Parameter mit den gespeicherten Paramtern
+            // übereinstimmen
             if ((email.equals(kunde.getEmail()) && (passwort.equals(kunde.getPasswort())))) {
                 return kunde;
             }
         }
-        //Suche fehlgeschlagen, nichts wird zurückgegeben
+        // Suche fehlgeschlagen, nichts wird zurückgegeben
         return null;
     }
+
     /**
      * Methode zum Registrieren von Kunden
      *
-     * @param name, Name vom Kunden
+     * @param name,     Name vom Kunden
      * @param passwort, Passwort vom Kunden
-     * @param email, E-Mail vom Kunden
-     * @param adresse, Adresse vom Kunden
+     * @param email,    E-Mail vom Kunden
+     * @param adresse,  Adresse vom Kunden
      */
     public void registerCustomer(String name, String email, String passwort, String adresse) {
-        //schenken 15 Euro
+        // schenken 15 Euro
         double guthaben = 15;
-        //Mitarbeiter werden in der Array-Liste mit den übergebenen Parametern hinzugefügt
+        // Mitarbeiter werden in der Array-Liste mit den übergebenen Parametern
+        // hinzugefügt
         kundenListe.add(new Kunden(name, email, passwort, adresse, guthaben));
     }
+
     /**
      * Methode zum Anzeigen des Guthabens der Kunden
+     * 
      * @param kunde, Kunde
      * @return Richtigkeit
      */
     public double guthabenAnzeigen(Kunden kunde) {
-        //Methode wird aufgerufen und zurückgegeben
+        // Methode wird aufgerufen und zurückgegeben
         return kunde.getGuthaben();
     }
+
     /**
      * Methode zum Aufalden des Guthabens der Kunden
      *
-     * @param kunde, Kunde
+     * @param kunde,    Kunde
      * @param aufladen, Betrag, der aufgeladen wird vom Kunden
      */
     public void guthabenAufladen(Kunden kunde, double aufladen) {
-        //Parameter des jetzigen Guthabens wird definiert
+        // Parameter des jetzigen Guthabens wird definiert
         double currentguthaben;
-        //durchläuft die Array-Liste und sucht nach Kunde
+        // durchläuft die Array-Liste und sucht nach Kunde
         for (Kunden kunde1 : kundenListe) {
             if (kunde1.equals(kunde)) {
-                //jetzige Guthaben wird dem Parameter übergeben
+                // jetzige Guthaben wird dem Parameter übergeben
                 currentguthaben = kunde.getGuthaben();
-                //addierter Guthaben wird dem jetzigen Guthaben raufaddiert
+                // addierter Guthaben wird dem jetzigen Guthaben raufaddiert
                 kunde.setGuthaben(currentguthaben + aufladen);
             }
         }
@@ -149,59 +162,89 @@ public class KundenVerwaltung {
         System.out.println(kunde.getGuthaben() + "€");
 
     }
+
     /**
-     * Methode zum Prüfen eines sicheren Passworts (Länge, Ziffer, Groß- und Kleinbuchstaben)
+     * Methode zum Prüfen eines sicheren Passworts (Länge, Ziffer, Groß- und
+     * Kleinbuchstaben)
+     * 
      * @param password, Passwort vom Kunden
      * @return Richtigkeit
      */
     public boolean valPassword(String password) {
-        //sobald die Passwortlänge mehr als sieben Zeichen entspricht
+        // sobald die Passwortlänge mehr als sieben Zeichen entspricht
         if (password.length() > 7) {
-            //...wird das Passwort auf weitere Anforderungen untersucht, Methode checkPass() wird aufgerufen
+            // ...wird das Passwort auf weitere Anforderungen untersucht, Methode
+            // checkPass() wird aufgerufen
             if (checkPass(password)) {
+                System.out.println(password + " ist okay");
                 return true;
             } else {
                 return false;
             }
-        //soblad sie weniger als acht Zeichen hat, wird sie nicht akzeptiert
+            // soblad sie weniger als acht Zeichen hat, wird sie nicht akzeptiert
         } else {
-            System.out.println("Too short!");
+            System.out.println(password + "Too short!");
             return false;
         }
     }
+
     /**
-     * Methode zum Prüfen eines sicheren Passworts anhand von mindestens einem Groß und Klein -buchstaben sowie einer Zahl
+     * Methode zum Prüfen eines sicheren Passworts anhand von mindestens einem Groß
+     * und Klein -buchstaben sowie einer Zahl
+     * 
      * @param password, Passwort vom Kunden
      * @return Richtigkeit
      */
     public boolean checkPass(String password) {
-        //Variablen definieren und vorsichtshalber auf false setzen
+        // Variablen definieren und vorsichtshalber auf false setzen
         boolean hasNum = false;
         boolean hasCap = false;
         boolean hasLow = false;
         char c;
-        //durchläuft Array
+        // durchläuft Array
         for (int i = 0; i < password.length(); i++) {
-            //das zurzeit durchlaufende Index wird dem Parameter c übergeben
+            // das zurzeit durchlaufende Index wird dem Parameter c übergeben
             c = password.charAt(i);
-            //checkt für jeden Index:
-            //...ob es sich um eine Ziffer handelt
+            // checkt für jeden Index:
+            // ...ob es sich um eine Ziffer handelt
             if (Character.isDigit(c)) {
                 hasNum = true;
-            //...ob es sich um einen Großbuchstaben handelt
+                // ...ob es sich um einen Großbuchstaben handelt
             } else if (Character.isUpperCase(c)) {
                 hasCap = true;
-                //...ob es sich um einen Kleinbuchstaben handelt
+                // ...ob es sich um einen Kleinbuchstaben handelt
             } else if (Character.isLowerCase(c)) {
                 hasLow = true;
             }
-            //treten alle drei Fälle auf, wird true ausgegeben
+            // treten alle drei Fälle auf, wird true ausgegeben
             if (hasNum && hasCap && hasLow) {
                 return true;
             }
-        } return false;
+        }
+        return false;
     }
+
+    public Kunden getKundeViaID(int id) {
+        for (Kunden kunde : kundenListe) {
+            if (id == kunde.getPersonID()) {
+                return kunde;
+            }
+        }
+        return null; // keinen Kunden gefunden
+    }
+
+    // ==============================
+    // Warenkorb
+    // ==============================
+
+    public void warenkorbAnzeigen(int id) {
+        Kunden kunde = getKundeViaID(id);
+        kunde.getWarenkorb().warenkorbAnzeigen();
+    }
+
+    public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering {
+        Kunden kunde = getKundeViaID(id);
+        kunde.getWarenkorb().artikelInWarenkorb(artikel, anzahl);
+    }
+
 }
-    
-
-

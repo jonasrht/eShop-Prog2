@@ -22,17 +22,17 @@ public interface PersistenceManager {
     /**
      * Methode zum Schreiben der Artiekldaten in eine externe Datenquelle.
      *
-     * @param Artikel-Objekt, das gespeichert werden soll
+     * @param -Objekt, das gespeichert werden soll
      * @return true, wenn Schreibvorgang erfolgreich, false sonst
      */
-    public Kunden ladeKunde() throws IOException;
-    public Mitarbeiter ladeMitarbeiter() throws IOException;
+    Kunden ladeKunde() throws IOException;
+    Mitarbeiter ladeMitarbeiter() throws IOException;
     boolean speichereArtikel(Artikel artikel) throws IOException;
     boolean speichereMassengutartikel(Artikel artikel) throws IOException;
     boolean speichereKunden(Kunden kunden) throws IOException;
     boolean speichereMitarbeiter(Mitarbeiter mitarbeiter) throws IOException;
-
-
+    Log ladeLog() throws IOException;
+    boolean speichereLog(String logMsg) throws IOException;
 
     /*
      * Wenn später mal eine Kundenverwaltung ergänzt wird:

@@ -18,40 +18,32 @@ import java.util.List;
  * - Import aus der Java Bibliotheck
  */
 public class Log {
-    private Artikel artikel;
-    private int anzahlArtikel;
-    private String zusatzMsg;
-    private Kunden kunde;
-    private Mitarbeiter mitarbeiter;
     private LocalDate datum;
-    private List<Log> logListe = new ArrayList<Log>();
+    private String logMsg;
+    private static List<String> logListe = new ArrayList<String>();
     private PersistenceManager pm = new FilePersistenceManager();
 
-    public Log(Kunden kunde, Artikel artikel, String zusatzMsg){
-        this.kunde = kunde;
-        this.artikel = artikel;
-        this.anzahlArtikel = anzahlArtikel;
-        this.datum = LocalDate.now();
-        this.zusatzMsg = zusatzMsg;
-    }
 
-    public Log(Mitarbeiter mitarbeiter, Artikel artikel, int anzahlArtikel, String zusatzMsg){
-        this.mitarbeiter = mitarbeiter;
-        this.artikel = artikel;
-        this.anzahlArtikel = anzahlArtikel;
+    public Log(String logMsg){
         this.datum = LocalDate.now();
-        this.zusatzMsg = zusatzMsg;
+        this.logMsg = this.datum + " " + logMsg;
+        logHinzufuegen(this);
+        try {
+            liesDaten();
+            schreibeDaten();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-
 
     public void logHinzufuegen(Log log) {
-        logListe.add(log);
+        logListe.add(log.getLogMsg());
     }
 
-    public String logAusgeben() {//TODO Seiten Ansicht falls zu viele Einträge
+    public static String logAusgeben() {//TODO Seiten Ansicht falls zu viele Einträge
         String logEintrag = "";
-        for (Log log : this.logListe) {
-            logEintrag = logEintrag + log.toString() + "\n";
+        for (String log : logListe) {
+            logEintrag = logEintrag + log + "\n";
         }
         return logEintrag;
     }
@@ -65,7 +57,7 @@ public class Log {
             einLog = pm.ladeLog();
             if (einLog != null) {
                 // Artiekl in Liste einfügen
-                logListe.add(log);
+                logListe.add(einLog.getLogMsg());
             }
         } while (einLog != null);  //wenn nicht, dann close
     }
@@ -74,74 +66,20 @@ public class Log {
         //PersistenzManager für Schreibvorgänge öffnen
         pm.openForWriting("Log.txt");
         //Mitarbeiter wird im PersistenzManager gespeichert
-        for (Log log: logListe){
-            pm.speichereMitarbeiter(mitarbeiter);
+        for (String logMsg: logListe){
+            pm.speichereLog(logMsg);
         }
         //Persistenz-Schnittstelle wieder schließen
         pm.close();
     }
 
-//
-//    public void LogOutputCustomer() {
-//        //int sum = 0;
-//        //sum = artikel.getPreis() * artikel.getPreis
-//        //
-//        //System.out.print("-" + datum + " | " + kunde + " > " + " [" + artikel.getProduktID() +  "] " + artikel.getName() + ": " + artikel.getAnzahl() + "x | " +  );
-//        //System.out.println(" " + artikel.getName() + " für " + preis +"€");
-//
-//    }
-
-    public Artikel getArtikel() {
-        return artikel;
-    }
-
-    public int getAnzahlArtikel() {
-        return anzahlArtikel;
-    }
-
-    public Kunden getKunde() {
-        return kunde;
-    }
-
-    public Mitarbeiter getMitarbeiter() {
-        return mitarbeiter;
-    }
+    public String getLogMsg() {return logMsg;}
 
     public LocalDate getDatum() {
         return datum;
     }
 
-    public void setArtikel(Artikel artikel) {
-        this.artikel = artikel;
-    }
-
-    public void setAnzahlArtikel(int anzahlArtikel) {
-        this.anzahlArtikel = anzahlArtikel;
-    }
-
-    public void setKunde(Kunden kunde) {
-        this.kunde = kunde;
-    }
-
-    public void setMitarbeiter(Mitarbeiter mitarbeiter) {
-        this.mitarbeiter = mitarbeiter;
-    }
-
     public void setDatum(LocalDate datum) {
         this.datum = datum;
-    }
-
-//    @Override
-
-    @Override
-    public String toString() {
-        return "Log{" +
-                "artikel=" + artikel.getName() +
-                ", anzahlArtikel=" + anzahlArtikel +
-                ", zusatzMsg='" + zusatzMsg + '\'' +
-                ", kunde=" + kunde.getName() +
-                ", mitarbeiter=" + mitarbeiter.getName() +
-                ", datum=" + datum +
-                '}';
     }
 }

@@ -111,8 +111,8 @@ public class FilePersistenceManager implements PersistenceManager {
         // schreibeZeile(Integer.valueOf(b.getNummer()).toString());
         schreibeZeile(artikel.getPreis() + "");
         schreibeZeile(artikel.getBestand() + "");
-        if (artikel instanceof Massengutartikel){
-            schreibeZeile(((Massengutartikel) artikel).getPackungsGroeße()+ "");
+        if (artikel instanceof Massengutartikel) {
+            schreibeZeile(((Massengutartikel) artikel).getPackungsGroeße() + "");
         }
         return true;
     }
@@ -148,28 +148,17 @@ public class FilePersistenceManager implements PersistenceManager {
         return new Mitarbeiter(name, email, passwort);
     }
 
-    public boolean speichereLog(Log log) throws IOException {
-        schreibeZeile(log.getDatum() + "");
-        if (log.getMitarbeiter() != null){
-            schreibeZeile(log.getMitarbeiter().getName());
-        }else {
-            schreibeZeile(log.getKunde().getName());
-        }
-        schreibeZeile(log.getArtikel().getName());
+    public boolean speichereLog(String logMsg) throws IOException {
+        schreibeZeile(logMsg + "");
         return true;
     }
 
-
-
     public Log ladeLog() throws IOException {
-        String name = liesZeile();
-        if (name == null) {
+        String logMsg = liesZeile();
+        if (logMsg == null) {
             return null;
         }
-        String artikel = liesZeile();
-        String bestand = liesZeile();
-
-        return new Log(name, artikel, bestand);
+        return new Log(logMsg);
     }
 
     public boolean speichereMitarbeiter(Mitarbeiter mitarbeiter) throws IOException {
