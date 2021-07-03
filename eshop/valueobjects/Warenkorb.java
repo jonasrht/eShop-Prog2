@@ -16,17 +16,19 @@ public class Warenkorb {
         this.artikelImKorb = new ArrayList<>();
     }
 
-    public void warenkorbAnzeigen() {
+    public List<String> warenkorbAnzeigen() {
+        List<String> warenkorb = new ArrayList<String>();
         for (HashMap<Artikel, Integer> array : artikelImKorb) {
             for (Artikel artikel : array.keySet()) {
                 // System.out.println(artikel);
                 Integer anzahl = array.get(artikel);
                 double preis = artikel.getPreis() * anzahl;
                 // TODO "System.out.print" nur in der CUI Klasse(?)
-                System.out.print("ID [" + artikel.getProduktID() + "] " + " Anzahl: " + anzahl + " mal");
-                System.out.println(" " + artikel.getName() + " für " + preis + "€");
+                warenkorb.add("ID [" + artikel.getProduktID() + "] " + " Anzahl: " + anzahl + " mal" + " "
+                        + artikel.getName() + " für " + preis + "€");
             }
         }
+        return warenkorb;
     }
 
     public void artikelInWarenkorbLeeren() {

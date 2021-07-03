@@ -30,7 +30,7 @@ public class EshopFassade implements EshopInterface {
             System.err.println("Fehler ---> " + e.getMessage());
         }
 
-        System.err.println("Verbunden mit Server " + socket.getInetAddress() + ":" + socket.getPort());
+        System.err.println("Verbunden mit Server " + socket.getInetAddress() + ":" + socket.getPort() + "\n");
     }
 
     public void bestandReduzieren(Artikel artikel, int entfernen) {
@@ -259,12 +259,17 @@ public class EshopFassade implements EshopInterface {
         return null;
     }
 
-    public String warenkorbAnzeigen(int id) {
-        String warenkorb = "";
+    public List<String> warenkorbAnzeigen(int id) {
+        List<String> warenkorb = new ArrayList<String>();
         out.println("warenkorbAnzeigen");
         out.println(id);
         try {
-            warenkorb = in.readLine();
+            int size = Integer.parseInt(in.readLine());
+
+            for (int i = 0; i < size; i++) {
+                String warenkorbStr = in.readLine();
+                warenkorb.add(warenkorbStr);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -290,9 +295,28 @@ public class EshopFassade implements EshopInterface {
         out.println(anzahl);
     }
 
-    public void rechnungErstellen(int persId) {
+    public List<String> rechnungErstellen(int persId) {
+        List<String> rechnung = new ArrayList<String>();
         out.println("rechnungErstellen");
         out.println(persId);
+        try {
+            int size = Integer.parseInt(in.readLine());
+
+            for (int i = 0; i < size; i++) {
+                String rechnungStr = in.readLine();
+                rechnung.add(rechnungStr);
+            }
+            // String input;
+            // while (!((input = in.readLine()).equals("stop"))) {
+            // if (input.equals("start")) {
+            // String rechnungStr = in.readLine();
+            // rechnung.add(rechnungStr);
+            // }
+            // }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return rechnung;
     }
 
     public void verbindungsAbbruch() {

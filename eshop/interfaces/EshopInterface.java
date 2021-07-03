@@ -54,7 +54,7 @@ public interface EshopInterface {
     void registerEmployee(String name, String email, String passwort); // x
 
     // Warenkorb
-    String warenkorbAnzeigen(int id);
+    List<String> warenkorbAnzeigen(int id);
 
     void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering;
 
@@ -62,8 +62,8 @@ public interface EshopInterface {
 
     void anzahlArtikelAendern(int id, Artikel artikel, int anzahl);
 
-    // Rechnung 
-    void rechnungErstellen(int id);
+    // Rechnung
+    List<String> rechnungErstellen(int id);
 
     void verbindungsAbbruch();
 }

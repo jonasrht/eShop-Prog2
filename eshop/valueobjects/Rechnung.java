@@ -1,7 +1,7 @@
 package eshop.valueobjects;
 
-import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,15 +29,19 @@ public class Rechnung {
     /**
      * Methode zum Erstellen von Rechnungen
      */
-    public void rechnungErstellen() {
+    public List<String> rechnungErstellen() {
         // Gesamtpreis anfangs auf null setzen
+        List<String> rechnung = new ArrayList<String>();
         double gesamtPreis = 0;
         // damit es sexy aussieht
-        System.out.println("+-------------------------------------------------+");
-        System.out.println("|                    Rechnung                     |");
-        System.out.println("Name: " + kunde.getName() + "\nE-Mail: " + kunde.getEmail() + "\nRechnungsadresse: "
-                + kunde.getAdresse() + "\nShop ID: " + kunde.getPersonID() + "\nDatum: " + datum);
-        System.out.println();
+        rechnung.add("+-------------------------------------------------+ ");
+        rechnung.add("|                    Rechnung                     | ");
+        rechnung.add("|\tName: " + kunde.getName());
+        rechnung.add("|\tE-Mail: " + kunde.getEmail());
+        rechnung.add("|\tRechnungsadresse: " + kunde.getAdresse());
+        rechnung.add("|\tShop ID: " + kunde.getPersonID());
+        rechnung.add("|\tDatum: " + datum);
+        rechnung.add("|                                                 | ");
         // in der Hashmap wird durch die ganzen Artikel durchiteriert
         for (HashMap<Artikel, Integer> array : this.artikelListe) {
             // setzt dort ein keyset ab
@@ -56,12 +60,13 @@ public class Rechnung {
                 double preis = artikel.getPreis() * anzahl;
                 // Preis zu dem Gesamtpreis addieren
                 gesamtPreis = gesamtPreis + preis;
-                System.out.println("|\tID [" + artikel.getProduktID() + "] " + " Anzahl: " + anzahl + "x "
-                        + artikel.getName() + " für " + preis + "€ |");
+                rechnung.add("|\tID [" + artikel.getProduktID() + "] " + " Anzahl: " + anzahl + "x " + artikel.getName()
+                        + " für " + preis + "€ |");
             }
         }
-        System.out.println("+-------------------------------------------------+");
-        System.out.println("Gesamtpreis:    " + gesamtPreis + "€");
+        rechnung.add("+-------------------------------------------------+");
+        rechnung.add("Gesamtpreis:    " + gesamtPreis + "€");
+        return rechnung;
     }
 
     public List<HashMap<Artikel, Integer>> getArtikel() {

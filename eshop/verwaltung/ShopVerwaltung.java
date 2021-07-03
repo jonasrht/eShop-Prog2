@@ -133,10 +133,10 @@ public class ShopVerwaltung implements EshopInterface {
     // Warenkorb
     // =============================
 
-    public String warenkorbAnzeigen(int id) {
+    public List<String> warenkorbAnzeigen(int id) {
         Kunden kunde = kundenVerwaltung.getKundeViaID(id);
         // String warenkorb = kunde.getWarenkorb().getArtikelImKorb().toString();
-        String warenkorb = kunde.getWarenkorb().toString();
+        List<String> warenkorb = kunde.getWarenkorb().warenkorbAnzeigen();
         return warenkorb;
     }
 
@@ -154,21 +154,22 @@ public class ShopVerwaltung implements EshopInterface {
         kunde.getWarenkorb().anzahlArtikelAendern(artikel, anzahl);
     }
 
-    public void rechnungErstellen(int persId) {
+    public List<String> rechnungErstellen(int persId) {
         Kunden kunde = kundenVerwaltung.getKundeViaID(persId);
         Rechnung rechnung1 = new Rechnung(kunde, kunde.getWarenkorb().getArtikelImKorb());
-        rechnung1.rechnungErstellen();
+        List<String> rechnung = rechnung1.rechnungErstellen();
         kunde.getWarenkorb().artikelInWarenkorbLeeren();
+        return rechnung;
     }
 
     public void verbindungsAbbruch() {
         try {
-            kundenVerwaltung.schreibeDaten(); 
+            kundenVerwaltung.schreibeDaten();
             mitarbeiterVerwaltung.schreibeDaten();
-            artikelVerwaltung.schreibeDaten();      
+            artikelVerwaltung.schreibeDaten();
         } catch (IOException e) {
-            //TODO: handle exception
+            e.printStackTrace();
         }
-       
+
     }
 }
