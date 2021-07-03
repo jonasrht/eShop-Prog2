@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -127,7 +128,6 @@ public class ClientEShopRequestProcessor implements Runnable {
             } else if (input.equals("rechnungErstellen")) {
                 rechnungErstellen();
             }
-
 
         } while (!(input.equals("q")));
 
@@ -361,13 +361,16 @@ public class ClientEShopRequestProcessor implements Runnable {
     private void warenkorbAnzeigen() {
         try {
             int persId = Integer.parseInt(in.readLine());
-            String warenkorb = eShop.warenkorbAnzeigen(persId);
-            System.out.println("TO STRING: ");
-            System.out.println(warenkorb);
-            out.println(warenkorb);
+            List<String> warenkorb = eShop.warenkorbAnzeigen(persId);
+            out.println(warenkorb.size());
+            for (String string : warenkorb) {
+                out.println(string);
+                System.out.println("Warenkorb: " + string);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // out.println("stop");
     }
 
     private void artikelInWarenkorbLeeren() {
@@ -395,8 +398,11 @@ public class ClientEShopRequestProcessor implements Runnable {
     private void rechnungErstellen() {
         try {
             int persId = Integer.parseInt(in.readLine());
-            eShop.rechnungErstellen(persId);
-
+            List<String> rechnung = eShop.rechnungErstellen(persId);
+            out.println(rechnung.size());
+            for (String string : rechnung) {
+                out.println(string);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

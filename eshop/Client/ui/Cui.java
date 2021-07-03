@@ -21,6 +21,7 @@ import eshop.valueobjects.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Scanner; //Import aus der Java Bib, damit das Skript Eingaben lesen kann
 
 import static eshop.valueobjects.Log.logAusgeben;
@@ -317,10 +318,11 @@ public class Cui {
                     break;
                 case "5":
                     // TODO "System.out.print" nur in der CUI Klasse
-                    //Rechnung rechnung1 = new Rechnung(kunde, kunde.getWarenkorb().getArtikelImKorb());
-                    //rechnung1.rechnungErstellen();
+                    // Rechnung rechnung1 = new Rechnung(kunde,
+                    // kunde.getWarenkorb().getArtikelImKorb());
+                    // rechnung1.rechnungErstellen();
                     eshopInterface.rechnungErstellen(kunde.getPersonID());
-                    //kunde.getWarenkorb().artikelInWarenkorbLeeren();
+                    // kunde.getWarenkorb().artikelInWarenkorbLeeren();
                     break;
                 case "6":
                     menu = false;
@@ -366,7 +368,10 @@ public class Cui {
             System.out.println("Ihr Warenkorb enthält folgende Artikel: ");
             // TODO: "System.out.print" nur in der CUI Klasse
             // kunde.getWarenkorb().warenkorbAnzeigen();
-            System.out.print(eshopInterface.warenkorbAnzeigen(kunde.getPersonID()));
+            List<String> warenkorb = eshopInterface.warenkorbAnzeigen(kunde.getPersonID());
+            for (String string : warenkorb) {
+                System.out.println(string);
+            }
             System.out.println("1 Zur Kasse");
             System.out.println("2 Warenkorb leeren");
             System.out.println("3 Anzahl der Artikel im Warenkorb ändern");
@@ -377,10 +382,14 @@ public class Cui {
             switch (input) {
                 case "1":
                     // TODO "System.out.print" nur in der CUI Klasse
-                    //Rechnung rechnung1 = new Rechnung(kunde, kunde.getWarenkorb().getArtikelImKorb());
-                    //rechnung1.rechnungErstellen();
-                    eshopInterface.rechnungErstellen(kunde.getPersonID());
-                    //kunde.getWarenkorb().artikelInWarenkorbLeeren();
+                    // Rechnung rechnung1 = new Rechnung(kunde,
+                    // kunde.getWarenkorb().getArtikelImKorb());
+                    // rechnung1.rechnungErstellen();
+                    List<String> rechnung = eshopInterface.rechnungErstellen(kunde.getPersonID());
+                    for (String string : rechnung) {
+                        System.out.println(string);
+                    }
+                    // kunde.getWarenkorb().artikelInWarenkorbLeeren();
                     break;
                 case "2":
                     eshopInterface.artikelInWarenkorbLeeren(kunde.getPersonID());
@@ -407,6 +416,7 @@ public class Cui {
                     break;
             }
         } while (menu);
+
     }
 
     public void kundeLogin() {
