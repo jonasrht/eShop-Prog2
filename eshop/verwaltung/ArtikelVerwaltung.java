@@ -242,16 +242,14 @@ public class ArtikelVerwaltung {
      * @param newbestand
      */
     public void artikelBestandAendern(Artikel artikel, int newbestand) {
-        int currentbestand;
+        artikel.setBestand(newbestand);
         // Artikel wird im Array gesucht
-        for (Artikel artikel1 : artikelListe) {
-            if (artikel1.equals(artikel)) {
-                // aktueller Bestand wird ausgegeben
-                currentbestand = artikel1.getBestand();
+       // for (Artikel artikel1 : artikelListe) {
+       //     if (artikel1.equals(artikel)) {
                 // neuer Bestand wird angelegt
-                artikel.setBestand(newbestand);
-            }
-        }
+        //        artikel.setBestand(newbestand);
+        //    }
+        //}
     }
 
     /**

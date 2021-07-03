@@ -203,10 +203,7 @@ public class Cui {
                     System.out.print("Eingabe >");
                     int inputArtikelNewBst = eingabe.nextInt();
                     eshopInterface.artikelBestandAendern(artikel2, inputArtikelNewBst);
-                    Log log1 = new Log(mitarbeiter.getName() + " hat den Bestand des Artikels " + artikel2.getName()
-                            + " auf " + artikel2.getBestand() + " geändert.");
-
-                    break;
+                     break;
                 case "4":
                     System.out.println("Welches Artikel sollte neu angelegt werden?");
                     System.out.print("Eingabe >");
