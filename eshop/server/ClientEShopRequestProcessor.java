@@ -61,6 +61,12 @@ public class ClientEShopRequestProcessor implements Runnable {
             } catch (Exception e) {
                 System.out.println("--->Fehler beim Lesen vom Client (Aktion): ");
                 System.out.println(e.getMessage());
+                try {
+                    socket.close();
+                    } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+                System.exit(0);
                 // continue;
             }
 
@@ -130,7 +136,11 @@ public class ClientEShopRequestProcessor implements Runnable {
             }
 
         } while (!(input.equals("q")));
-
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void gibAlleAnzeigen() throws IOException {
