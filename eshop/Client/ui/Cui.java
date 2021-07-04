@@ -45,6 +45,7 @@ public class Cui {
         // this.kundenVerwaltung = new KundenVerwaltung();
         // this.artikelVerwaltung = new ArtikelVerwaltung();
         // this.mitarbeiterVerwaltung = new MitarbeiterVerwaltung();
+        // fahr weiter
     }
 
     // Methode
