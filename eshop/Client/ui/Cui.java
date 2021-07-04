@@ -12,6 +12,7 @@ import eshop.Client.net.EshopFassade;
 */
 
 import eshop.exceptions.ArtikelExistiertBereitsException;
+import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.interfaces.EshopInterface;
@@ -199,11 +200,17 @@ public class Cui {
                     System.out.print("Eingabe >");
                     String inputArtikelStr = eingabe.nextLine();
                     int inputArtikel = Integer.parseInt(inputArtikelStr);
-                    Artikel artikel2 = eshopInterface.getArtikelViaID(inputArtikel);
-                    System.out.println("Wie hoch soll der Bestand des Artikels sein?");
-                    System.out.print("Eingabe >");
-                    int inputArtikelNewBst = eingabe.nextInt();
-                    eshopInterface.artikelBestandAendern(artikel2, inputArtikelNewBst);
+                    Artikel artikel2;
+                    try {
+                        artikel2 = eshopInterface.getArtikelViaID(inputArtikel);
+                        System.out.println("Wie hoch soll der Bestand des Artikels sein?");
+                        System.out.print("Eingabe >");
+                        int inputArtikelNewBst = eingabe.nextInt();
+                        eshopInterface.artikelBestandAendern(artikel2, inputArtikelNewBst);
+                    } catch (ArtikelNichtGefundenException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
                      break;
                 case "4":
                     System.out.println("Welches Artikel sollte neu angelegt werden?");
@@ -290,20 +297,23 @@ public class Cui {
                     System.out.print("Eingabe >");
                     String inputArtikelStr = eingabe.nextLine();
                     int inputArtikel = Integer.parseInt(inputArtikelStr);
-                    Artikel artikel = eshopInterface.getArtikelViaID(inputArtikel);
-                    System.out.println("Suche Artikel mit ID: " + inputArtikel);
-                    System.out.println("Artikel: " + artikel.getName() + " gefunden! ID " + artikel.getProduktID());
-                    System.out.println("Wie viele Artikel willst du kaufen?");
-                    System.out.print("Eingabe >");
-                    String inputAnzahlStr = eingabe.nextLine();
-                    int inputAnzahl = Integer.parseInt(inputAnzahlStr);
+                    Artikel artikel;
                     try {
-                        // kunde.getWarenkorb().artikelInWarenkorb(artikel, inputAnzahl);
-                        eshopInterface.artikelInWarenkorb(kunde.getPersonID(), artikel, inputAnzahl);
-                    } catch (BestandZuGering e) {
-                        e.printStackTrace();
+                        artikel = eshopInterface.getArtikelViaID(inputArtikel);
+                        System.out.println("Suche Artikel mit ID: " + inputArtikel);
+                        System.out.println("Artikel: " + artikel.getName() + " gefunden! ID " + artikel.getProduktID());
+                        System.out.println("Wie viele Artikel willst du kaufen?");
+                        System.out.print("Eingabe >");
+                        String inputAnzahlStr = eingabe.nextLine();
+                        int inputAnzahl = Integer.parseInt(inputAnzahlStr);
+                        try {
+                            eshopInterface.artikelInWarenkorb(kunde.getPersonID(), artikel, inputAnzahl);
+                        } catch (BestandZuGering e) {
+                            e.printStackTrace();
+                        }
+                    } catch (ArtikelNichtGefundenException e1) {
+                        e1.printStackTrace();
                     }
-
                     break;
                 case "2":
                     eshopInterface.artikelSortieren();
@@ -398,13 +408,19 @@ public class Cui {
                     System.out.print("Eingabe >");
                     String inputArtikelStr = eingabe.nextLine();
                     int inputArtikel = Integer.parseInt(inputArtikelStr);
-                    Artikel artikel = eshopInterface.getArtikelViaID(inputArtikel);
-                    System.out.println("Neue Anzahl");
-                    System.out.print("Eingabe >");
-                    String neueAnzahlStr = eingabe.nextLine();
-                    int neueAnzahl = Integer.parseInt(neueAnzahlStr);
-                    kunde.getWarenkorb().anzahlArtikelAendern(artikel, neueAnzahl);
-                    eshopInterface.anzahlArtikelAendern(kunde.getPersonID(), artikel, neueAnzahl);
+                    Artikel artikel;
+                    try {
+                        artikel = eshopInterface.getArtikelViaID(inputArtikel);
+                        System.out.println("Neue Anzahl");
+                        System.out.print("Eingabe >");
+                        String neueAnzahlStr = eingabe.nextLine();
+                        int neueAnzahl = Integer.parseInt(neueAnzahlStr);
+                        kunde.getWarenkorb().anzahlArtikelAendern(artikel, neueAnzahl);
+                        eshopInterface.anzahlArtikelAendern(kunde.getPersonID(), artikel, neueAnzahl);
+                    } catch (ArtikelNichtGefundenException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                     break;
                 case "4":
                     menu = false;

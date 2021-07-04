@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import eshop.exceptions.ArtikelExistiertBereitsException;
+import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.valueobjects.Artikel;
@@ -14,7 +15,7 @@ import eshop.valueobjects.Mitarbeiter;
 public interface EshopInterface {
 
     // Artikel Verwaltung
-    Artikel getArtikelViaID(int id);
+    Artikel getArtikelViaID(int id) throws ArtikelNichtGefundenException;
 
     void bestandReduzieren(Artikel artikel, int entfernen); // x
 
