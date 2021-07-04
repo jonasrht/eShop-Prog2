@@ -1,6 +1,7 @@
 package eshop.Client.net;
 
 import eshop.exceptions.ArtikelExistiertBereitsException;
+import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.interfaces.EshopInterface;
@@ -236,9 +237,10 @@ public class EshopFassade implements EshopInterface {
         return null;
     }
 
-    public Artikel getArtikelViaID(int id) {
+    public Artikel getArtikelViaID(int id) throws ArtikelNichtGefundenException {
         out.println("getArtikelViaID");
         out.println(id);
+        Artikel artikel = null;
 
         try {
             String check = in.readLine();
@@ -251,10 +253,17 @@ public class EshopFassade implements EshopInterface {
                 double preis = Double.parseDouble(preisStr);
                 int bestand = Integer.parseInt(bestandStr);
                 int idP = Integer.parseInt(idStr);
-                return new Artikel(idP, name, preis, bestand);
+                artikel = new Artikel(idP, name, preis, bestand);
+                return artikel;
+                //return new Artikel(idP, name, preis, bestand);
+            } else {
+                throw new ArtikelNichtGefundenException();
             }
         } catch (Exception e) {
             // TODO: handle exception
+        }
+        if (artikel == null) {
+            throw new ArtikelNichtGefundenException();
         }
         return null;
     }

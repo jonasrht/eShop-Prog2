@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import eshop.exceptions.ArtikelExistiertBereitsException;
+import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.interfaces.EshopInterface;
@@ -24,7 +25,7 @@ public class ShopVerwaltung implements EshopInterface {
 
     // ArtikelVerwaltung
 
-    public Artikel getArtikelViaID(int id) {
+    public Artikel getArtikelViaID(int id) throws ArtikelNichtGefundenException {
         Artikel artikel;
         artikel = artikelVerwaltung.getArtikelViaID(id);
         return artikel;

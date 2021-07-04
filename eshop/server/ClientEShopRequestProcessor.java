@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import eshop.exceptions.ArtikelExistiertBereitsException;
+import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
 import eshop.valueobjects.Kunden;
@@ -210,6 +211,8 @@ public class ClientEShopRequestProcessor implements Runnable {
             eShop.artikelBestandAendern(artikel, newbestand);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ArtikelNichtGefundenException e) {
+            e.printStackTrace();
         }
     }
 
@@ -349,6 +352,7 @@ public class ClientEShopRequestProcessor implements Runnable {
                 out.println(artikel.getPreis());
                 out.println(artikel.getBestand());
             }
+            //out.println("false");
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -401,7 +405,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             Artikel artikel = eShop.getArtikelViaID(artId);
             eShop.anzahlArtikelAendern(persId, artikel, anzahl);
         } catch (IOException e) {
-            // TODO: handle exception
+            e.printStackTrace();
+        } catch (ArtikelNichtGefundenException e) {
+            e.printStackTrace();
         }
     }
 

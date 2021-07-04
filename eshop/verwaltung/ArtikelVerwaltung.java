@@ -8,6 +8,7 @@ import java.util.Comparator; //...um Artikel (nach Attribute) zu finden, wenn ma
 import java.util.List; // ...schreibt Verhalten vor, die alle konkreten Listen im-plementieren müssen
 
 import eshop.exceptions.ArtikelExistiertBereitsException;
+import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.persistence.FilePersistenceManager;
 import eshop.persistence.PersistenceManager;
 import eshop.valueobjects.*;
@@ -127,6 +128,7 @@ public class ArtikelVerwaltung {
                 return artikel;
             }
         }
+        //throw new ArtikelNichtGefundenException();
         return null; // ausverkauft
     }
 
