@@ -69,6 +69,7 @@ public class ClientEShopRequestProcessor implements Runnable {
                 }
                 System.exit(0);
                 // continue;
+                
             }
 
             // Eingabe-Menue bearbeiten:
