@@ -1,8 +1,11 @@
 package eshop.Client.ui.gui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import eshop.Client.net.EshopFassade;
+import eshop.Client.ui.gui.models.ArtikelTabellenModel;
+import eshop.Client.ui.gui.panels.ArtikelTabellenPanel;
 import eshop.Client.ui.gui.panels.SuchPanel;
 import eshop.exceptions.ArtikelExistiertBereitsException;
 import eshop.interfaces.EshopInterface;
@@ -26,6 +29,10 @@ public class Gui extends JFrame implements ActionListener, SuchPanel.SucheArtike
 
     private JList artikelListe;
     private JButton neuerArtBtn;
+
+    private JTable artikelTabelle;
+
+    private ArtikelTabellenPanel artikelPanel;
 
     public Gui(String titel, String host, int port){
         super(titel);
@@ -80,13 +87,12 @@ public class Gui extends JFrame implements ActionListener, SuchPanel.SucheArtike
         // CENTER
         try {
             java.util.List<Artikel> artikel = eshopInterface.gibAlleArtikel();
-
-            artikelListe = new JList(new Vector(artikel));
-
+            artikelPanel = new ArtikelTabellenPanel(artikel);
+            JScrollPane scrollPane = new JScrollPane(artikelPanel);
 
             add(suchPanel, BorderLayout.NORTH);
             add(einfuegePanel, BorderLayout.WEST);
-            add(artikelListe, BorderLayout.CENTER);
+            add(scrollPane, BorderLayout.CENTER);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -108,7 +114,7 @@ public class Gui extends JFrame implements ActionListener, SuchPanel.SucheArtike
 
     @Override
     public void beiSuchErgebnisArtikel(List<Artikel> artikelListe) {
-
+        artikelPanel.aktualisiereArtikelListe(artikelListe);
     }
 
     class ActionPerformedSuchBtn implements ActionListener {
@@ -126,7 +132,7 @@ public class Gui extends JFrame implements ActionListener, SuchPanel.SucheArtike
             } else {
                 suchErgebnis = eshopInterface.sucheNachArtikel(suche);
             }
-            artikelListe.setListData(new Vector<>(suchErgebnis));
+            aktualisiereArtikelListe(suchErgebnis);
         }
     }
 
@@ -153,5 +159,17 @@ public class Gui extends JFrame implements ActionListener, SuchPanel.SucheArtike
                 e1.getMessage();
             }
         }
+    }
+
+    public void aktualisiereArtikelListe(java.util.List<Artikel> artikel) {
+
+//        // TableModel von JTable holen und ...
+//        DefaultListModel<Artikel> listModel = (DefaultListModel<Artikel>) artikelListe.getModel();
+////		// ... Inhalt aktualisieren
+//        listModel.clear();
+//        listModel.addAll(artikel);
+
+        ArtikelTabellenModel tabellenModel = (ArtikelTabellenModel)  artikelTabelle.getModel();
+        tabellenModel.setArtikel(artikel);
     }
 }

@@ -100,6 +100,7 @@ public class SuchPanel extends JPanel {
                     suchErgebnis = eshopInterface.sucheNachArtikel(suche);
                 }
                 //artikelListe.setListData(new Vector<>(suchErgebnis));
+                listener.beiSuchErgebnisArtikel(suchErgebnis);
             }
         }
     }
