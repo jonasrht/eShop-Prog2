@@ -17,7 +17,6 @@ public class ArtikelTabellenPanel extends JTable {
     }
 
     public void aktualisiereArtikelListe(java.util.List<Artikel> artikel) {
-
         // TableModel von JTable holen und ...
         tabellenModel = (ArtikelTabellenModel) getModel();
 //		// ... Inhalt aktualisieren

@@ -150,6 +150,7 @@ public class ClientEShopRequestProcessor implements Runnable {
     private void gibAlleAnzeigen() throws IOException {
         List<Artikel> artikelListe = eShop.gibAlleArtikel();
         int size = artikelListe.size();
+        System.out.println(size);
         // Gibt die Länge der ArrayList aus
         out.println(String.valueOf(size));
         // Gebe alle Artikel aus

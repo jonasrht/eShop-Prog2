@@ -44,6 +44,7 @@ public class EshopFassade implements EshopInterface {
         List<Artikel> artikelListe = new ArrayList<Artikel>();
         out.println("gibAlleAnzeigen");
         String sizeStr = in.readLine();
+        System.out.println(sizeStr);
         int size = Integer.parseInt(sizeStr);
         for (int i = 0; i < size; i++) {
             String idStr = in.readLine();

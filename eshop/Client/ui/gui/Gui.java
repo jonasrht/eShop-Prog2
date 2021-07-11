@@ -5,7 +5,9 @@ import javax.swing.table.DefaultTableModel;
 
 import eshop.Client.net.EshopFassade;
 import eshop.Client.ui.gui.models.ArtikelTabellenModel;
+import eshop.Client.ui.gui.panels.ArtikelEinfuegenPanel;
 import eshop.Client.ui.gui.panels.ArtikelTabellenPanel;
+import eshop.Client.ui.gui.panels.MenuPanel;
 import eshop.Client.ui.gui.panels.SuchPanel;
 import eshop.exceptions.ArtikelExistiertBereitsException;
 import eshop.interfaces.EshopInterface;
@@ -18,7 +20,7 @@ import java.util.List;
 import java.util.Vector;
 
 
-public class Gui extends JFrame implements ActionListener, SuchPanel.SucheArtikelPanelListener {
+public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, ArtikelEinfuegenPanel.ArtikelHinzufuegenListener, MenuPanel.MenuPanelListener {
     
     private final EshopInterface eshopInterface;
     //String name, double preis, int bestand
@@ -28,7 +30,12 @@ public class Gui extends JFrame implements ActionListener, SuchPanel.SucheArtike
     private JTextField suchTextFeld;
 
     private JList artikelListe;
-    private JButton neuerArtBtn;
+    private JButton switchScene;
+
+    private JScrollPane scrollPane;
+    private SuchPanel suchPanel;
+    private ArtikelEinfuegenPanel artikelEinfuegenPanel;
+    private MenuPanel menuPanel;
 
     private JTable artikelTabelle;
 
@@ -47,63 +54,41 @@ public class Gui extends JFrame implements ActionListener, SuchPanel.SucheArtike
         setLayout(new BorderLayout());
 
         // NORTH
-        SuchPanel suchPanel = new SuchPanel(eshopInterface, this);
-//        JPanel suchPanel = new JPanel();
-//        suchPanel.setLayout(new FlowLayout());
-//        suchPanel.add(new JLabel("Suchbegriff"));
-//        suchTextFeld = new JTextField();
-//        suchTextFeld.setPreferredSize(new Dimension(200, 30));
-//        suchPanel.add(suchTextFeld);
-//        JButton suchButton = new JButton("Such!");
-//        ActionPerformedSuchBtn suchListener = new ActionPerformedSuchBtn();
-//        suchButton.addActionListener(suchListener);
-//        suchPanel.add(suchButton);
+        suchPanel = new SuchPanel(eshopInterface, this);
+
 
         // WEST
-        JPanel einfuegePanel = new JPanel();
-        einfuegePanel.setLayout(new BoxLayout(einfuegePanel, BoxLayout.PAGE_AXIS));
-        einfuegePanel.add(new JLabel("Name:"));
-        artikelNameFeld = new JTextField();
-        einfuegePanel.add(artikelNameFeld);
-        einfuegePanel.add(new JLabel("Preis:"));
-        artikelPreisFeld = new JTextField();
-        einfuegePanel.add(artikelPreisFeld);
-        einfuegePanel.add(new JLabel("Bestand:"));
-        artikelBestandFeld = new JTextField();
-        einfuegePanel.add(artikelBestandFeld);
-
-
-        // Abstand
-        Dimension fillerMinSize = new Dimension(5, 20);
-        Dimension fillerPreferedSize = new Dimension(5, Short.MAX_VALUE);
-        Dimension fillerMaxSize = new Dimension(5, Short.MAX_VALUE);
-        einfuegePanel.add(new Box.Filler(fillerMinSize, fillerPreferedSize, fillerMaxSize));
-
-        // Button
-        neuerArtBtn = new JButton("Einfügen");
-        neuerArtBtn.addActionListener(this);
-        einfuegePanel.add(neuerArtBtn);
+        artikelEinfuegenPanel = new ArtikelEinfuegenPanel(eshopInterface, this);
 
         // CENTER
         try {
             java.util.List<Artikel> artikel = eshopInterface.gibAlleArtikel();
             artikelPanel = new ArtikelTabellenPanel(artikel);
-            JScrollPane scrollPane = new JScrollPane(artikelPanel);
+            scrollPane = new JScrollPane(artikelPanel);
+            switchScene = new JButton();
 
+            // Panels zusammen fassen
             add(suchPanel, BorderLayout.NORTH);
-            add(einfuegePanel, BorderLayout.WEST);
+            add(artikelEinfuegenPanel, BorderLayout.WEST);
             add(scrollPane, BorderLayout.CENTER);
+
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
-
-        // Panels zusammen fassen
-
 
         setSize(640, 480);
         setVisible(true);
+    }
+
+    public void initializeMitarbeiterMenu() {
+        suchPanel.setVisible(true);
+        artikelEinfuegenPanel.setVisible(false);
+        scrollPane.setVisible(true);
+
+        menuPanel = new MenuPanel(eshopInterface, this);
+        add(menuPanel, BorderLayout.WEST);
+        System.out.println("Mitarbeiter");
     }
 
     public static void main(String[] args) {
@@ -117,59 +102,20 @@ public class Gui extends JFrame implements ActionListener, SuchPanel.SucheArtike
         artikelPanel.aktualisiereArtikelListe(artikelListe);
     }
 
-    class ActionPerformedSuchBtn implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String suche = suchTextFeld.getText();
-            java.util.List<Artikel> suchErgebnis = null;
-            if (suche.isEmpty()) {
-                try {
-                    suchErgebnis = eshopInterface.gibAlleArtikel();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            } else {
-                suchErgebnis = eshopInterface.sucheNachArtikel(suche);
-            }
-            aktualisiereArtikelListe(suchErgebnis);
-        }
+    @Override
+    public void switchScene() {
+        initializeMitarbeiterMenu();
     }
 
-    // Wenn auf Button geklickt wird
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(neuerArtBtn)) {
-            System.out.println("Klick");
-
-            String artName = artikelNameFeld.getText();
-            String artPreis = artikelPreisFeld.getText();
-            String artBestand = artikelBestandFeld.getText();
-    
-            double preis = Double.parseDouble(artPreis);
-            int bestand = Integer.parseInt(artBestand);
-    
-            try {
-                eshopInterface.artikelNeu(artName, preis, bestand);
-                eshopInterface.verbindungsAbbruch();
-                //artikelListe.ensureIndexIsVisible(index);
-                java.util.List<Artikel> artikel = eshopInterface.gibAlleArtikel();
-                artikelListe.setListData(new Vector(artikel));
-            } catch (ArtikelExistiertBereitsException | IOException e1) {
-                // TODO Auto-generated catch block
-                e1.getMessage();
-            }
-        }
+    @Override
+    public void aktikelPanelaktualisieren(java.util.List<Artikel> artikel) {
+        artikelPanel.aktualisiereArtikelListe(artikel);
     }
 
-    public void aktualisiereArtikelListe(java.util.List<Artikel> artikel) {
-
-//        // TableModel von JTable holen und ...
-//        DefaultListModel<Artikel> listModel = (DefaultListModel<Artikel>) artikelListe.getModel();
-////		// ... Inhalt aktualisieren
-//        listModel.clear();
-//        listModel.addAll(artikel);
-
-        ArtikelTabellenModel tabellenModel = (ArtikelTabellenModel)  artikelTabelle.getModel();
-        tabellenModel.setArtikel(artikel);
+    @Override
+    public void wechselNeuerArtikel() {
+        menuPanel.setVisible(false);
+        add(artikelEinfuegenPanel, BorderLayout.WEST);
+        artikelEinfuegenPanel.setVisible(true);
     }
 }

@@ -16,9 +16,9 @@ Moin
 Ein Artikel
 1.0
 1
-222
-11.0
-11
-Hallo
-123.0
-123
+Bier
+1.0
+1
+lol
+1.0
+1

@@ -18,6 +18,7 @@ public class SuchPanel extends JPanel {
 
     public interface SucheArtikelPanelListener {
         public void beiSuchErgebnisArtikel(List<Artikel> artikelListe);
+        public void switchScene();
     }
 
     private EshopInterface eshopInterface;
@@ -25,8 +26,7 @@ public class SuchPanel extends JPanel {
 
     private JTextField suchTextFeld;
     private JButton suchButton;
-
-    private JLabel fehlermeldungFeld = null;
+    private JButton neueScene;
 
     public SuchPanel(EshopInterface eshopInterface, SucheArtikelPanelListener listener) {
         this.eshopInterface = eshopInterface;
@@ -37,38 +37,6 @@ public class SuchPanel extends JPanel {
     }
 
     private void erstelleUI() {
-//        GridBagLayout gridBagLayout = new GridBagLayout();
-//        this.setLayout(gridBagLayout);
-//        GridBagConstraints constraints = new GridBagConstraints();
-//        constraints.fill = GridBagConstraints.HORIZONTAL;
-//        constraints.gridy = 0; // Zeile 0
-//
-//        JLabel sucheLabel = new JLabel("Artikelname:");
-//        constraints.gridx = 0; // Spalte 0
-//        constraints.weightx = 0.2; // 20% der gesamten Breite
-//        constraints.anchor = GridBagConstraints.EAST;
-//        gridBagLayout.setConstraints(sucheLabel, constraints);
-//        this.add(sucheLabel);
-//
-//        sucheTextFeld = new JTextField();
-//        sucheTextFeld.setToolTipText("Suchbegriff eingeben.");
-//        constraints.gridx = 1; // Spalte 1
-//        constraints.weightx = 0.6; // 60% der gesamten Breite
-//        gridBagLayout.setConstraints(sucheTextFeld, constraints);
-//        this.add(sucheTextFeld);
-//
-//        suchButton = new JButton("Suchen!");
-//        constraints.gridx = 2; // Spalte 2
-//        constraints.weightx = 0.2; // 20% der Gesammtbreite
-//        gridBagLayout.setConstraints(suchButton, constraints);
-//        this.add(suchButton);
-//
-//        fehlermeldungFeld = new JLabel("");
-//        constraints.gridy = 1; // Zeile 1
-//        constraints.gridx = 1; // Spalte 1
-//        constraints.weightx = 0.2; // 20% der Gesammtbreite
-//        gridBagLayout.setConstraints(fehlermeldungFeld, constraints);
-//        this.add(fehlermeldungFeld);
         this.setLayout(new FlowLayout());
         add(new JLabel("Suchbegriff"));
         suchTextFeld = new JTextField();
@@ -77,10 +45,18 @@ public class SuchPanel extends JPanel {
         add(suchTextFeld);
         suchButton = new JButton("Such!");
         add(suchButton);
+        neueScene = new JButton("Switch");
+        add(neueScene);
     }
 
     private void erstelleEreignisse() {
         suchButton.addActionListener(new SuchListener());
+        neueScene.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.switchScene();
+            }
+        });
     }
 
     class SuchListener implements ActionListener {
