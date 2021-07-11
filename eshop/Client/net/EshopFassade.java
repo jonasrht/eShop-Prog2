@@ -61,6 +61,27 @@ public class EshopFassade implements EshopInterface {
         return artikelListe;
     }
 
+    public List<Artikel> sucheNachArtikel(String suchName) {
+        List<Artikel> suchErgebnis = new ArrayList<Artikel>();
+        out.println("sucheNachArtikel");
+        out.println(suchName);
+        try {
+            int size = Integer.parseInt(in.readLine());
+
+            for (int i = 0; i < size; i++) {
+                int id = Integer.parseInt(in.readLine());
+                String name = in.readLine();
+                double preis = Double.parseDouble(in.readLine());
+                int bestand = Integer.parseInt(in.readLine());
+
+                suchErgebnis.add(new Artikel(id, name, preis, bestand));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return suchErgebnis;
+    }
+
     public void artikelSortieren() {
         out.println("artikelSortieren");
 

@@ -3,10 +3,22 @@ Test
 12
 Sojasoße
 1.99
-10
+6
 Yum Yum
 0.39
 44
 Tofu
 1.49
 20
+Moin
+11.0
+11
+Ein Artikel
+1.0
+1
+222
+11.0
+11
+Hallo
+123.0
+123
