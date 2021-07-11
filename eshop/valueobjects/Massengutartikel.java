@@ -11,7 +11,11 @@ package eshop.valueobjects;
 //        oder 3 Six-Packs) kaufen, d.h. der Kunde legt einzelne Dosen (immer Vielfaches der Packungsgröße!) in
 //        den Warenkorb und keine Sixpacks. Implementieren Sie die Klasse Massengutartikel nachträglich.
 //        Nutzen Sie Vererbung!
-
+/**
+ * Klasse zur Verwaltung von Massengutartikeln vom Asia Shop.
+ *
+ * @author Jonas, Jana, Dabin
+ */
 public class Massengutartikel extends Artikel {
     private int packungsGroeße;
 

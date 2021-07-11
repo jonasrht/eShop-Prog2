@@ -11,12 +11,12 @@ import eshop.persistence.FilePersistenceManager;
 import eshop.persistence.PersistenceManager;
 
 /**
- * Klasse zum aktiven Verwalten von Mitarbeitern.
+ * Klasse zum Verwalten von Mitarbeitern.
  *
  * @author Jonas, Jana, Dabina
- * @extends Person - Verwaltung der Mitarbeiter in List/Vector mit Generics -
- *          außerdem Einsatz von Interfaces (List) - Import aus der Java
- *          Bibliotheck
+ * - Verwaltung der Mitarbeiter in List/Vector mit Generics
+ * - außerdem Einsatz von Interfaces (List)
+ * - Import aus der Java Bibliotheck
  */
 public class MitarbeiterVerwaltung {
     // Attribute

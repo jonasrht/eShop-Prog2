@@ -9,7 +9,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
+/**
+ * Klasse zum Verwalten der FilePersistenceManager Schnittstelle.Daten in einem nichtfluechtigen Speicher abspeichern (typischerweise in einer Datenbank), sodass sie auch ueber einen Programmneustart/Rechnerneustart hinweg noch unveraendert vorhanden sind
+ *
+ * @author Jonas, Jana, Dabina
+ */
 public class FilePersistenceManager implements PersistenceManager {
     private BufferedReader reader = null;
     private PrintWriter writer = null;
@@ -41,9 +45,9 @@ public class FilePersistenceManager implements PersistenceManager {
     }
 
     /**
-     * Methode zum Einlesen der Buchdaten aus einer externen Datenquelle.
+     * Methode zum Einlesen der Artikelaten aus einer externen Datenquelle.
      *
-     * @return Buch-Objekt, wenn Einlesen erfolgreich, false null
+     * @return Artikel-Objekt, wenn Einlesen erfolgreich, false null
      */
     public Artikel ladeArtikel() throws IOException {
         // Titel einlesen

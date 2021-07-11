@@ -10,7 +10,12 @@ import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.*;
-
+/**
+ * Klasse zum Verwalten des Shops.
+ *
+ * @author Jonas, Jana, Dabina
+ *
+ */
 public class ShopVerwaltung implements EshopInterface {
 
     private ArtikelVerwaltung artikelVerwaltung;

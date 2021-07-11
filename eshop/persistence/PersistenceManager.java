@@ -2,7 +2,12 @@ package eshop.persistence;
 
 import eshop.valueobjects.*;
 import java.io.IOException;
-
+/**
+ * Interface Persistenz Schnittstelle.Daten in einem nichtfluechtigen Speicher abspeichern (typischerweise in einer Datenbank), sodass sie auch ueber einen Programmneustart/Rechnerneustart hinweg noch unveraendert vorhanden sind
+ *
+ * @author Jonas, Jana, Dabin
+ * @throws IOException
+ */
 public interface PersistenceManager {
 
     public void openForReading(String datenquelle) throws IOException;

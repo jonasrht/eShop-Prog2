@@ -11,10 +11,9 @@ import eshop.persistence.FilePersistenceManager;
 import eshop.persistence.PersistenceManager;
 
 /**
- * Klasse zum passivem Verwalten der Kunden.
+ * Klasse zum Verwalten der Kunden.
  *
  * @author Jonas, Jana, Dabina
- * @extends Person
  */
 public class KundenVerwaltung {
     // Attribute
