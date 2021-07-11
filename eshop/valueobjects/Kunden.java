@@ -1,8 +1,8 @@
 package eshop.valueobjects;
 /**
- * Klasse zum Erstellen von Kunden.
+ * Klasse zur Repraesentation einzelner Kunden.
  *
- * @author Jonas, Jana, Dabina
+ * @author Jonas, Jana, Dabin
  * @extends Person
  */
 public class Kunden extends Person {
@@ -11,21 +11,38 @@ public class Kunden extends Person {
     private double guthaben;
     protected Warenkorb warenkorb;
 
-    //Konstruktoren
-    //Kunde mit Guthaben
+    /**
+     * Konstruktor Kunde mit Guthaben
+     *
+     * @param name des Kunden
+     * @param email des Kunden
+     * @param passwort des Kunden
+     * @param adresse des Kunden
+     * @param guthaben des Kunden
+     */
     public Kunden(String name, String email, String passwort, String adresse, double guthaben){
         super(name, email, passwort);
         this.warenkorb = new Warenkorb();
         this.adresse = adresse;
         this.guthaben = guthaben;
     }
-    //Kunde ohne Guthaben
+
+    /**
+     * Konstruktor ohne Guthaben
+     *
+     * @param name des Kunden
+     * @param email des Kunden
+     * @param passwort des Kunden
+     * @param adresse des Kunden
+     */
     public Kunden(String name, String email, String passwort, String adresse){
         super(name, email, passwort);
         this.warenkorb = new Warenkorb();
         this.adresse = adresse;
     }
-    //Getter und Setter Methoden
+    /**
+     * Accessor-Methoden
+     */
     public void setAdresse(String adresse){
         this.adresse = adresse;
     }

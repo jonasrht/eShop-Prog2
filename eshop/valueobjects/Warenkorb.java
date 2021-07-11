@@ -7,15 +7,28 @@ import java.util.List;
 import eshop.exceptions.BestandZuGering;
 import eshop.verwaltung.*;
 import eshop.valueobjects.Artikel;
-
+/**
+ * Klasse zum Verwalten des Warenkorbs der Kunden.
+ *
+ * @author Jonas, Jana, Dabin
+ * - Verwaltung der Artikel in List/Vector mitGenerics
+ * - außerdem Einsatz von Interfaces (List)
+ * - Import aus der Java Bibliotheck
+ */
 public class Warenkorb {
     private List<HashMap<Artikel, Integer>> artikelImKorb;
 
-    // Konstruktor
+    /**
+     * Konstruktor
+     */
     public Warenkorb() {
         this.artikelImKorb = new ArrayList<>();
     }
-
+    /**
+     * Methode zum Anzeigen des Warenkorbs.
+     *
+     * @return warenkorb
+     */
     public List<String> warenkorbAnzeigen() {
         List<String> warenkorb = new ArrayList<String>();
         for (HashMap<Artikel, Integer> array : artikelImKorb) {
@@ -30,16 +43,19 @@ public class Warenkorb {
         }
         return warenkorb;
     }
-
+    /**
+     * Methode zum Leeren Warenkorb.
+     */
     public void artikelInWarenkorbLeeren() {
         this.artikelImKorb.removeAll(artikelImKorb);
     }
 
     /**
+     * Methode zum Setzen der Artikel in den Warenkorb.
      *
-     * @param artikel
-     * @param anzahl
-     * @throws BestandZuGering
+     * @param artikel Produkt
+     * @param anzahl wie viele
+     * @throws BestandZuGering Schutz vor nicht besitzenden Artikel
      */
     public void artikelInWarenkorb(Artikel artikel, int anzahl) throws BestandZuGering {
 
@@ -56,7 +72,12 @@ public class Warenkorb {
 
         warenkorbAnzeigen();
     }
-
+    /**
+     * Methode Aendern der Artikelanzahl.
+     *
+     * @param artikel Produkt
+     * @param anzahl der neue Wert
+     */
     public void anzahlArtikelAendern(Artikel artikel, int anzahl) {
         for (HashMap<Artikel, Integer> array : artikelImKorb) {
             for (Artikel artikel1 : array.keySet()) {
@@ -67,19 +88,33 @@ public class Warenkorb {
             }
         }
     }
-
-    // Getter
+    /**
+     * Accessor-Methoden
+     */
     public List<HashMap<Artikel, Integer>> getArtikelImKorb() {
         return this.artikelImKorb;
     }
 
     // Wird nicht benutzt
+    /**
+     * Methode zum Warenkorb einkaufen
+     * .
+     * @param kunde Kunde
+     * @param artikel Artikel im Warenkorb
+     * @return rechnung
+     */
     public Rechnung warenkorbKaufen(Kunden kunde, List<HashMap<Artikel, Integer>> artikel) {
         Rechnung rechnung = new Rechnung(kunde, artikel);
         artikelInWarenkorbLeeren();
         return rechnung;
     }
-
+    /**
+     * Standard-Methode von Object überschrieben.
+     * Methode wird immer automatisch aufgerufen, wenn ein Artikel-Objekt als String
+     * benutzt wird (z.B. in println(Artikel);)
+     *
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
         String output = "";

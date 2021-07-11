@@ -1,8 +1,8 @@
 package eshop.valueobjects;
 /**
- * Abstrakte Klasse zur Verwaltung von Personen.
+ * Abstrakte Klasse zum Verwalten der Personen.
  *
- * @author Jonas, Jana, Dabina
+ * @author Jonas, Jana, Dabin
  * @abstract
  */
 public abstract class Person {
@@ -12,14 +12,24 @@ public abstract class Person {
     protected int personID = 0;
     protected String  name;
     protected static int num;
-    // Konstruktor
+
+    /**
+     * Konstruktor
+     *
+     * @param name der Person
+     * @param email der Person
+     * @param passwort der Person
+     */
     public Person(String name, String email, String passwort){
         this.personID = num++;
         this.name = name;
         this.email = email;
         this.passwort = passwort;
     }
-    // getter und setter Methoden
+
+    /**
+     * Accessor-Methoden
+     */
     public Person(String name){
         this.name = name;
     }

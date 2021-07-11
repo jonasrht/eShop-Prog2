@@ -11,7 +11,12 @@ import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.valueobjects.Artikel;
 import eshop.valueobjects.Kunden;
 import eshop.valueobjects.Mitarbeiter;
-
+/**
+ * Interface E-shop.
+ *
+ * @author Jonas, Jana, Dabin
+ * @throws IOException
+ */
 public interface EshopInterface {
 
     // Artikel Verwaltung

@@ -8,18 +8,23 @@ import java.util.List;
 /**
  * Klasse zum Verwalten der Rechnungen.
  *
- * @author Jonas, Jana, Dabina - Verwaltung der Artikel in List/Vector mit
- *         Generics - außerdem Einsatz von Interfaces (List) - Import aus der
- *         Java Bibliotheck
+ * @author Jonas, Jana, Dabin
+ * - Verwaltung der Artikel in List/Vector mitGenerics
+ * - außerdem Einsatz von Interfaces (List)
+ * - Import aus der Java Bibliotheck
  */
 public class Rechnung {
-    // Attribute für Kunde, Datum, die gekauften Artikel, Stückzahl und
-    // Preisinformation sowie den Gesamtpreis.
+    // Attribute für Kunde, Datum, die gekauften Artikel, Stückzahl und Preisinformation sowie den Gesamtpreis.
     private Kunden kunde;
     private List<HashMap<Artikel, Integer>> artikelListe;
     private LocalDate datum;
 
-    // Konstruktor
+    /**
+     * Konstruktor
+     *
+     * @param kunde der Kunde
+     * @param artikelListe Einkauf
+     */
     public Rechnung(Kunden kunde, List<HashMap<Artikel, Integer>> artikelListe) {
         this.kunde = kunde;
         this.artikelListe = artikelListe;
@@ -28,6 +33,8 @@ public class Rechnung {
 
     /**
      * Methode zum Erstellen von Rechnungen
+     *
+     * @return rechnung
      */
     public List<String> rechnungErstellen() {
         // Gesamtpreis anfangs auf null setzen
@@ -68,7 +75,9 @@ public class Rechnung {
         rechnung.add("Gesamtpreis:    " + gesamtPreis + "€");
         return rechnung;
     }
-
+    /**
+     * Accessor-Methoden
+     */
     public List<HashMap<Artikel, Integer>> getArtikel() {
         return artikelListe;
     }

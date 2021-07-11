@@ -11,12 +11,12 @@ import eshop.persistence.FilePersistenceManager;
 import eshop.persistence.PersistenceManager;
 
 /**
- * Klasse zum aktiven Verwalten von Mitarbeitern.
+ * Klasse zum Verwalten von Mitarbeitern.
  *
  * @author Jonas, Jana, Dabina
- * @extends Person - Verwaltung der Mitarbeiter in List/Vector mit Generics -
- *          außerdem Einsatz von Interfaces (List) - Import aus der Java
- *          Bibliotheck
+ * - Verwaltung der Mitarbeiter in List/Vector mit Generics
+ * - außerdem Einsatz von Interfaces (List)
+ * - Import aus der Java Bibliotheck
  */
 public class MitarbeiterVerwaltung {
     // Attribute
@@ -26,9 +26,7 @@ public class MitarbeiterVerwaltung {
     private PersistenceManager pm = new FilePersistenceManager();
 
     /**
-     * Methode zur Erkennung von schon bestehenden Mitarbeitern
-     *
-     * @throws IOException
+     * Konstruktor
      */
     public MitarbeiterVerwaltung() {
         // Fehlerbehandlung
@@ -43,9 +41,9 @@ public class MitarbeiterVerwaltung {
     }
 
     /**
-     * Methode zur Datenerfassung
+     * Methode zur Datenerfassung.
      *
-     * @throws IOException
+     * @throws IOException Fehlerpruefung
      */
     public void liesDaten() throws IOException { // Methode mit Fehlerprüfung
         // PersistenzManager für Lesevorgänge öffnen
@@ -62,9 +60,9 @@ public class MitarbeiterVerwaltung {
     }
 
     /**
-     * Methode zum Schreiben der Mitarbeiter in eine Datei.
+     * Methode zum Schreiben der Mitarbeiter in eine externe Datei.
      *
-     * @throws IOException
+     * @throws IOException Fehlerpruefung
      */
     public void schreibeDaten() throws IOException {
         // PersistenzManager für Schreibvorgänge öffnen
@@ -79,11 +77,12 @@ public class MitarbeiterVerwaltung {
 
     // TODO: Exception throw
     /**
-     * Methode zum Einloggen der Mitarbeiter
+     * Methode zum Einloggen der Mitarbeiter.
      *
-     * @param passwort, Passwort vom Mitarbeiter
-     * @param email,    E-Mail vom Mitarbeiter
-     * @return erfolgreiches oder gescheitertes Einloggen
+     * @param passwort Passwort vom Mitarbeiter
+     * @param email    E-Mail vom Mitarbeiter
+     * @throws LoginFehlgeschlagen Fehler beim Login
+     * @return mitarbeiter or null
      */
     public Mitarbeiter logInEmployee(String passwort, String email) throws LoginFehlgeschlagen {
         // durchläuft die Array-Liste und sucht nach Mitarbeiter
@@ -100,11 +99,11 @@ public class MitarbeiterVerwaltung {
     }
 
     /**
-     * Methode zum Finden der Mitarbeiter
+     * Methode zum Finden der Mitarbeiter.
      *
-     * @param passwort, Passwort vom Mitarbeiter
-     * @param email,    E-Mail vom Mitarbeiter
-     * @return Mitarbeiter oder nichts
+     * @param passwort Passwort vom Mitarbeiter
+     * @param email    E-Mail vom Mitarbeiter
+     * @return Mitarbeiter or null
      */
     public Mitarbeiter getEmployee(String passwort, String email) {
         // durchläuft die Array-Liste und sucht nach Mitarbeiter
@@ -122,9 +121,10 @@ public class MitarbeiterVerwaltung {
     /**
      * Methode zum Registrieren von Mitarbeitern
      *
-     * @param name,     Name vom Mitarbeiter
-     * @param passwort, Passwort vom Mitarbeiter
-     * @param email,    E-Mail vom Mitarbeiter
+     * @param name     Name vom Mitarbeiter
+     * @param email    E-Mail vom Mitarbeiter
+     * @param passwort Passwort vom Mitarbeiter
+
      */
     public void registerEmployee(String name, String email, String passwort) {
         // Mitarbeiter werden in der Array-Liste mit den übergebenen Parametern
@@ -136,8 +136,8 @@ public class MitarbeiterVerwaltung {
      * Methode zum Prüfen eines sicheren Passworts (Länge, Ziffer, Groß- und
      * Kleinbuchstaben)
      * 
-     * @param password, Passwort vom Mitarbeiter
-     * @return Richtigkeit
+     * @param password Passwort vom Mitarbeiter
+     * @return true or false
      */
     public boolean valPassword(String password) {
         // sobald die Passwortlänge mehr als sieben Zeichen entspricht
@@ -160,7 +160,7 @@ public class MitarbeiterVerwaltung {
      * Methode zum Prüfen eines sicheren Passworts anhand von mindestens einem Groß
      * und Klein -buchstaben sowie einer Zahl
      * 
-     * @param password, Passwort vom Mitarbeiter
+     * @param password Passwort vom Mitarbeiter
      * @return Richtigkeit
      */
     public boolean checkPass(String password) {
