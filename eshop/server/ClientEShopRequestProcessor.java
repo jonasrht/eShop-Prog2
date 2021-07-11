@@ -17,7 +17,11 @@ import eshop.valueobjects.Kunden;
 import eshop.valueobjects.Mitarbeiter;
 
 /**
- * ClientEShopRequestProcessor
+ * Client fuer den Request Prozessor.Kommunikation findet zwischen Server und Client sattt.
+ *
+ * @author Jonas, Jana, Dabin
+ * @implements Runnable
+ * - Import aus der Java Bibliotheck
  */
 public class ClientEShopRequestProcessor implements Runnable {
 

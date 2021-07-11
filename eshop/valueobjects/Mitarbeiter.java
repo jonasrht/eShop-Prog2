@@ -1,8 +1,8 @@
 package eshop.valueobjects;
 /**
- * Klasse zum passivem Erstellen von Mitarbeitern.
+ * Klasse zu Repraesentation von Mitarbeitern.
  *
- * @author Jonas, Jana, Dabina
+ * @author Jonas, Jana, Dabin
  * @extends Person
  */
 public class Mitarbeiter extends Person {

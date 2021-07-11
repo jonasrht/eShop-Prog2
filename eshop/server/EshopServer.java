@@ -7,7 +7,14 @@ import java.net.Socket;
 
 import eshop.interfaces.EshopInterface;
 import eshop.verwaltung.ShopVerwaltung;
-
+/**
+ * Klasse des Eshop Servers.Kommunikation findet zwischen Server und Client sattt.
+ * Socket ist eine bidirektionale Netzwerk-Kommunikationsschnittstelle, deren Verwaltung das Betriebssystem uebernimmt.
+ * Die Kommunikation findet zwischen einem Server und einem Client ueber einen definierten Port statt.
+ *
+ * @author Jonas, Jana, Dabina
+ * - Import aus der Java Bibliotheck
+ */
 public class EshopServer {
     public final static int DEFAULT_PORT = 6789;
 

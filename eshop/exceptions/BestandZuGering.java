@@ -2,7 +2,7 @@ package eshop.exceptions;
 
 import eshop.valueobjects.Artikel;
 /**
- * Klasse zum Schutz von Kaufen von Artikel, die nicht im Besitz stehen
+ * Klasse zum Schutz des Kaufens von Artikeln, die nicht im Besitz sind.
  *
  * @author Jonas, Jana, Dabina
  * @extends Exception

@@ -1,8 +1,8 @@
 package eshop.valueobjects;
 /**
- * Klasse zum Erstellen von Kunden.
+ * Klasse zur Repraesentation einzelner Kunden.
  *
- * @author Jonas, Jana, Dabina
+ * @author Jonas, Jana, Dabin
  * @extends Person
  */
 public class Kunden extends Person {
@@ -25,7 +25,7 @@ public class Kunden extends Person {
         this.warenkorb = new Warenkorb();
         this.adresse = adresse;
     }
-    //Getter und Setter Methoden
+    // Methoden zum Setzen und Lesen der Kunden-Eigenschaften
     public void setAdresse(String adresse){
         this.adresse = adresse;
     }

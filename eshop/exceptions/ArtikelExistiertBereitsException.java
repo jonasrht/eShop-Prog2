@@ -2,9 +2,9 @@ package eshop.exceptions;
 
 import eshop.valueobjects.Artikel;
 /**
- * Klasse zum Schutz von doppelten Einträgen von bereits existierenden Artikeln
+ * Klasse zum Schutz von doppelten Eintraegen von bereits existierenden Artikeln.
  *
- * @author Jonas, Jana, Dabina
+ * @author Jonas, Jana, Dabin
  * @extends Exception
  * - Import aus der Java Bibliotheck
  */

@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Klasse zur Buchhaltung vom Asia Shop.
  *
- * @author Jonas, Jana, Dabina
+ * @author Jonas, Jana, Dabin
  * - Verwaltung der Artikel in List/Vector mit Generics
  * - außerdem Einsatz von Interfaces (List)
  * - Import aus der Java Bibliotheck

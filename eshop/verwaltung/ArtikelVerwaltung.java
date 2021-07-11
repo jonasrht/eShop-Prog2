@@ -14,11 +14,12 @@ import eshop.persistence.PersistenceManager;
 import eshop.valueobjects.*;
 
 /**
- * Klasse zur Verwaltung von asiatischen Lebensmitteln.
+ * Klasse zum Verwalten von asiatischen Lebensmitteln.
  *
- * @author Jonas, Jana, Dabina - Verwaltung der Artikel in List/Vector mit
- *         Generics - außerdem Einsatz von Interfaces (List) - Import aus der
- *         Java Bibliotheck
+ * @author Jonas, Jana, Dabina
+ * - Verwaltung der Artikel in List/Vector mit Generics
+ * - außerdem Einsatz von Interfaces (List)
+ * - Import aus der Java Bibliotheck
  */
 
 public class ArtikelVerwaltung {
@@ -120,7 +121,7 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Suchen der Artikel via ID in der Artikelliste.
      *
-     * @param int id, die die Artikel individualisiert
+     * @param id  die die Artikel individualisiert
      */
     public Artikel getArtikelViaID(int id) {
         for (Artikel artikel : artikelListe) {
@@ -135,8 +136,8 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Entfernen der Artikel im Bestand.
      *
-     * @param Artikel artikel
-     * @param int     entfernen, die die Anzahl an Artikel entfernt
+     * @param artikel Artikel
+     * @param entfernen  die die Anzahl an Artikel entfernt
      */
     public void bestandReduzieren(Artikel artikel, int entfernen) {
         // int wird definiert
@@ -174,9 +175,6 @@ public class ArtikelVerwaltung {
 
     /**
      * Methode zum alphabetischen Sortieren der Artikel im Bestand.
-     *
-     * @param Array artikelListe, die alphabetisch sortiert wird
-     * @import java.util.Collections
      */
     public void artikelSortieren() {
         // wenn der counter restlos durch zwei teilbar ist...
@@ -240,7 +238,7 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Ändern des Bestandes der Artikel.
      *
-     * @param name       des Artikels, wonach alphabetisch sortiert wird
+     * @param artikel       des Artikels, wonach alphabetisch sortiert wird
      * @param newbestand
      */
     public void artikelBestandAendern(Artikel artikel, int newbestand) {

@@ -8,9 +8,10 @@ import java.util.List;
 /**
  * Klasse zum Verwalten der Rechnungen.
  *
- * @author Jonas, Jana, Dabina - Verwaltung der Artikel in List/Vector mit
- *         Generics - außerdem Einsatz von Interfaces (List) - Import aus der
- *         Java Bibliotheck
+ * @author Jonas, Jana, Dabin
+ * - Verwaltung der Artikel in List/Vector mitGenerics
+ * - außerdem Einsatz von Interfaces (List)
+ * - Import aus der Java Bibliotheck
  */
 public class Rechnung {
     // Attribute für Kunde, Datum, die gekauften Artikel, Stückzahl und

@@ -1,12 +1,13 @@
 package eshop.valueobjects;
 
 /**
- * Klasse zum passivem Erstellen von Artiekeln.
+ * Klasse zur Repraesentation einzenler Artikel.
  *
- * @author Jonas, Jana, Dabina
- * @implements Java Interface für das Vergleichen - Verwaltung der Artikel in
- *             List/Vector mit Generics - außerdem Einsatz von Interfaces (List)
- *             - Import aus der Java Bibliotheck
+ * @author Jonas, Jana, Dabin
+ * - Verwaltung der Artikel in List/Vector mit Generics
+ * - außerdem Einsatz von Interfaces (List)
+ * - Import aus der Java Bibliotheck
+ * -implementiert Comparable<Artikel>, damit die Artikel der Liste verglichen werden kann
  */
 public class Artikel implements Comparable<Artikel> {
     // Attribute definieren
@@ -30,7 +31,9 @@ public class Artikel implements Comparable<Artikel> {
         this.preis = preis;
         this.bestand = bestand;
     }
-
+    /**
+     + Accessor-Methoden
+     */
     public void setName(String name) {
         this.name = name;
     }
@@ -63,7 +66,13 @@ public class Artikel implements Comparable<Artikel> {
         return this.produktID;
     }
 
-    // Methode gibt es shon, wird nur überschrieben
+    /**
+     * Standard-Methode von Object überschrieben.
+     * Methode wird immer automatisch aufgerufen, wenn ein Artikel-Objekt als String
+     * benutzt wird (z.B. in println(Artikel);)
+     *
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
         return ("ID: " + produktID + " / Name: " + name + " / Preis: " + preis + "/ Bestand: " + bestand + "\n");
