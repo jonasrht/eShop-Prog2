@@ -1,5 +1,7 @@
 package eshop.valueobjects;
 
+import eshop.verwaltung.EreignisVerwaltung;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,8 +55,7 @@ public class Rechnung {
                 int neuerBestand = aktuellerBestand - anzahl;
                 artikel.setBestand(neuerBestand);
 
-                // Log Objekt erstellen
-                // Log log = new Log(kunde, artikel, anzahl);
+                EreignisVerwaltung.ereignisEinfuegen(artikel.getProduktID(), anzahl, 3, this.kunde.getPersonID());
 
                 // Preis für die Anzahl der Artikel berechnen
                 double preis = artikel.getPreis() * anzahl;

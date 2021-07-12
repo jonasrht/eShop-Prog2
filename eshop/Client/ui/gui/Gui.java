@@ -18,28 +18,21 @@ import java.util.List;
 import java.util.Vector;
 
 
-public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, ArtikelEinfuegenPanel.ArtikelHinzufuegenListener, MenuPanel.MenuPanelListener, ArtikelBestandPanel.ArtikelBestandListener, NeuerMitarbeiterPanel.NeuerMitarbeiterListener, KundenMenuPanel.KundenMenuPanelListener, ArtikelZumWarenkorbPanel.ArtikelZumWarenkorbListener, LoginPanel.LoginListener {
+public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, ArtikelEinfuegenPanel.ArtikelHinzufuegenListener, MenuPanel.MenuPanelListener, ArtikelBestandPanel.ArtikelBestandListener, NeuerMitarbeiterPanel.NeuerMitarbeiterListener, KundenMenuPanel.KundenMenuPanelListener, ArtikelZumWarenkorbPanel.ArtikelZumWarenkorbListener, LoginPanel.LoginListener, WarenkorbPanel.WarenkorbListener, KassePanel.KasseListener {
     
     private final EshopInterface eshopInterface;
-    //String name, double preis, int bestand
-    private JTextField artikelNameFeld;
-    private JTextField artikelPreisFeld;
-    private JTextField artikelBestandFeld;
-    private JTextField suchTextFeld;
-
-    private JList artikelListe;
-    private JButton switchScene;
 
     private JScrollPane scrollPane;
     private SuchPanel suchPanel;
+    private LoginPanel loginPanel;
     private ArtikelEinfuegenPanel artikelEinfuegenPanel;
     private ArtikelBestandPanel artikelBestandPanel;
     private ArtikelZumWarenkorbPanel artikelZumWarenkorbPanel;
+    private WarenkorbPanel warenkorbPanel;
+    private KassePanel kassePanel;
     private NeuerMitarbeiterPanel neuerMitarbeiterPanel;
     private KundenMenuPanel kundenMenuPanel;
     private MenuPanel menuPanel;
-
-    private JTable artikelTabelle;
 
     private ArtikelTabellenPanel artikelPanel;
 
@@ -52,31 +45,13 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
         initialize();
     }
 
+    // Login
     public void initialize() {
+
         setLayout(new BorderLayout());
+        loginPanel = new LoginPanel(eshopInterface, this);
 
-        // NORTH
-        suchPanel = new SuchPanel(eshopInterface, this);
-
-        // WEST
-        artikelEinfuegenPanel = new ArtikelEinfuegenPanel(eshopInterface, this);
-
-        // CENTER
-        try {
-            java.util.List<Artikel> artikel = eshopInterface.gibAlleArtikel();
-            artikelPanel = new ArtikelTabellenPanel(artikel);
-            scrollPane = new JScrollPane(artikelPanel);
-            switchScene = new JButton();
-
-            // Panels zusammen fassen
-            add(suchPanel, BorderLayout.NORTH);
-            add(artikelEinfuegenPanel, BorderLayout.WEST);
-            add(scrollPane, BorderLayout.CENTER);
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        add(loginPanel, BorderLayout.NORTH);
 
         setSize(640, 480);
         setVisible(true);
@@ -94,15 +69,26 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
     }
 
     // Kundenmenü
-    public void initializeKundenMenu() {
-        suchPanel.setVisible(true);
-        artikelEinfuegenPanel.setVisible(false);
-        scrollPane.setVisible(true);
+    public void initializeKundenMenu(Kunden kunde) {
+        try {
+            suchPanel = new SuchPanel(eshopInterface, this);
 
-        kundenMenuPanel = new KundenMenuPanel(eshopInterface, this);
-        add(kundenMenuPanel, BorderLayout.WEST);
-        System.out.println("Mitarbeiter");
+            List<Artikel> artikel = eshopInterface.gibAlleArtikel();
+            artikelPanel = new ArtikelTabellenPanel(artikel);
+            scrollPane = new JScrollPane(artikelPanel);
+
+            suchPanel.setVisible(true);
+            scrollPane.setVisible(true);
+
+            kundenMenuPanel = new KundenMenuPanel(eshopInterface, kunde, this);
+            add(suchPanel, BorderLayout.NORTH);
+            add(kundenMenuPanel, BorderLayout.WEST);
+            add(scrollPane, BorderLayout.CENTER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public static void main(String[] args) {
         String host = "localhost";
@@ -122,7 +108,7 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
 
     @Override
     public void swichKunde() {
-        initializeKundenMenu();
+        //initializeKundenMenu();
     }
 
     @Override
@@ -188,26 +174,36 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
     }
 
     @Override
-    public void wechselWarenkorbHinzu() {
+    public void wechselWarenkorbHinzu(Kunden kunde) {
         kundenMenuPanel.setVisible(false);
-        artikelZumWarenkorbPanel = new ArtikelZumWarenkorbPanel(eshopInterface, this);
+        artikelZumWarenkorbPanel = new ArtikelZumWarenkorbPanel(eshopInterface, kunde, this);
         artikelZumWarenkorbPanel.setVisible(true);
         add(artikelZumWarenkorbPanel, BorderLayout.WEST);
     }
 
     @Override
-    public void wechselWarenkorb() {
+    public void wechselWarenkorb(Kunden kunde) {
+        kundenMenuPanel.setVisible(false);
+        warenkorbPanel = new WarenkorbPanel(eshopInterface, kunde, this);
+        scrollPane.setVisible(false);
 
+        add(warenkorbPanel, BorderLayout.WEST);
     }
 
     @Override
-    public void wechselZurKasse() {
+    public void wechselZurKasse(Kunden kunde) {
+        kundenMenuPanel.setVisible(false);
+        kassePanel = new KassePanel(eshopInterface, kunde, this);
+        scrollPane.setVisible(false);
 
+        add(kassePanel, BorderLayout.WEST);
     }
 
     @Override
     public void wechselLogout() {
-
+        eshopInterface.verbindungsAbbruch();
+        allesAusblenden();
+        initialize();
     }
 
     @Override
@@ -216,12 +212,71 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
     }
 
     @Override
-    public void kundenLogout() {
+    public void artikelWarenZurueck() {
         // Zurück
+        artikelZumWarenkorbPanel.setVisible(false);
+        kundenMenuPanel.setVisible(true);
+        add(kundenMenuPanel, BorderLayout.WEST);
     }
 
     @Override
     public void loginErfolgreich(Kunden kunde) {
+        loginPanel.setVisible(false);
+        initializeKundenMenu(kunde);
+    }
 
+    @Override
+    public void warenkorbZurueck(Kunden kunde) {
+        allesAusblenden();
+        initializeKundenMenu(kunde);
+    }
+
+    @Override
+    public void warenkorbZurKasse(Kunden kunde) {
+        warenkorbPanel.setVisible(false);
+        kassePanel = new KassePanel(eshopInterface, kunde, this);
+        add(kassePanel, BorderLayout.WEST);
+    }
+
+    @Override
+    public void zurueckKasse(Kunden kunde) {
+        allesAusblenden();
+        initializeKundenMenu(kunde);
+    }
+
+    public void allesAusblenden() {
+        if (scrollPane != null) {
+            scrollPane.setVisible(false);
+        }
+        if (suchPanel != null) {
+            suchPanel.setVisible(false);
+        }
+        if (loginPanel != null) {
+            loginPanel.setVisible(false);
+        }
+        if (artikelEinfuegenPanel != null) {
+            artikelPanel.setVisible(false);
+        }
+        if (artikelBestandPanel != null) {
+            artikelBestandPanel.setVisible(false);
+        }
+        if (artikelZumWarenkorbPanel != null) {
+            artikelZumWarenkorbPanel.setVisible(false);
+        }
+        if (warenkorbPanel != null) {
+            warenkorbPanel.setVisible(false);
+        }
+        if (kassePanel != null) {
+            kassePanel.setVisible(false);
+        }
+        if (neuerMitarbeiterPanel != null) {
+            neuerMitarbeiterPanel.setVisible(false);
+        }
+        if (kundenMenuPanel != null) {
+            kundenMenuPanel.setVisible(false);
+        }
+        if (menuPanel != null) {
+            menuPanel.setVisible(false);
+        }
     }
 }

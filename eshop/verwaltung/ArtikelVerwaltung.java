@@ -135,8 +135,8 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Entfernen der Artikel im Bestand.
      *
-     * @param Artikel artikel
-     * @param int     entfernen, die die Anzahl an Artikel entfernt
+     * @param  artikel
+     * @param  entfernen, die die Anzahl an Artikel entfernt
      */
     public void bestandReduzieren(Artikel artikel, int entfernen) {
         // int wird definiert
@@ -154,6 +154,16 @@ public class ArtikelVerwaltung {
         }
     }
 
+
+    /**
+     * Methode, welche mittels einer foreach Schleife durch
+     * die Artikel Liste iteriert und falls ein Artikel mit
+     * dem übergebenen Namen übereinstimmt, in eine "suchErgbenis"
+     * Liste schreibt und diese zurückgibt.
+     *
+     * @param suchName Artikelname, nach welchem gesucht werden soll
+     * @return Das Suchergebnis
+     */
     public List<Artikel> sucheNachArtikel(String suchName) {
         List<Artikel> suchErgebnis = new ArrayList<Artikel>();
         for (Artikel artikel: artikelListe) {
@@ -185,8 +195,6 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum alphabetischen Sortieren der Artikel im Bestand.
      *
-     * @param Array artikelListe, die alphabetisch sortiert wird
-     * @import java.util.Collections
      */
     public void artikelSortieren() {
         // wenn der counter restlos durch zwei teilbar ist...

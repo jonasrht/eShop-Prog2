@@ -1,6 +1,7 @@
 package eshop.Client.ui.gui.panels;
 
 import eshop.interfaces.EshopInterface;
+import eshop.valueobjects.Kunden;
 import eshop.valueobjects.Warenkorb;
 
 import javax.swing.*;
@@ -10,9 +11,9 @@ import java.awt.event.ActionListener;
 public class KundenMenuPanel extends JPanel {
 
     public interface KundenMenuPanelListener {
-        public void wechselWarenkorbHinzu();
-        public void wechselWarenkorb();
-        public void wechselZurKasse();
+        public void wechselWarenkorbHinzu(Kunden kunde);
+        public void wechselWarenkorb(Kunden kunde);
+        public void wechselZurKasse(Kunden kunde);
         public void wechselLogout();
     }
 
@@ -23,10 +24,12 @@ public class KundenMenuPanel extends JPanel {
     private JButton warenkorbAnzeigenBtn;
     private JButton zurKasseBtn;
     private JButton logoutBtn;
+    private Kunden kunde;
 
-    public KundenMenuPanel(EshopInterface eshopInterface, KundenMenuPanelListener listener) {
+    public KundenMenuPanel(EshopInterface eshopInterface, Kunden kunde, KundenMenuPanelListener listener) {
         this.eshopInterface = eshopInterface;
         this.listener = listener;
+        this.kunde = kunde;
 
         erstelleUI();
         erstelleEreignisse();
@@ -37,7 +40,7 @@ public class KundenMenuPanel extends JPanel {
         zumWarenkorbHinzuBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listener.wechselWarenkorbHinzu();
+                listener.wechselWarenkorbHinzu(kunde);
             }
         });
 
@@ -45,7 +48,7 @@ public class KundenMenuPanel extends JPanel {
         warenkorbAnzeigenBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listener.wechselWarenkorb();
+                listener.wechselWarenkorb(kunde);
             }
         });
 
@@ -53,7 +56,7 @@ public class KundenMenuPanel extends JPanel {
         zurKasseBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listener.wechselZurKasse();
+                listener.wechselZurKasse(kunde);
             }
         });
 

@@ -53,17 +53,16 @@ public class LoginPanel extends JPanel {
     }
 
     private void erstelleUI() {
-        JPanel whiteSpace = new JPanel();
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         //Distance
 //        Establish padding/margin like distances to be used between components
-        Dimension fillerMinSize = new Dimension(5, 20);
-        Dimension fillerPreferredSize = new Dimension(5, Short.MAX_VALUE);
-        Dimension fillerMaxSize = new Dimension(5, Short.MAX_VALUE);
-        add(new Box.Filler(fillerMinSize, fillerPreferredSize, fillerMaxSize));
+//        Dimension fillerMinSize = new Dimension(5, 20);
+//        Dimension fillerPreferredSize = new Dimension(5, Short.MAX_VALUE);
+//        Dimension fillerMaxSize = new Dimension(5, Short.MAX_VALUE);
+//        add(new Box.Filler(fillerMinSize, fillerPreferredSize, fillerMaxSize));
 
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        setAlignmentY(0);
+//        setAlignmentY(0);
 
         userLabel = new JLabel("E-Mail");
 //        userLabel.setBounds(10,20,80,25);

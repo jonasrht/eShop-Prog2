@@ -9,6 +9,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Instant;
+import java.util.Date;
 
 public class FilePersistenceManager implements PersistenceManager {
     private BufferedReader reader = null;
@@ -166,6 +168,40 @@ public class FilePersistenceManager implements PersistenceManager {
         schreibeZeile(mitarbeiter.getEmail());
         schreibeZeile(mitarbeiter.getPasswort());
         return true;
+    }
+
+    public Ereignis ladeEreignis() throws IOException {
+        // Datum einlesen
+        String datumString = liesZeile();
+        if (datumString != null) {
+            Date datum = Date.from(Instant.parse(datumString));
+
+            // Artikelnummer einlesen
+            String artikelNummerString = liesZeile();
+            int artikelId = Integer.parseInt(artikelNummerString);
+
+            // Anzahl einlesen
+            String anzahlString = liesZeile();
+            int anzahl = Integer.parseInt(anzahlString);
+
+            // Ereignisart einlesen
+            String ereignisArtString = liesZeile();
+            int ereignisart = Integer.parseInt(ereignisArtString);
+
+            // Personindex einlesen
+            String personIndexString = liesZeile();
+            int persId = Integer.parseInt(personIndexString);
+            return new Ereignis(datum, artikelId, anzahl, ereignisart, persId);
+        }
+        return null;
+    }
+
+    public void speichereEreignis(Ereignis ereignis) throws IOException {
+        schreibeZeile(ereignis.getDatum() + "");
+        schreibeZeile(ereignis.getArtikelId() + "");
+        schreibeZeile(ereignis.getAnzahl() + "");
+        schreibeZeile(ereignis.getEreignisArt() + "");
+        schreibeZeile(ereignis.getPersId() + "");
     }
 
     /*
