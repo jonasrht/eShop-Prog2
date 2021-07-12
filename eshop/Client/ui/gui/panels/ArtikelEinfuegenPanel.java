@@ -15,6 +15,7 @@ public class ArtikelEinfuegenPanel extends JPanel {
 
     public interface ArtikelHinzufuegenListener {
         public void aktikelPanelaktualisieren(java.util.List<Artikel> artikel);
+        public void zurueckArtikelHinzu();
     }
 
     private EshopInterface eshopInterface;
@@ -25,6 +26,7 @@ public class ArtikelEinfuegenPanel extends JPanel {
     private JTextField artikelBestandFeld;
     private JTextField packungsGroeße;
     private JButton neuerArtBtn;
+    private JButton zurueckBtn;
     private JCheckBox massenArtCheckBox;
 
     public ArtikelEinfuegenPanel(EshopInterface eshopInterface, ArtikelHinzufuegenListener listener) {
@@ -38,6 +40,12 @@ public class ArtikelEinfuegenPanel extends JPanel {
     private void erstelleEreignisse() {
         neuerArtBtn.addActionListener(new NeuerArtBtnListener());
         massenArtCheckBox.addActionListener(new MassenArtCheckListener());
+        zurueckBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.zurueckArtikelHinzu();
+            }
+        });
     }
 
     private void erstelleUI() {
@@ -68,6 +76,9 @@ public class ArtikelEinfuegenPanel extends JPanel {
         // Button
         neuerArtBtn = new JButton("Einfügen");
         add(neuerArtBtn);
+
+        zurueckBtn = new JButton("<- Zurück");
+        add(zurueckBtn);
     }
 
     class NeuerArtBtnListener implements ActionListener {

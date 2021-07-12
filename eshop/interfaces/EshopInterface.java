@@ -69,4 +69,5 @@ public interface EshopInterface {
     List<String> rechnungErstellen(int id);
 
     void verbindungsAbbruch();
+
 }

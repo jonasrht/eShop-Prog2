@@ -19,6 +19,7 @@ public class SuchPanel extends JPanel {
     public interface SucheArtikelPanelListener {
         public void beiSuchErgebnisArtikel(List<Artikel> artikelListe);
         public void switchScene();
+        public void swichKunde();
     }
 
     private EshopInterface eshopInterface;
@@ -26,7 +27,10 @@ public class SuchPanel extends JPanel {
 
     private JTextField suchTextFeld;
     private JButton suchButton;
+
+    // Nur zum Test
     private JButton neueScene;
+    private JButton wechselKundeBtn;
 
     public SuchPanel(EshopInterface eshopInterface, SucheArtikelPanelListener listener) {
         this.eshopInterface = eshopInterface;
@@ -45,16 +49,26 @@ public class SuchPanel extends JPanel {
         add(suchTextFeld);
         suchButton = new JButton("Such!");
         add(suchButton);
-        neueScene = new JButton("Switch");
+        neueScene = new JButton("Mitarbeiter");
         add(neueScene);
+        wechselKundeBtn = new JButton("Kunde");
+        add(wechselKundeBtn);
     }
 
     private void erstelleEreignisse() {
         suchButton.addActionListener(new SuchListener());
+
         neueScene.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 listener.switchScene();
+            }
+        });
+
+        wechselKundeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.swichKunde();
             }
         });
     }

@@ -11,7 +11,9 @@ import java.awt.event.ActionListener;
 public class MenuPanel extends JPanel {
 
     public interface MenuPanelListener {
+        public void wechselNeuerMitarbeiter();
         public void wechselNeuerArtikel();
+        public void wechselBestand();
     }
 
     private EshopInterface eshopInterface;
@@ -30,12 +32,27 @@ public class MenuPanel extends JPanel {
     }
 
     private void erstelleEreignisse() {
+        mitarbeiterRegistrieren.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.wechselNeuerMitarbeiter();
+            }
+        });
+
         neuerArtikel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 listener.wechselNeuerArtikel();
             }
         });
+
+        bestandAendern.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                listener.wechselBestand();
+            }
+        });
+
     }
 
     private void erstelleUI() {
