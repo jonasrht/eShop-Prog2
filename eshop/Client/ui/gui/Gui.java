@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Vector;
 
 
-public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, ArtikelEinfuegenPanel.ArtikelHinzufuegenListener, MenuPanel.MenuPanelListener, ArtikelBestandPanel.ArtikelBestandListener, NeuerMitarbeiterPanel.NeuerMitarbeiterListener, KundenMenuPanel.KundenMenuPanelListener, ArtikelZumWarenkorbPanel.ArtikelZumWarenkorbListener {
+public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, ArtikelEinfuegenPanel.ArtikelHinzufuegenListener, MenuPanel.MenuPanelListener, ArtikelBestandPanel.ArtikelBestandListener, NeuerMitarbeiterPanel.NeuerMitarbeiterListener, KundenMenuPanel.KundenMenuPanelListener, ArtikelZumWarenkorbPanel.ArtikelZumWarenkorbListener, LoginPanel.LoginListener {
     
     private final EshopInterface eshopInterface;
     //String name, double preis, int bestand
@@ -82,6 +82,7 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
         setVisible(true);
     }
 
+    // Mitarbeitermenü
     public void initializeMitarbeiterMenu() {
         suchPanel.setVisible(true);
         artikelEinfuegenPanel.setVisible(false);
@@ -92,6 +93,7 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
         System.out.println("Mitarbeiter");
     }
 
+    // Kundenmenü
     public void initializeKundenMenu() {
         suchPanel.setVisible(true);
         artikelEinfuegenPanel.setVisible(false);
@@ -101,7 +103,6 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
         add(kundenMenuPanel, BorderLayout.WEST);
         System.out.println("Mitarbeiter");
     }
-
 
     public static void main(String[] args) {
         String host = "localhost";
@@ -217,5 +218,10 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
     @Override
     public void kundenLogout() {
         // Zurück
+    }
+
+    @Override
+    public void loginErfolgreich(Kunden kunde) {
+
     }
 }
