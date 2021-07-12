@@ -307,11 +307,22 @@ public class EshopFassade implements EshopInterface {
         return warenkorb;
     }
 
-    public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering {
+    public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering, ArtikelNichtGefundenException {
         out.println("artikelInWarenkorb");
         out.println(id);
         out.println(artikel.getProduktID());
         out.println(anzahl);
+        try {
+            String check = in.readLine();
+            if (check.equals("nicht gefunden")) {
+                throw new ArtikelNichtGefundenException();
+            }
+            if (check.equals("bestand zu gering")) {
+                throw new BestandZuGering(artikel);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void artikelInWarenkorbLeeren(int id) {

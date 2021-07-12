@@ -1,22 +1,15 @@
 package eshop.Client.ui.gui;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
 import eshop.Client.net.EshopFassade;
-import eshop.Client.ui.gui.models.ArtikelTabellenModel;
 import eshop.Client.ui.gui.panels.*;
-import eshop.exceptions.ArtikelExistiertBereitsException;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
 import eshop.valueobjects.Kunden;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.io.IOException;
 import java.util.List;
-import java.util.Vector;
-
 
 public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, ArtikelEinfuegenPanel.ArtikelHinzufuegenListener, MenuPanel.MenuPanelListener, ArtikelBestandPanel.ArtikelBestandListener, NeuerMitarbeiterPanel.NeuerMitarbeiterListener, KundenMenuPanel.KundenMenuPanelListener, ArtikelZumWarenkorbPanel.ArtikelZumWarenkorbListener, LoginPanel.LoginListener, WarenkorbPanel.WarenkorbListener, KassePanel.KasseListener {
     
@@ -102,16 +95,6 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
     }
 
     @Override
-    public void switchScene() {
-        initializeMitarbeiterMenu();
-    }
-
-    @Override
-    public void swichKunde() {
-        //initializeKundenMenu();
-    }
-
-    @Override
     public void aktikelPanelaktualisieren(java.util.List<Artikel> artikel) {
         artikelPanel.aktualisiereArtikelListe(artikel);
     }
@@ -192,11 +175,16 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
 
     @Override
     public void wechselZurKasse(Kunden kunde) {
-        kundenMenuPanel.setVisible(false);
-        kassePanel = new KassePanel(eshopInterface, kunde, this);
-        scrollPane.setVisible(false);
+        List<String> warenkorbCheck = eshopInterface.warenkorbAnzeigen(kunde.getPersonID());
+        if (!warenkorbCheck.isEmpty()) {
+            kundenMenuPanel.setVisible(false);
+            kassePanel = new KassePanel(eshopInterface, kunde, this);
+            scrollPane.setVisible(false);
+            add(kassePanel, BorderLayout.WEST);
+        } else {
+            Gui.errorBox("Sie haben keine Artikel im Warenkorb");
+        }
 
-        add(kassePanel, BorderLayout.WEST);
     }
 
     @Override
@@ -233,9 +221,14 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
 
     @Override
     public void warenkorbZurKasse(Kunden kunde) {
-        warenkorbPanel.setVisible(false);
-        kassePanel = new KassePanel(eshopInterface, kunde, this);
-        add(kassePanel, BorderLayout.WEST);
+        List<String> warenkorbCheck = eshopInterface.warenkorbAnzeigen(kunde.getPersonID());
+        if (!warenkorbCheck.isEmpty()) {
+            warenkorbPanel.setVisible(false);
+            kassePanel = new KassePanel(eshopInterface, kunde, this);
+            add(kassePanel, BorderLayout.WEST);
+        } else {
+            Gui.errorBox("Sie haben keine Artikel im Warenkorb");
+        }
     }
 
     @Override

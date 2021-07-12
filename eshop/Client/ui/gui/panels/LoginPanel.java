@@ -7,8 +7,9 @@ import eshop.valueobjects.Kunden;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.awt.font.TextAttribute;
+import java.util.Map;
 
 public class LoginPanel extends JPanel {
 
@@ -24,7 +25,8 @@ public class LoginPanel extends JPanel {
     private JLabel passLabel;
     private JPasswordField passText;
     private JButton loginButton;
-    private JLabel succ;
+    private JLabel mitarbeiterLogin;
+    private JLabel registrieren;
 
     public LoginPanel(EshopInterface eshopInterface, LoginListener listener) {
         this.eshopInterface = eshopInterface;
@@ -35,6 +37,7 @@ public class LoginPanel extends JPanel {
     }
 
     private void erstelleEreignisse() {
+        // Wenn Login Button geklickt wird
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,8 +49,56 @@ public class LoginPanel extends JPanel {
                     kunde = eshopInterface.logInCustomer(nutzerEingabe, passEingabe);
                     listener.loginErfolgreich(kunde);
                 } catch (LoginFehlgeschlagen e1) {
+                    userText.setText("");
+                    passText.setText("");
                     Gui.errorBox(e1.getMessage());
                 }
+            }
+        });
+
+        mitarbeiterLogin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                System.out.println("Juhu");
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                mitarbeiterLogin.setForeground(Color.blue);
+                Font font = mitarbeiterLogin.getFont();
+                Map attributes = font.getAttributes();
+                attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+                mitarbeiterLogin.setFont(font.deriveFont(attributes));
+                mitarbeiterLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                mitarbeiterLogin.setForeground(Color.black);
+            }
+        });
+
+        registrieren.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                System.out.println("Juhu");
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                registrieren.setForeground(Color.blue);
+                registrieren.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                registrieren.setForeground(Color.black);
             }
         });
     }
@@ -55,37 +106,27 @@ public class LoginPanel extends JPanel {
     private void erstelleUI() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        //Distance
-//        Establish padding/margin like distances to be used between components
-//        Dimension fillerMinSize = new Dimension(5, 20);
-//        Dimension fillerPreferredSize = new Dimension(5, Short.MAX_VALUE);
-//        Dimension fillerMaxSize = new Dimension(5, Short.MAX_VALUE);
-//        add(new Box.Filler(fillerMinSize, fillerPreferredSize, fillerMaxSize));
-
-//        setAlignmentY(0);
 
         userLabel = new JLabel("E-Mail");
-//        userLabel.setBounds(10,20,80,25);
         add(userLabel);
 
         userText = new JTextField(20);
-//        userText.setBounds(100,20,170,25);
         add(userText);
 
         passLabel = new JLabel("Passwort");
-//        passLabel.setBounds(10,50,80,25);
         add(passLabel);
 
         passText = new JPasswordField(20);
-//        passText.setBounds(100,50,170,25);
         add(passText);
 
         loginButton = new JButton("Log in");
-//        loginButton.setBounds(200,80,70,25);
         add(loginButton);
 
-        succ = new JLabel();
-//        succ.setBounds(10,80,300,25);
-        add(succ);
+        mitarbeiterLogin = new JLabel("bist du ein Mitarbeiter?");
+        add(mitarbeiterLogin);
+
+        registrieren = new JLabel("Registrieren");
+        add(registrieren);
+
     }
 }

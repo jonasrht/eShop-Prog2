@@ -11,6 +11,7 @@ import java.util.List;
 
 import eshop.exceptions.ArtikelExistiertBereitsException;
 import eshop.exceptions.ArtikelNichtGefundenException;
+import eshop.exceptions.BestandZuGering;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
 import eshop.valueobjects.Kunden;
@@ -239,7 +240,6 @@ public class ClientEShopRequestProcessor implements Runnable {
                 out.println(kunde.getName());
                 out.println(kunde.getAdresse());
             } else {
-                System.out.println("Login failed");
                 out.println("false");
             }
 
@@ -373,10 +373,16 @@ public class ClientEShopRequestProcessor implements Runnable {
             int anzahl = Integer.parseInt(in.readLine());
 
             Artikel artikel = eShop.getArtikelViaID(artikelID);
-
             eShop.artikelInWarenkorb(persIs, artikel, anzahl);
-        } catch (Exception e) {
-            // TODO: handle exception
+            out.println("");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ArtikelNichtGefundenException e1) {
+            out.println("nicht gefunden");
+            out.println(e1.getMessage());
+        } catch (BestandZuGering e2) {
+            out.println("bestand zu gering");
+            out.println(e2.getMessage());
         }
     }
 
