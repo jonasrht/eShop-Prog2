@@ -1,5 +1,6 @@
 package eshop.Client.ui.gui.panels;
 
+import eshop.Client.ui.gui.Gui;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Kunden;
 

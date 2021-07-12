@@ -15,6 +15,10 @@ public class BestandZuGering extends Exception{
         super("Bestand des Artikels: " + artikel.getName() + " ist zu gering. Bestand: " + artikel.getBestand());
         this.artikel = artikel;
     }
+    public BestandZuGering(Artikel artikel){
+        super("Bestand des Artikels: " + artikel.getName() + " ist zu gering. Bestand: " + artikel.getBestand());
+        this.artikel = artikel;
+    }
 
     public Artikel getArtikel() {
         return artikel;

@@ -51,6 +51,7 @@ public class Warenkorb {
             }
             this.artikelImKorb.add(hashMap);
         } else {
+            System.out.println("Errrroorr");
             throw new BestandZuGering(artikel, " - in artikelInWarenkorb()");
         }
 
@@ -68,17 +69,11 @@ public class Warenkorb {
         }
     }
 
-    // Getter
+
     public List<HashMap<Artikel, Integer>> getArtikelImKorb() {
         return this.artikelImKorb;
     }
 
-    // Wird nicht benutzt
-    public Rechnung warenkorbKaufen(Kunden kunde, List<HashMap<Artikel, Integer>> artikel) {
-        Rechnung rechnung = new Rechnung(kunde, artikel);
-        artikelInWarenkorbLeeren();
-        return rechnung;
-    }
 
     @Override
     public String toString() {

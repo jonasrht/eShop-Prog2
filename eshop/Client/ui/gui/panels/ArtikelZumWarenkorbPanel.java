@@ -52,14 +52,13 @@ public class ArtikelZumWarenkorbPanel extends JPanel {
                         Artikel artikel = eshopInterface.getArtikelViaID(artikelId);
                         eshopInterface.artikelInWarenkorb(kundenID, artikel, menge);
                         listener.beiArtikelHinzugefügt();
-                        artikelIDFeld.setText("");
-                        artikelMengeFeld.setText("");
                         //Gui.infoBox("Artikel " + artikel.getName() + " " + menge + " mal zum Warenkorb hinzugefügt.", "Info");
                     } catch (ArtikelNichtGefundenException | BestandZuGering e1) {
                         Gui.errorBox(e1.getMessage());
                     }
                 }
-
+                artikelIDFeld.setText("");
+                artikelMengeFeld.setText("");
             }
         });
 

@@ -174,7 +174,7 @@ public class FilePersistenceManager implements PersistenceManager {
         // Datum einlesen
         String datumString = liesZeile();
         if (datumString != null) {
-            Date datum = Date.from(Instant.parse(datumString));
+
 
             // Artikelnummer einlesen
             String artikelNummerString = liesZeile();
@@ -191,7 +191,7 @@ public class FilePersistenceManager implements PersistenceManager {
             // Personindex einlesen
             String personIndexString = liesZeile();
             int persId = Integer.parseInt(personIndexString);
-            return new Ereignis(datum, artikelId, anzahl, ereignisart, persId);
+            return new Ereignis(datumString, artikelId, anzahl, ereignisart, persId);
         }
         return null;
     }

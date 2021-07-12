@@ -59,7 +59,7 @@ public interface EshopInterface {
     // Warenkorb
     List<String> warenkorbAnzeigen(int id);
 
-    void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering;
+    void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering, ArtikelNichtGefundenException;
 
     void artikelInWarenkorbLeeren(int id);
 

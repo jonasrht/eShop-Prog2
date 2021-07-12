@@ -1,23 +1,30 @@
 package eshop.valueobjects;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 public class Ereignis {
-    private Date datum;
+    private String datum;
     private int artikelId;
     private int anzahl;
     private int ereignisArt;
     private int persId;
 
+    SimpleDateFormat dateFormat =new SimpleDateFormat("dd-MMM-yyyy");
+
     public Ereignis(int artikelId, int anzahl, int ereignisArt, int persId) {
-        this.datum = new Date();
+        LocalDateTime ldt = LocalDateTime.now();
+        this.datum = DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH).format(ldt);;
         this.artikelId = artikelId;
         this.anzahl = anzahl;
         this.ereignisArt = ereignisArt;
         this.persId = persId;
     }
 
-    public Ereignis(Date datum, int artikelId, int anzahl, int ereignisArt, int persId) {
+    public Ereignis(String datum, int artikelId, int anzahl, int ereignisArt, int persId) {
         this.datum = datum;
         this.artikelId = artikelId;
         this.anzahl = anzahl;
@@ -25,7 +32,7 @@ public class Ereignis {
         this.persId = persId;
     }
 
-    public Date getDatum() {
+    public String getDatum() {
         return datum;
     }
 
