@@ -37,6 +37,8 @@ public interface EshopInterface {
 
     void produktIDSortieren(); // x
 
+    List<Artikel> sucheNachArtikel(String suchName);
+
     // Kunden Verwaltung
     Kunden logInCustomer(String passwort, String email) throws LoginFehlgeschlagen; // x
 
@@ -72,4 +74,5 @@ public interface EshopInterface {
     List<String> rechnungErstellen(int id);
 
     void verbindungsAbbruch();
+
 }

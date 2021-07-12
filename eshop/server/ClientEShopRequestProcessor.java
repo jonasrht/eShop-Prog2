@@ -73,6 +73,7 @@ public class ClientEShopRequestProcessor implements Runnable {
                 }
                 System.exit(0);
                 // continue;
+                
             }
 
             // Eingabe-Menue bearbeiten:
@@ -138,6 +139,8 @@ public class ClientEShopRequestProcessor implements Runnable {
                 anzahlArtikelAendern();
             } else if (input.equals("rechnungErstellen")) {
                 rechnungErstellen();
+            } else if (input.equals("sucheNachArtikel")) {
+                sucheNachArtikel();
             }
 
         } while (!(input.equals("q")));
@@ -151,6 +154,7 @@ public class ClientEShopRequestProcessor implements Runnable {
     private void gibAlleAnzeigen() throws IOException {
         List<Artikel> artikelListe = eShop.gibAlleArtikel();
         int size = artikelListe.size();
+        System.out.println(size);
         // Gibt die Länge der ArrayList aus
         out.println(String.valueOf(size));
         // Gebe alle Artikel aus
@@ -430,5 +434,21 @@ public class ClientEShopRequestProcessor implements Runnable {
 
     private void verbindungsAbbruch() {
         eShop.verbindungsAbbruch();
+    }
+
+    private void sucheNachArtikel() {
+        try {
+            String suchName = in.readLine();
+            List<Artikel> suchErgebnis = eShop.sucheNachArtikel(suchName);
+            out.println(suchErgebnis.size());
+            for (Artikel artikel : suchErgebnis) {
+                out.println(artikel.getProduktID());
+                out.println(artikel.getName());
+                out.println(artikel.getPreis());
+                out.println(artikel.getBestand());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

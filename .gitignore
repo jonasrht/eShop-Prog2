@@ -1,2 +1,6 @@
 # Project exclude paths
 /out/
+out/production/eshop/Kunden.txt
+out/production/eshop/eshop/verwaltung/ShopVerwaltung.class
+out/production/eshop/eshop/verwaltung/ArtikelVerwaltung.class
+*.class

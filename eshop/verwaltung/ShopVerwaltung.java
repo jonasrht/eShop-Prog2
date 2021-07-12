@@ -1,6 +1,7 @@
 package eshop.verwaltung;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,6 +64,10 @@ public class ShopVerwaltung implements EshopInterface {
 
     public void produktIDSortieren() {
         artikelVerwaltung.produktIDSortieren();
+    }
+
+    public List<Artikel> sucheNachArtikel(String suchName) {
+        return artikelVerwaltung.sucheNachArtikel(suchName);
     }
 
     // =================================

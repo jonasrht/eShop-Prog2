@@ -155,6 +155,16 @@ public class ArtikelVerwaltung {
         }
     }
 
+    public List<Artikel> sucheNachArtikel(String suchName) {
+        List<Artikel> suchErgebnis = new ArrayList<Artikel>();
+        for (Artikel artikel: artikelListe) {
+            if (suchName.equals(artikel.getName())) {
+                suchErgebnis.add(artikel);
+            }
+        }
+        return suchErgebnis;
+    }
+
     /**
      * Methode zum Anzeigen der Artikel im Bestand.
      */
