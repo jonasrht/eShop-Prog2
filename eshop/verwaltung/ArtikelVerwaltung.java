@@ -14,12 +14,11 @@ import eshop.persistence.PersistenceManager;
 import eshop.valueobjects.*;
 
 /**
- * Klasse zum Verwalten von asiatischen Lebensmitteln.
+ * Klasse zur Verwaltung von asiatischen Lebensmitteln.
  *
- * @author Jonas, Jana, Dabina
- * - Verwaltung der Artikel in List/Vector mit Generics
- * - außerdem Einsatz von Interfaces (List)
- * - Import aus der Java Bibliotheck
+ * @author Jonas, Jana, Dabina - Verwaltung der Artikel in List/Vector mit
+ *         Generics - außerdem Einsatz von Interfaces (List) - Import aus der
+ *         Java Bibliotheck
  */
 
 public class ArtikelVerwaltung {
@@ -121,7 +120,7 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Suchen der Artikel via ID in der Artikelliste.
      *
-     * @param id  die die Artikel individualisiert
+     * @param int id, die die Artikel individualisiert
      */
     public Artikel getArtikelViaID(int id) {
         for (Artikel artikel : artikelListe) {
@@ -136,8 +135,8 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Entfernen der Artikel im Bestand.
      *
-     * @param artikel Artikel
-     * @param entfernen  die die Anzahl an Artikel entfernt
+     * @param  artikel
+     * @param  entfernen, die die Anzahl an Artikel entfernt
      */
     public void bestandReduzieren(Artikel artikel, int entfernen) {
         // int wird definiert
@@ -155,6 +154,16 @@ public class ArtikelVerwaltung {
         }
     }
 
+
+    /**
+     * Methode, welche mittels einer foreach Schleife durch
+     * die Artikel Liste iteriert und falls ein Artikel mit
+     * dem übergebenen Namen übereinstimmt, in eine "suchErgbenis"
+     * Liste schreibt und diese zurückgibt.
+     *
+     * @param suchName Artikelname, nach welchem gesucht werden soll
+     * @return Das Suchergebnis
+     */
     public List<Artikel> sucheNachArtikel(String suchName) {
         List<Artikel> suchErgebnis = new ArrayList<Artikel>();
         for (Artikel artikel: artikelListe) {
@@ -185,6 +194,7 @@ public class ArtikelVerwaltung {
 
     /**
      * Methode zum alphabetischen Sortieren der Artikel im Bestand.
+     *
      */
     public void artikelSortieren() {
         // wenn der counter restlos durch zwei teilbar ist...
@@ -248,7 +258,7 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Ändern des Bestandes der Artikel.
      *
-     * @param artikel       des Artikels, wonach alphabetisch sortiert wird
+     * @param name       des Artikels, wonach alphabetisch sortiert wird
      * @param newbestand
      */
     public void artikelBestandAendern(Artikel artikel, int newbestand) {

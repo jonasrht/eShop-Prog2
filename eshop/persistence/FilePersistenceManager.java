@@ -9,11 +9,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-/**
- * Klasse zum Verwalten der FilePersistenceManager Schnittstelle.Daten in einem nichtfluechtigen Speicher abspeichern (typischerweise in einer Datenbank), sodass sie auch ueber einen Programmneustart/Rechnerneustart hinweg noch unveraendert vorhanden sind
- *
- * @author Jonas, Jana, Dabina
- */
+import java.time.Instant;
+import java.util.Date;
+
 public class FilePersistenceManager implements PersistenceManager {
     private BufferedReader reader = null;
     private PrintWriter writer = null;
@@ -45,9 +43,9 @@ public class FilePersistenceManager implements PersistenceManager {
     }
 
     /**
-     * Methode zum Einlesen der Artikelaten aus einer externen Datenquelle.
+     * Methode zum Einlesen der Buchdaten aus einer externen Datenquelle.
      *
-     * @return Artikel-Objekt, wenn Einlesen erfolgreich, false null
+     * @return Buch-Objekt, wenn Einlesen erfolgreich, false null
      */
     public Artikel ladeArtikel() throws IOException {
         // Titel einlesen
@@ -170,6 +168,40 @@ public class FilePersistenceManager implements PersistenceManager {
         schreibeZeile(mitarbeiter.getEmail());
         schreibeZeile(mitarbeiter.getPasswort());
         return true;
+    }
+
+    public Ereignis ladeEreignis() throws IOException {
+        // Datum einlesen
+        String datumString = liesZeile();
+        if (datumString != null) {
+            Date datum = Date.from(Instant.parse(datumString));
+
+            // Artikelnummer einlesen
+            String artikelNummerString = liesZeile();
+            int artikelId = Integer.parseInt(artikelNummerString);
+
+            // Anzahl einlesen
+            String anzahlString = liesZeile();
+            int anzahl = Integer.parseInt(anzahlString);
+
+            // Ereignisart einlesen
+            String ereignisArtString = liesZeile();
+            int ereignisart = Integer.parseInt(ereignisArtString);
+
+            // Personindex einlesen
+            String personIndexString = liesZeile();
+            int persId = Integer.parseInt(personIndexString);
+            return new Ereignis(datum, artikelId, anzahl, ereignisart, persId);
+        }
+        return null;
+    }
+
+    public void speichereEreignis(Ereignis ereignis) throws IOException {
+        schreibeZeile(ereignis.getDatum() + "");
+        schreibeZeile(ereignis.getArtikelId() + "");
+        schreibeZeile(ereignis.getAnzahl() + "");
+        schreibeZeile(ereignis.getEreignisArt() + "");
+        schreibeZeile(ereignis.getPersId() + "");
     }
 
     /*

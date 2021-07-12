@@ -39,6 +39,9 @@ public interface PersistenceManager {
     Log ladeLog() throws IOException;
     boolean speichereLog(String logMsg) throws IOException;
 
+    Ereignis ladeEreignis() throws IOException;
+    void speichereEreignis(Ereignis ereignis) throws IOException;
+
     /*
      * Wenn später mal eine Kundenverwaltung ergänzt wird:
      * 

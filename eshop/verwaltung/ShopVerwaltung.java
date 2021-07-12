@@ -22,11 +22,13 @@ public class ShopVerwaltung implements EshopInterface {
     private ArtikelVerwaltung artikelVerwaltung;
     private KundenVerwaltung kundenVerwaltung;
     private MitarbeiterVerwaltung mitarbeiterVerwaltung;
+    private EreignisVerwaltung ereignisVerwaltung;
 
     public ShopVerwaltung() {
         artikelVerwaltung = new ArtikelVerwaltung();
         kundenVerwaltung = new KundenVerwaltung();
         mitarbeiterVerwaltung = new MitarbeiterVerwaltung();
+        ereignisVerwaltung = new EreignisVerwaltung();
     }
 
     // ArtikelVerwaltung
@@ -178,6 +180,7 @@ public class ShopVerwaltung implements EshopInterface {
             kundenVerwaltung.schreibeDaten();
             mitarbeiterVerwaltung.schreibeDaten();
             artikelVerwaltung.schreibeDaten();
+            ereignisVerwaltung.schreibeDaten();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -5,6 +5,7 @@ import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.exceptions.BestandZuGering;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
+import eshop.valueobjects.Kunden;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,20 +15,22 @@ public class ArtikelZumWarenkorbPanel extends JPanel {
 
     public interface ArtikelZumWarenkorbListener {
         public void beiArtikelHinzugefügt();
-        public void kundenLogout();
+        public void artikelWarenZurueck();
     }
 
     private EshopInterface eshopInterface;
     private ArtikelZumWarenkorbListener listener;
+    private Kunden kunde;
 
     private JTextField artikelIDFeld;
     private JTextField artikelMengeFeld;
     private JButton hinzufuegenBtn;
     private JButton zurueckBtn;
 
-    public ArtikelZumWarenkorbPanel(EshopInterface eshopInterface, ArtikelZumWarenkorbListener listener) {
+    public ArtikelZumWarenkorbPanel(EshopInterface eshopInterface, Kunden kunde, ArtikelZumWarenkorbListener listener) {
         this.eshopInterface = eshopInterface;
         this.listener = listener;
+        this.kunde = kunde;
 
         erstelleUI();
         erstelleEreignisse();
@@ -42,13 +45,16 @@ public class ArtikelZumWarenkorbPanel extends JPanel {
                 String mengeStr = artikelMengeFeld.getText();
 
                 if (!artikelIdStr.isEmpty() && !mengeStr.isEmpty()) {
+                    int kundenID = kunde.getPersonID();
                     int artikelId = Integer.parseInt(artikelIdStr);
                     int menge = Integer.parseInt(mengeStr);
                     try {
                         Artikel artikel = eshopInterface.getArtikelViaID(artikelId);
-                        eshopInterface.artikelInWarenkorb(1, artikel, menge);
+                        eshopInterface.artikelInWarenkorb(kundenID, artikel, menge);
                         listener.beiArtikelHinzugefügt();
-                        Gui.infoBox("Artikel " + artikel.getName() + " " + menge + " mal zum Warenkorb hinzugefügt.", "Info");
+                        artikelIDFeld.setText("");
+                        artikelMengeFeld.setText("");
+                        //Gui.infoBox("Artikel " + artikel.getName() + " " + menge + " mal zum Warenkorb hinzugefügt.", "Info");
                     } catch (ArtikelNichtGefundenException | BestandZuGering e1) {
                         Gui.errorBox(e1.getMessage());
                     }
@@ -61,7 +67,7 @@ public class ArtikelZumWarenkorbPanel extends JPanel {
         zurueckBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listener.kundenLogout();
+                listener.artikelWarenZurueck();
             }
         });
     }
