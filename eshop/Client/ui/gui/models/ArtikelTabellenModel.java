@@ -2,15 +2,25 @@ package eshop.Client.ui.gui.models;
 
 import eshop.valueobjects.Artikel;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
 public class ArtikelTabellenModel extends AbstractTableModel {
+
+    private JTable table;
+
+    private static final int SPALTEN_NR = 0;
+    private static final int SPALTEN_NAME = 1;
+    private static final int SPALTEN_PRS = 2;
+    private static final int SPALTEN_BST = 3;
     private List<Artikel> artikel;
     private String[] spaltenNamen = { "Artikelnummer", "Artikelname", "Preis", "Bestand"};
+
 
     public ArtikelTabellenModel(List<Artikel> aktuelleArtikel) {
         super();
@@ -43,17 +53,25 @@ public class ArtikelTabellenModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Artikel gewaehlterArtikel = artikel.get(rowIndex);
         switch (columnIndex) {
-            case 0:
+            case SPALTEN_NR:
                 return gewaehlterArtikel.getProduktID();
-            case 1:
+            case SPALTEN_NAME:
                 return gewaehlterArtikel.getName();
-            case 2:
+            case SPALTEN_PRS:
                 return gewaehlterArtikel.getPreis() + " €";
-            case 3:
+            case SPALTEN_BST:
                 return gewaehlterArtikel.getBestand();
             default:
                 return null;
         }
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        if (artikel.isEmpty()) {
+            return Object.class;
+        }
+        return getValueAt(0, columnIndex).getClass();
     }
 
 }

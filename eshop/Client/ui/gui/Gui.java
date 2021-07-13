@@ -2,6 +2,8 @@ package eshop.Client.ui.gui;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import eshop.Client.net.EshopFassade;
 import eshop.Client.ui.gui.models.ArtikelTabellenModel;
@@ -14,6 +16,8 @@ import eshop.valueobjects.Kunden;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -48,6 +52,7 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
         eshopInterface = new EshopFassade(host, port);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         addWindowListener(new WindowCloser());
         initialize();
     }
@@ -68,6 +73,18 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
             scrollPane = new JScrollPane(artikelPanel);
             switchScene = new JButton();
 
+            artikelPanel.setAutoCreateRowSorter(true);
+
+            TableRowSorter<TableModel> sortierer = new TableRowSorter<>(artikelPanel.getModel());
+            artikelPanel.setRowSorter(sortierer);
+            List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+
+            int spaltenIndexZuSortieren = 1;
+            sortKeys.add(new RowSorter.SortKey(spaltenIndexZuSortieren, SortOrder.ASCENDING));
+
+            sortierer.setSortKeys(sortKeys);
+            sortierer.sort();
+
             // Panels zusammen fassen
             add(suchPanel, BorderLayout.NORTH);
             add(artikelEinfuegenPanel, BorderLayout.WEST);
@@ -77,6 +94,9 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+
+        setLocationRelativeTo(null);
 
         setSize(640, 480);
         setVisible(true);

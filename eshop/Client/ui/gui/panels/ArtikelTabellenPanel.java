@@ -7,6 +7,8 @@ import javax.swing.*;
 
 public class ArtikelTabellenPanel extends JTable {
 
+    private JTable table;
+
     private ArtikelTabellenModel tabellenModel;
 
     public ArtikelTabellenPanel(java.util.List<Artikel> artikel) {
