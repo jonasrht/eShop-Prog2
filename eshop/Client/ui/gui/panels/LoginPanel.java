@@ -16,6 +16,8 @@ public class LoginPanel extends JPanel {
         public void loginErfolgreich(Kunden kunde);
     }
 
+    private JLabel header;
+
     private EshopInterface eshopInterface;
     private LoginListener listener;
 
@@ -25,6 +27,7 @@ public class LoginPanel extends JPanel {
     private JPasswordField passText;
     private JButton loginButton;
     private JLabel succ;
+    private JButton accountButton;
 
     public LoginPanel(EshopInterface eshopInterface, LoginListener listener) {
         this.eshopInterface = eshopInterface;
@@ -46,6 +49,8 @@ public class LoginPanel extends JPanel {
                     kunde = eshopInterface.logInCustomer(nutzerEingabe, passEingabe);
                     listener.loginErfolgreich(kunde);
                 } catch (LoginFehlgeschlagen e1) {
+                    succ.setText("Benutzername oder Passwort falsch. Bitte erneut versuchen");
+                    //TODO Fehlermeldung bei falsch einloggen
                     Gui.errorBox(e1.getMessage());
                 }
             }
@@ -53,7 +58,22 @@ public class LoginPanel extends JPanel {
     }
 
     private void erstelleUI() {
-        JPanel whiteSpace = new JPanel();
+        JPanel loginPanel = new JPanel();
+        JPanel whiteSpaceW = new JPanel();
+        JPanel whiteSpaceN = new JPanel();
+        JPanel whiteSpaceS = new JPanel();
+        JPanel whiteSpaceE = new JPanel();
+
+
+        whiteSpaceN.setPreferredSize(new Dimension(500, 30));
+        whiteSpaceW.setPreferredSize(new Dimension(10,300));
+        whiteSpaceS.setPreferredSize(new Dimension(500,135));
+        whiteSpaceE.setPreferredSize(new Dimension(200,300));
+
+        header = new JLabel("Einloggen", JLabel.LEFT);
+        header.setVerticalAlignment(JLabel.TOP);
+        header.setFont(new Font("Arial", Font.ITALIC, 15));
+        loginPanel.add(header);
 
         //Distance
 //        Establish padding/margin like distances to be used between components
@@ -62,7 +82,7 @@ public class LoginPanel extends JPanel {
         Dimension fillerMaxSize = new Dimension(5, Short.MAX_VALUE);
         add(new Box.Filler(fillerMinSize, fillerPreferredSize, fillerMaxSize));
 
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setAlignmentY(0);
 
         userLabel = new JLabel("E-Mail");
@@ -84,6 +104,17 @@ public class LoginPanel extends JPanel {
         loginButton = new JButton("Log in");
 //        loginButton.setBounds(200,80,70,25);
         add(loginButton);
+
+        accountButton = new JButton("Noch kein Account?");
+//        loginButton.setBounds(200,80,70,25);
+        loginPanel.add(accountButton);
+        //TODO Account button > Anderes UI (Login > Register)
+
+        add(loginPanel, BorderLayout.CENTER);
+        add(whiteSpaceW, BorderLayout.WEST);
+//        add(whiteSpaceN, BorderLayout.NORTH);
+        add(whiteSpaceS, BorderLayout.SOUTH);
+        add(whiteSpaceE, BorderLayout.EAST);
 
         succ = new JLabel();
 //        succ.setBounds(10,80,300,25);
