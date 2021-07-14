@@ -164,9 +164,9 @@ public class FilePersistenceManager implements PersistenceManager {
         if (name == null) {
             return null;
         }
-        String email = liesZeile();
-        String passwort = liesZeile();
         String adresse = liesZeile();
+        String passwort = liesZeile();
+        String email = liesZeile();
 
         return new Kunden(name, email, passwort, adresse);
     }

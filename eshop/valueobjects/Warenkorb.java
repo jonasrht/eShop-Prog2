@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.exceptions.BestandZuGering;
 
 public class Warenkorb {
@@ -48,7 +49,8 @@ public class Warenkorb {
      * @param anzahl anzahl der Artikel
      * @throws BestandZuGering wenn der Bestand zu gering ist
      */
-    public void artikelInWarenkorb(Artikel artikel, int anzahl) throws BestandZuGering {
+    public void artikelInWarenkorb(Artikel artikel, int anzahl) throws BestandZuGering, ArtikelNichtGefundenException {
+        if (artikel == null) { throw new ArtikelNichtGefundenException();}
         System.out.println("Warenkorb 45: Artikel " + artikel.getName() + " a: " + anzahl);
         if (artikel != null && artikel.getBestand() >= anzahl) {
             HashMap<Artikel, Integer> hashMap = new HashMap<>(); // wird verwendet, um Datenelemente in einer großen

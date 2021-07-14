@@ -399,8 +399,7 @@ public class EshopFassade implements EshopInterface {
         } catch (Exception e) {
             // TODO: handle exception
         }
-
-        return null;
+        throw new ArtikelNichtGefundenException();
     }
 
     /**
