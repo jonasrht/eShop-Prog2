@@ -51,7 +51,7 @@ public class LoginPanel extends JPanel {
                 String passEingabe = passText.getText();
                 try {
                     Kunden kunde;
-                    kunde = eshopInterface.logInCustomer(nutzerEingabe, passEingabe);
+                    kunde = eshopInterface.logInCustomer(passEingabe, nutzerEingabe);
                     listener.loginErfolgreich(kunde);
                 } catch (LoginFehlgeschlagen e1) {
                     userText.setText("");
@@ -68,7 +68,7 @@ public class LoginPanel extends JPanel {
                 String passEingabe = passText.getText();
                 try {
                     Mitarbeiter mitarbeiter;
-                    mitarbeiter = eshopInterface.logInEmployee(nutzerEingabe, passEingabe);
+                    mitarbeiter = eshopInterface.logInEmployee(passEingabe, nutzerEingabe);
                     listener.loginMitarbeiterErfolgreich(mitarbeiter);
                 } catch (LoginFehlgeschlagen e1) {
                     userText.setText("");
