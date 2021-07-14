@@ -16,20 +16,25 @@ import eshop.valueobjects.Kunden;
 import eshop.valueobjects.Mitarbeiter;
 
 /**
- * Client fuer den Request Prozessor.Kommunikation findet zwischen Server und Client sattt.
+ * Klasse des Request Prozessors vom Server.Uebernimmt die Kommunikation vom Server.Datenaustausch zwischen Client und Server erfolgt ueber Streams: bietet einen sequenzierten und einzigartigen Fluss fehlerfreier Daten ohne Datensatzgrenzen mit gut definierten Mechanismen zum Erstellen und Zerstoeren von Verbindungen und Melden von Fehlern.Ein Stream-Socket uebertraegt Daten zuverlaessig, geordnet und mit Out-of-Band-Faehigkeiten
  *
  * @author Jonas, Jana, Dabin
  * @implements Runnable
  * - Import aus der Java Bibliotheck
  */
 public class ClientEShopRequestProcessor implements Runnable {
-
+    // Attribute
     private EshopInterface eShop;
 
     private Socket socket;
     private BufferedReader in;
     private PrintStream out;
-
+    /**
+     * Konstruktor
+     *
+     * @param socket   stellt Socket bereit
+     * @param eShop  Server
+     */
     public ClientEShopRequestProcessor(Socket socket, EshopInterface eShop) {
 
         this.eShop = eShop;
@@ -50,7 +55,9 @@ public class ClientEShopRequestProcessor implements Runnable {
         System.out.println("Verbunden mit " + this.socket.getInetAddress() + ":" + this.socket.getPort());
         // this.start(); // Thread starten...
     }
-
+    /**
+     * Methode zum Starten des Servers.
+     */
     public void run() {
         String input = "";
 
@@ -154,7 +161,11 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Anzeigen aller Artikel.
+     *
+     * @throws IOException Fehlerpruefung
+     */
     private void gibAlleAnzeigen() throws IOException {
         List<Artikel> artikelListe = eShop.gibAlleArtikel();
         int size = artikelListe.size();
@@ -169,7 +180,10 @@ public class ClientEShopRequestProcessor implements Runnable {
             out.println(artikel.getBestand());
         }
     }
-
+    /**
+     * Methode zum Reduzieren des Bestands.
+     *
+     */
     private void bestandReduzieren() {
         try {
             String idString = in.readLine();
@@ -182,7 +196,11 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Erstellen von Artikeln.
+     *
+     * @throws IOException Fehlerpruefung
+     */
     private Artikel artikelErstellen() throws IOException {
         String name = in.readLine();
         String preisStr = in.readLine();
@@ -191,11 +209,17 @@ public class ClientEShopRequestProcessor implements Runnable {
         int bestand = Integer.parseInt(bastandStr);
         return new Artikel(name, preis, bestand);
     }
-
+    /**
+     * Methode zum Sortieren aller Artikel nach dem Alphabet.
+     */
     private void artikelSortieren() {
         eShop.artikelSortieren();
     }
-
+    /**
+     * Methode zum Erstellen neuer Artikel.
+     *
+     * @throws ArtikelExistiertBereitsException falls Artikel bereits existiert
+     */
     private void artikelNeu() throws ArtikelExistiertBereitsException {
         try {
             String idString = in.readLine();
@@ -206,7 +230,11 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Erstellen neuer Massengutartikel.
+     *
+     * @throws ArtikelExistiertBereitsException falls Artikel bereits existiert
+     */
     private void massenartikelNeu() throws ArtikelExistiertBereitsException {
         try {
             Artikel a = artikelErstellen();
@@ -217,7 +245,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Aendern des Artikelbestandes.
+     */
     private void artikelBestandAendern() {
         try {
             int artId = Integer.parseInt(in.readLine());
@@ -231,11 +261,15 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Sortieren dach der ID.
+     */
     private void produktIDSortieren() {
         eShop.produktIDSortieren();
     }
-
+    /**
+     * Methode zum Einloggen des Kunden.
+     */
     private void logInCustomer() {
         try {
             String passwort = in.readLine();
@@ -254,7 +288,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Registrieren des Kunden.
+     */
     private void registerCustomer() {
         try {
             String name = in.readLine();
@@ -266,7 +302,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             // TODO: handle exception
         }
     }
-
+    /**
+     * Methode zum Checken eines validen Passworts.
+     */
     private void valPassword() {
         try {
             String passwort = in.readLine();
@@ -278,7 +316,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             // TODO: handle exception
         }
     }
-
+    /**
+     * Methode zum Checken eines gültigen Passworts.
+     */
     private void checkPass() {
         try {
             String passwort = in.readLine();
@@ -290,7 +330,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             // TODO: handle exception
         }
     }
-
+    /**
+     * Methode zum Einloggen des Mitarbeiters.
+     */
     private void logInEmployee() {
         try {
             String passwort = in.readLine();
@@ -312,7 +354,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Registrieren des Mitarbeiters.
+     */
     private void registerEmployee() {
         try {
             String name = in.readLine();
@@ -323,7 +367,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             // TODO: handle exception
         }
     }
-
+    /**
+     * Methode zum Anzeigen des eingeloggten Mitarbeiters.
+     */
     private void getEmployee() {
         try {
             String passwort = in.readLine();
@@ -337,7 +383,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             // TODO: handle exception
         }
     }
-
+    /**
+     * Methode zum Anzeigen des eingeloggten Kunden.
+     */
     private void getCustomer() {
         try {
             String passwort = in.readLine();
@@ -352,7 +400,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             // TODO: handle exception
         }
     }
-
+    /**
+     * Methode zum Suchen der Artikel via ID.
+     */
     private void getArtikelViaID() {
         try {
             String idStr = in.readLine();
@@ -372,7 +422,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             out.println("false");
         }
     }
-
+    /**
+     * Methode zum Legen der Artikel in den Warenkorb.
+     */
     private void artikelInWarenkorb() {
         try {
             int persIs = Integer.parseInt(in.readLine());
@@ -391,7 +443,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             out.println("bestand zu gering");
         }
     }
-
+    /**
+     * Methode zum Anzeigen des Warenkorbs.
+     */
     private void warenkorbAnzeigen() {
         try {
             int persId = Integer.parseInt(in.readLine());
@@ -406,7 +460,9 @@ public class ClientEShopRequestProcessor implements Runnable {
         }
         // out.println("stop");
     }
-
+    /**
+     * Methode zum Leeren des Warenkorbs.
+     */
     private void artikelInWarenkorbLeeren() {
         try {
             int persId = Integer.parseInt(in.readLine());
@@ -415,7 +471,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Ändern der Anzahl der Artikel.
+     */
     private void anzahlArtikelAendern() {
         try {
             int persId = Integer.parseInt(in.readLine());
@@ -430,7 +488,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Erstellen der Rechnung.
+     */
     private void rechnungErstellen() {
         try {
             int persId = Integer.parseInt(in.readLine());
@@ -443,7 +503,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Abbrechen der Verbindung zum Client.
+     */
     private void verbindungsAbbruch() {
         eShop.verbindungsAbbruch();
     }

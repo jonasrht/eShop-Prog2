@@ -9,11 +9,17 @@ import eshop.exceptions.BestandZuGering;
 public class Warenkorb {
     private List<HashMap<Artikel, Integer>> artikelImKorb;
 
-    // Konstruktor
+    /**
+     * Konstruktor
+     */
     public Warenkorb() {
         this.artikelImKorb = new ArrayList<>();
     }
-
+    /**
+     * Methode zum Anzeigen des Warenkorbs.
+     *
+     * @return warenkorb
+     */
     public List<String> warenkorbAnzeigen() {
         List<String> warenkorb = new ArrayList<String>();
         for (HashMap<Artikel, Integer> array : artikelImKorb) {
@@ -28,12 +34,15 @@ public class Warenkorb {
         }
         return warenkorb;
     }
-
+    /**
+     * Methode zum Leeren Warenkorb.
+     */
     public void artikelInWarenkorbLeeren() {
         this.artikelImKorb.removeAll(artikelImKorb);
     }
 
     /**
+     * Methode zum Setzen der Artikel in den Warenkorb.
      *
      * @param artikel Artikel, welcher in den Warenkorb soll
      * @param anzahl anzahl der Artikel
@@ -68,6 +77,12 @@ public class Warenkorb {
         warenkorbAnzeigen();
     }
 
+    /**
+     * Methode Aendern der Artikelanzahl.
+     *
+     * @param artikel Produkt
+     * @param anzahl der neue Wert
+     */
     public void anzahlArtikelAendern(Artikel artikel, int anzahl) {
         for (HashMap<Artikel, Integer> array : artikelImKorb) {
             for (Artikel artikel1 : array.keySet()) {
@@ -80,11 +95,34 @@ public class Warenkorb {
     }
 
 
+    /**
+     * Accessor-Methoden
+     */
     public List<HashMap<Artikel, Integer>> getArtikelImKorb() {
         return this.artikelImKorb;
     }
 
 
+    // Wird nicht benutzt
+    /**
+     * Methode zum Warenkorb einkaufen
+     * .
+     * @param kunde Kunde
+     * @param artikel Artikel im Warenkorb
+     * @return rechnung
+     */
+    public Rechnung warenkorbKaufen(Kunden kunde, List<HashMap<Artikel, Integer>> artikel) {
+        Rechnung rechnung = new Rechnung(kunde, artikel);
+        artikelInWarenkorbLeeren();
+        return rechnung;
+    }
+    /**
+     * Standard-Methode von Object überschrieben.
+     * Methode wird immer automatisch aufgerufen, wenn ein Artikel-Objekt als String
+     * benutzt wird (z.B. in println(Artikel);)
+     *
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
         String output = "";

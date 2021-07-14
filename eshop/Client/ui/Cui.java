@@ -28,6 +28,7 @@ import java.util.Scanner; //Import aus der Java Bib, damit das Skript Eingaben l
 import static eshop.valueobjects.Log.logAusgeben;
 
 public class Cui {
+
     Scanner eingabe = new Scanner(System.in);
     // private KundenVerwaltung kundenVerwaltung;
     // private ArtikelVerwaltung artikelVerwaltung;

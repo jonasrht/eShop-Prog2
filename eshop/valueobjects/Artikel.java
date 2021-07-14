@@ -17,14 +17,27 @@ public class Artikel implements Comparable<Artikel> {
     private double preis;
     private int bestand;
 
-    // KOnstruktor
+    /**
+     * Konstruktor
+     *
+     * @param name Artikelname
+     * @param preis vom Artikel
+     * @param bestand wie viele Artikel
+     */
     public Artikel(String name, double preis, int bestand) {
         this.produktID = num++;
         this.name = name;
         this.preis = preis;
         this.bestand = bestand;
     }
-
+    /**
+     * Konstruktor
+     *
+     * @param produktID ID des Produktes
+     * @param name Artikelname
+     * @param preis vom Artikel
+     * @param bestand wie viele Artikel
+     */
     public Artikel(int produktID, String name, double preis, int bestand) {
         this.produktID = produktID;
         this.name = name;
@@ -32,7 +45,7 @@ public class Artikel implements Comparable<Artikel> {
         this.bestand = bestand;
     }
     /**
-     + Accessor-Methoden
+     * Accessor-Methoden
      */
     public void setName(String name) {
         this.name = name;
@@ -67,7 +80,7 @@ public class Artikel implements Comparable<Artikel> {
     }
 
     /**
-     * Standard-Methode von Object überschrieben.
+     * Standard-Methode wird überschrieben.
      * Methode wird immer automatisch aufgerufen, wenn ein Artikel-Objekt als String
      * benutzt wird (z.B. in println(Artikel);)
      *

@@ -12,7 +12,14 @@ public abstract class Person {
     protected int personID = 0;
     protected String  name;
     protected static int num;
-    // Konstruktor
+
+    /**
+     * Konstruktor
+     *
+     * @param name der Person
+     * @param email der Person
+     * @param passwort der Person
+     */
     public Person(String name, String email, String passwort){
         this.personID = num++;
         this.name = name;

@@ -2,6 +2,7 @@ Dabby
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Bremen 1
 <<<<<<< HEAD
 1
@@ -14,6 +15,9 @@ Bremen 1
 >>>>>>> GUI
 =======
 >>>>>>> GUI
+=======
+Bremen 1
+>>>>>>> f8033c7aa8e4825524b947b0d6c8be443ba0dbb4
 1
 1
 Bremen 1
@@ -161,15 +165,18 @@ Dabby
 Bremen 1
 1
 1
->>>>>>> GUI
 Dabby
 1
 1
 Bremen 1
-Jonas
-info
-12345678Aa
-Bremen 11
+Dabby
+Bremen 1
+1
+1
+Dabby
+1
+1
+Bremen 1
 Dabby
 Bremen 1
 1

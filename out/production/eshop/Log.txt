@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 07-13-2021
 10
 4
@@ -18,3 +19,15 @@ Bestand geändert
 12
 Neuen Artikel erstellt
 0
+=======
+07-13-2021
+10
+4
+neuen Artikel hinzugefügt
+0
+07-14-2021
+9
+2
+Artikel gekauft
+0
+>>>>>>> f8033c7aa8e4825524b947b0d6c8be443ba0dbb4
