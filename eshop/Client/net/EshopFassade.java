@@ -48,14 +48,14 @@ public class EshopFassade implements EshopInterface {
         System.err.println("Verbunden mit Server " + socket.getInetAddress() + ":" + socket.getPort() + "\n");
     }
 
-    public void bestandReduzieren(int id, Artikel artikel, int entfernen) {
+
     /**
      * Methode zum Anfragen des Entfernen der Artikel im Bestand.
      *
      * @param artikel Artikel
      * @param entfernen  die die Anzahl an Artikel entfernt
      */
-    public void bestandReduzieren(Artikel artikel, int entfernen) {
+    public void bestandReduzieren(int id, Artikel artikel, int entfernen) {
         out.println("bestandReduzieren");
         out.println(id);
         printArtikel(artikel);
@@ -128,7 +128,7 @@ public class EshopFassade implements EshopInterface {
         out.println(artikel.getBestand());
     }
 
-    public void artikelNeu(int id, String name, double preis, int bestand) throws ArtikelExistiertBereitsException {
+
     /**
      * Methode zum Anfragen eines neuen Artikels im Bestand.
      *
@@ -137,7 +137,7 @@ public class EshopFassade implements EshopInterface {
      * @param bestand wieviele von den Artikeln
      * @throws ArtikelExistiertBereitsException Schutz vor doppelten Einträgen
      */
-    public void artikelNeu(String name, double preis, int bestand) throws ArtikelExistiertBereitsException {
+    public void artikelNeu(int id, String name, double preis, int bestand) throws ArtikelExistiertBereitsException {
         out.println("artikelNeu");
         out.println(id);
         out.println(name);
@@ -174,10 +174,6 @@ public class EshopFassade implements EshopInterface {
         out.println(artikel.getProduktID());
         // printArtikel(artikel);
         out.println(newbestand);
-    }
-
-    public void produktIDSortieren() {
-        out.println("produktIDSortieren");
     }
 
     /**
@@ -442,7 +438,7 @@ public class EshopFassade implements EshopInterface {
         return warenkorb;
     }
 
-    public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering, ArtikelNichtGefundenException {
+
     /**
      * Methode zum Anfragen der Artikel im Warenbkorb.
      *
@@ -451,7 +447,7 @@ public class EshopFassade implements EshopInterface {
      * @param anzahl der Artikel
      * @throws BestandZuGering Artikel nicht in Besitz
      */
-    public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering {
+    public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering, ArtikelNichtGefundenException {
         out.println("artikelInWarenkorb");
         out.println(id);
         out.println(artikel.getProduktID());
