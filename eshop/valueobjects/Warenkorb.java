@@ -42,16 +42,28 @@ public class Warenkorb {
      * @throws BestandZuGering
      */
     public void artikelInWarenkorb(Artikel artikel, int anzahl) throws BestandZuGering {
-
+        System.out.println("Warenkorb 45: Artikel " + artikel.getName() + " a: " + anzahl);
         if (artikel != null && artikel.getBestand() >= anzahl) {
             HashMap<Artikel, Integer> hashMap = new HashMap<>(); // wird verwendet, um Datenelemente in einer großen
                                                                  // Datenmenge zu suchen bzw. aufzufinden
-            for (int i = 0; i < anzahl; i++) {
-                hashMap.put(artikel, anzahl);
+            if (artikel instanceof Massengutartikel) {
+                System.out.println("Artikel ist ein Massengutartikel");
+                int packung = ((Massengutartikel) artikel).getPackungsGroeße();
+                if (artikel.getBestand() >= anzahl*packung) {
+                    for (int i = 0; i < anzahl; i++) {
+                        hashMap.put(artikel, anzahl);
+                    }
+                } else {
+                    throw new BestandZuGering(artikel, "da der Artikel eine Packungsgröße von " + packung + " hat.");
+                }
+            } else {
+                for (int i = 0; i < anzahl; i++) {
+                    hashMap.put(artikel, anzahl);
+                }
             }
             this.artikelImKorb.add(hashMap);
         } else {
-            System.out.println("Errrroorr");
+            System.out.println("Warenkorb 66: fehler");
             throw new BestandZuGering(artikel, " - in artikelInWarenkorb()");
         }
 

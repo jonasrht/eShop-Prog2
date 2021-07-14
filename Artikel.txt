@@ -3,10 +3,10 @@ Test
 12
 Sojasoße
 1.99
-2
+1
 Yum Yum
 0.39
-44
+40
 Tofu
 1.49
 20
@@ -22,3 +22,6 @@ Bier
 lol
 1.0
 1
+Log
+2.0
+4

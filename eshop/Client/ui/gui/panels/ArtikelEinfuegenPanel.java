@@ -3,6 +3,7 @@ package eshop.Client.ui.gui.panels;
 import eshop.exceptions.ArtikelExistiertBereitsException;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
+import eshop.valueobjects.Mitarbeiter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +21,7 @@ public class ArtikelEinfuegenPanel extends JPanel {
 
     private EshopInterface eshopInterface;
     private ArtikelHinzufuegenListener listener;
+    private Mitarbeiter mitarbeiter;
 
     private JTextField artikelNameFeld;
     private JTextField artikelPreisFeld;
@@ -29,9 +31,10 @@ public class ArtikelEinfuegenPanel extends JPanel {
     private JButton zurueckBtn;
     private JCheckBox massenArtCheckBox;
 
-    public ArtikelEinfuegenPanel(EshopInterface eshopInterface, ArtikelHinzufuegenListener listener) {
+    public ArtikelEinfuegenPanel(EshopInterface eshopInterface, Mitarbeiter mitarbeiter, ArtikelHinzufuegenListener listener) {
         this.eshopInterface = eshopInterface;
         this.listener = listener;
+        this.mitarbeiter = mitarbeiter;
 
         erstelleUI();
         erstelleEreignisse();
@@ -66,6 +69,10 @@ public class ArtikelEinfuegenPanel extends JPanel {
         massenArtCheckBox = new JCheckBox("Massengutartikel", false);
         add(massenArtCheckBox);
 
+        // Button
+        neuerArtBtn = new JButton("Einfügen");
+        add(Box.createRigidArea(new Dimension(0, 5)));
+        add(neuerArtBtn);
 
         // Abstand
         Dimension fillerMinSize = new Dimension(5, 20);
@@ -73,12 +80,9 @@ public class ArtikelEinfuegenPanel extends JPanel {
         Dimension fillerMaxSize = new Dimension(5, Short.MAX_VALUE);
         add(new Box.Filler(fillerMinSize, fillerPreferedSize, fillerMaxSize));
 
-        // Button
-        neuerArtBtn = new JButton("Einfügen");
-        add(neuerArtBtn);
-
         zurueckBtn = new JButton("<- Zurück");
         add(zurueckBtn);
+        add(Box.createRigidArea(new Dimension(0, 5)));
     }
 
     class NeuerArtBtnListener implements ActionListener {
@@ -112,7 +116,7 @@ public class ArtikelEinfuegenPanel extends JPanel {
                 }
             } else if (!artName.isEmpty() && !artPreis.isEmpty() && !artBestand.isEmpty() && !massenArtCheckBox.isSelected()) {
                 try {
-                    eshopInterface.artikelNeu(artName, preis, bestand);
+                    eshopInterface.artikelNeu(mitarbeiter.getPersonID(), artName, preis, bestand);
                     java.util.List<Artikel> artikel = eshopInterface.gibAlleArtikel();
                     artikelNameFeld.setText("");
                     artikelPreisFeld.setText("");
@@ -130,7 +134,6 @@ public class ArtikelEinfuegenPanel extends JPanel {
     }
 
     class MassenArtCheckListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             JCheckBox massenArtCheckBox = (JCheckBox) e.getSource();

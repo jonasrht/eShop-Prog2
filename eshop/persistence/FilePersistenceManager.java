@@ -83,8 +83,9 @@ public class FilePersistenceManager implements PersistenceManager {
         int bestand = Integer.parseInt(bestandString);
         String packungGrString = liesZeile();
         int packungGr = Integer.parseInt(packungGrString);
+        String fromFile = "";
 
-        return new Massengutartikel(name, preis, bestand, packungGr);
+        return new Massengutartikel(name, preis, bestand /packungGr, packungGr, fromFile);
     }
 
     /**
@@ -185,13 +186,12 @@ public class FilePersistenceManager implements PersistenceManager {
             int anzahl = Integer.parseInt(anzahlString);
 
             // Ereignisart einlesen
-            String ereignisArtString = liesZeile();
-            int ereignisart = Integer.parseInt(ereignisArtString);
+            String ereignisMsg = liesZeile();
 
             // Personindex einlesen
             String personIndexString = liesZeile();
             int persId = Integer.parseInt(personIndexString);
-            return new Ereignis(datumString, artikelId, anzahl, ereignisart, persId);
+            return new Ereignis(datumString, artikelId, anzahl, ereignisMsg, persId);
         }
         return null;
     }
@@ -200,7 +200,7 @@ public class FilePersistenceManager implements PersistenceManager {
         schreibeZeile(ereignis.getDatum() + "");
         schreibeZeile(ereignis.getArtikelId() + "");
         schreibeZeile(ereignis.getAnzahl() + "");
-        schreibeZeile(ereignis.getEreignisArt() + "");
+        schreibeZeile(ereignis.getEreignisMsg() + "");
         schreibeZeile(ereignis.getPersId() + "");
     }
 

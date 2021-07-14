@@ -5,6 +5,7 @@ import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -52,6 +53,9 @@ public class ArtikelBestandPanel extends JPanel {
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
+
+                artikelIDFeld.setText("");
+                neuerBestandFeld.setText("");
             }
         });
 
@@ -79,8 +83,15 @@ public class ArtikelBestandPanel extends JPanel {
         add(bestandAendernBtn);
         // Button zurücks
         zurueckBtn = new JButton("<- Zurück");
-        add(zurueckBtn);
 
+        // Abstand
+        Dimension fillerMinSize = new Dimension(5, 20);
+        Dimension fillerPreferedSize = new Dimension(5, Short.MAX_VALUE);
+        Dimension fillerMaxSize = new Dimension(5, Short.MAX_VALUE);
+        add(new Box.Filler(fillerMinSize, fillerPreferedSize, fillerMaxSize));
+
+        add(zurueckBtn);
+        add(Box.createRigidArea(new Dimension(0, 5)));
     }
 
 }

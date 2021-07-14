@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.valueobjects.*;
@@ -242,7 +243,7 @@ public class KundenVerwaltung {
         kunde.getWarenkorb().warenkorbAnzeigen();
     }
 
-    public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering {
+    public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering, ArtikelNichtGefundenException {
         Kunden kunde = getKundeViaID(id);
         kunde.getWarenkorb().artikelInWarenkorb(artikel, anzahl);
     }

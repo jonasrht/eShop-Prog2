@@ -9,6 +9,7 @@ import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.valueobjects.Artikel;
+import eshop.valueobjects.Ereignis;
 import eshop.valueobjects.Kunden;
 import eshop.valueobjects.Mitarbeiter;
 
@@ -17,13 +18,13 @@ public interface EshopInterface {
     // Artikel Verwaltung
     Artikel getArtikelViaID(int id) throws ArtikelNichtGefundenException;
 
-    void bestandReduzieren(Artikel artikel, int entfernen); // x
+    void bestandReduzieren(int id, Artikel artikel, int entfernen); // x
 
     List<Artikel> gibAlleArtikel() throws IOException; // x
 
     void artikelSortieren(); // x
 
-    void artikelNeu(String name, double preis, int bestand) throws ArtikelExistiertBereitsException; // x
+    void artikelNeu(int id, String name, double preis, int bestand) throws ArtikelExistiertBereitsException; // x
 
     void massenartikelNeu(String name, double preis, int bestand, int packungsGroesse) // x
             throws ArtikelExistiertBereitsException;
@@ -69,5 +70,7 @@ public interface EshopInterface {
     List<String> rechnungErstellen(int id);
 
     void verbindungsAbbruch();
+
+    List<String> getEreignisList();
 
 }

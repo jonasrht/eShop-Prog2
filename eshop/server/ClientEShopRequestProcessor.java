@@ -138,6 +138,8 @@ public class ClientEShopRequestProcessor implements Runnable {
                 rechnungErstellen();
             } else if (input.equals("sucheNachArtikel")) {
                 sucheNachArtikel();
+            } else if (input.equals("getEreignisList")) {
+                getEreignisList();
             }
 
         } while (!(input.equals("q")));
@@ -165,10 +167,12 @@ public class ClientEShopRequestProcessor implements Runnable {
 
     private void bestandReduzieren() {
         try {
+            String idString = in.readLine();
+            int id = Integer.parseInt(idString);
             Artikel artikel = artikelErstellen();
             String entfernenStr = in.readLine();
             int entfernen = Integer.parseInt(entfernenStr);
-            eShop.bestandReduzieren(artikel, entfernen);
+            eShop.bestandReduzieren(id, artikel, entfernen);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -189,8 +193,10 @@ public class ClientEShopRequestProcessor implements Runnable {
 
     private void artikelNeu() throws ArtikelExistiertBereitsException {
         try {
+            String idString = in.readLine();
+            int id = Integer.parseInt(idString);
             Artikel a = artikelErstellen();
-            eShop.artikelNeu(a.getName(), a.getPreis(), a.getBestand());
+            eShop.artikelNeu(id, a.getName(), a.getPreis(), a.getBestand());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -357,8 +363,10 @@ public class ClientEShopRequestProcessor implements Runnable {
                 out.println(artikel.getBestand());
             }
             //out.println("false");
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ArtikelNichtGefundenException e1) {
+            out.println("false");
         }
     }
 
@@ -375,10 +383,9 @@ public class ClientEShopRequestProcessor implements Runnable {
             e.printStackTrace();
         } catch (ArtikelNichtGefundenException e1) {
             out.println("nicht gefunden");
-            out.println(e1.getMessage());
         } catch (BestandZuGering e2) {
+            System.out.println("ClientReq 379:");
             out.println("bestand zu gering");
-            out.println(e2.getMessage());
         }
     }
 
@@ -451,6 +458,14 @@ public class ClientEShopRequestProcessor implements Runnable {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void getEreignisList() {
+        List<String> ereignisListStr = eShop.getEreignisList();
+        out.println(ereignisListStr.size());
+        for (String string : ereignisListStr) {
+            out.println(string);
         }
     }
 }

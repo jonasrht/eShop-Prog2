@@ -120,16 +120,16 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Suchen der Artikel via ID in der Artikelliste.
      *
-     * @param int id, die die Artikel individualisiert
+     * @param id, die die Artikel individualisiert
      */
-    public Artikel getArtikelViaID(int id) {
+    public Artikel getArtikelViaID(int id) throws ArtikelNichtGefundenException{
         for (Artikel artikel : artikelListe) {
             if (id == artikel.getProduktID()) {
                 return artikel;
             }
         }
-        //throw new ArtikelNichtGefundenException();
-        return null; // ausverkauft
+        throw new ArtikelNichtGefundenException();
+        //return null;
     }
 
     /**
@@ -219,7 +219,7 @@ public class ArtikelVerwaltung {
      * @param bestand
      * @throws ArtikelExistiertBereitsException
      */
-    public void artikelNeu(String name, double preis, int bestand) throws ArtikelExistiertBereitsException {
+    public void artikelNeu(int id, String name, double preis, int bestand) throws ArtikelExistiertBereitsException {
         Artikel artikel = new Artikel(name, preis, bestand);
         // wird durch die Artikel durchiteriert
         for (Artikel artiekln : artikelListe) {
@@ -230,6 +230,7 @@ public class ArtikelVerwaltung {
         }
         // Artikel hinzufügen
         artikelListe.add(artikel);
+        EreignisVerwaltung.ereignisEinfuegen(artikel.getProduktID(), bestand, "neuen Artikel hinzugefügt", id);
     }
 
     // TODO: 19.05.2021 Log Objekt erstellen

@@ -4,6 +4,7 @@ import eshop.Client.ui.gui.Gui;
 import eshop.interfaces.EshopInterface;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -87,8 +88,17 @@ public class NeuerMitarbeiterPanel extends JPanel {
         passwordCheckFeld = new JPasswordField();
         add(passwordCheckFeld);
         registrierenBtn = new JButton("Registrieren");
+        add(Box.createRigidArea(new Dimension(0, 5)));
         add(registrierenBtn);
         zurueckBtn = new JButton("<- Zurück");
+
+        // Abstand
+        Dimension fillerMinSize = new Dimension(5, 20);
+        Dimension fillerPreferedSize = new Dimension(5, Short.MAX_VALUE);
+        Dimension fillerMaxSize = new Dimension(5, Short.MAX_VALUE);
+        add(new Box.Filler(fillerMinSize, fillerPreferedSize, fillerMaxSize));
+
         add(zurueckBtn);
+        add(Box.createRigidArea(new Dimension(0, 5)));
     }
 }

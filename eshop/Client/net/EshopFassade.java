@@ -6,6 +6,7 @@ import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
+import eshop.valueobjects.Ereignis;
 import eshop.valueobjects.Kunden;
 import eshop.valueobjects.Mitarbeiter;
 
@@ -34,8 +35,9 @@ public class EshopFassade implements EshopInterface {
         System.err.println("Verbunden mit Server " + socket.getInetAddress() + ":" + socket.getPort() + "\n");
     }
 
-    public void bestandReduzieren(Artikel artikel, int entfernen) {
+    public void bestandReduzieren(int id, Artikel artikel, int entfernen) {
         out.println("bestandReduzieren");
+        out.println(id);
         printArtikel(artikel);
         out.println(entfernen);
     }
@@ -94,8 +96,9 @@ public class EshopFassade implements EshopInterface {
         out.println(artikel.getBestand());
     }
 
-    public void artikelNeu(String name, double preis, int bestand) throws ArtikelExistiertBereitsException {
+    public void artikelNeu(int id, String name, double preis, int bestand) throws ArtikelExistiertBereitsException {
         out.println("artikelNeu");
+        out.println(id);
         out.println(name);
         out.println(preis);
         out.println(bestand);
@@ -252,8 +255,8 @@ public class EshopFassade implements EshopInterface {
                 String adresse = in.readLine();
                 return new Kunden(name, email, passwort, adresse);
             }
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return null;
@@ -279,6 +282,7 @@ public class EshopFassade implements EshopInterface {
                 return artikel;
                 //return new Artikel(idP, name, preis, bestand);
             } else {
+                System.out.println("EshopFassade 282: Artikel nicht gefunden");
                 throw new ArtikelNichtGefundenException();
             }
         } catch (Exception e) {
@@ -314,6 +318,7 @@ public class EshopFassade implements EshopInterface {
         out.println(anzahl);
         try {
             String check = in.readLine();
+            System.out.println("EshopFassade 317: " + check);
             if (check.equals("nicht gefunden")) {
                 throw new ArtikelNichtGefundenException();
             }
@@ -363,6 +368,22 @@ public class EshopFassade implements EshopInterface {
 
     public void verbindungsAbbruch() {
         out.println("q");
+    }
+
+    @Override
+    public List<String> getEreignisList() {
+        List<String> ereignisListStr = new ArrayList<String>();
+        out.println("getEreignisList");
+        try {
+            int size = Integer.parseInt(in.readLine());
+            for (int i = 0; i < size; i++) {
+                String ereignisStr = in.readLine();
+                ereignisListStr.add(ereignisStr);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ereignisListStr;
     }
 
 }

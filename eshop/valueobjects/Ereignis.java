@@ -10,27 +10,29 @@ public class Ereignis {
     private String datum;
     private int artikelId;
     private int anzahl;
-    private int ereignisArt;
     private int persId;
+    private String ereignisMsg;
 
     SimpleDateFormat dateFormat =new SimpleDateFormat("dd-MMM-yyyy");
 
-    public Ereignis(int artikelId, int anzahl, int ereignisArt, int persId) {
+    public Ereignis(int artikelId, int anzahl, String ereignisMsg, int persId) {
         LocalDateTime ldt = LocalDateTime.now();
         this.datum = DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH).format(ldt);;
         this.artikelId = artikelId;
         this.anzahl = anzahl;
-        this.ereignisArt = ereignisArt;
+        this.ereignisMsg = ereignisMsg;
         this.persId = persId;
     }
 
-    public Ereignis(String datum, int artikelId, int anzahl, int ereignisArt, int persId) {
+    public Ereignis(String datum, int artikelId, int anzahl, String ereignisMsg, int persId) {
         this.datum = datum;
         this.artikelId = artikelId;
         this.anzahl = anzahl;
-        this.ereignisArt = ereignisArt;
+        this.ereignisMsg = ereignisMsg;
         this.persId = persId;
     }
+
+
 
     public String getDatum() {
         return datum;
@@ -52,12 +54,12 @@ public class Ereignis {
         this.anzahl = anzahl;
     }
 
-    public int getEreignisArt() {
-        return ereignisArt;
+    public String getEreignisMsg() {
+        return ereignisMsg;
     }
 
-    public void setEreignisArt(int ereignisArt) {
-        this.ereignisArt = ereignisArt;
+    public void setEreignisMsg(String ereignisMsg) {
+        this.ereignisMsg = ereignisMsg;
     }
 
     public int getPersId() {
@@ -73,7 +75,7 @@ public class Ereignis {
      */
     @Override
     public String toString() {
-        return ("Datum: " + this.datum + " UserID: " + this.persId + " ArtikelId: " + this.artikelId + " | Anzahl: " + this.anzahl + " | " + " Aktion: " + getAktion(this.ereignisArt));
+        return ("Datum: " + this.datum + " UserID: " + this.persId + " ArtikelId: " + this.artikelId + " | Anzahl: " + this.anzahl + " | " + " Aktion: " + getEreignisMsg());
     }
 
     private String getAktion(int ereignisArt) {
