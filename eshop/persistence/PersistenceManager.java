@@ -3,10 +3,10 @@ package eshop.persistence;
 import eshop.valueobjects.*;
 import java.io.IOException;
 /**
- * Interface Persistenz Schnittstelle.Daten in einem nichtfluechtigen Speicher abspeichern (typischerweise in einer Datenbank), sodass sie auch ueber einen Programmneustart/Rechnerneustart hinweg noch unveraendert vorhanden sind
+ * Interface Persistenz Schnittstelle.Daten (Artikel- und Kundendaten) in einem nichtfluechtigen Speicher abspeichern (typischerweise in einer Datenbank), sodass sie auch ueber einen Programmneustart/Rechnerneustart hinweg noch unveraendert vorhanden sind.
  *
  * @author Jonas, Jana, Dabin
- * @throws IOException
+ * - Import aus der Java Bibliotheck
  */
 public interface PersistenceManager {
 
@@ -16,21 +16,9 @@ public interface PersistenceManager {
 
     public boolean close();
 
-    /**
-     * Methode zum Einlesen der Artiekl aus einer externen Datenquelle.
-     *
-     * @return Artikel-Objekt, wenn Einlesen erfolgreich, false null
-     */
     public Artikel ladeArtikel() throws IOException;
     public Massengutartikel ladeMassengutartikel() throws IOException;
-
-    /**
-     * Methode zum Schreiben der Artiekldaten in eine externe Datenquelle.
-     *
-     * @param -Objekt, das gespeichert werden soll
-     * @return true, wenn Schreibvorgang erfolgreich, false sonst
-     */
-    Kunden ladeKunde() throws IOException;
+    public Kunden ladeKunde() throws IOException;
     Mitarbeiter ladeMitarbeiter() throws IOException;
     boolean speichereArtikel(Artikel artikel) throws IOException;
     boolean speichereMassengutartikel(Artikel artikel) throws IOException;

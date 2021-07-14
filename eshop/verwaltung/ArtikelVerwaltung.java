@@ -31,9 +31,7 @@ public class ArtikelVerwaltung {
     // interface gibt //impementierung vor, was es enthalten soll
 
     /**
-     * Methode zum Verwalten von Artikeln in einer Datei
-     *
-     * @throws IOException
+     * Konstruktor
      */
     public ArtikelVerwaltung() {
         // Fehlerbehandlung
@@ -57,9 +55,9 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Einlesen von Artikeln aus einer Datei.
      *
-     * @throws IOException
+     * @throws IOException Feherpruefung
      */
-    public void liesDaten() throws IOException { // Methode mit Fehlerprüfung
+    public void liesDaten() throws IOException {
         // PersistenzManager für Lesevorgänge öffnen
         pm.openForReading("Artikel.txt");
         Artikel einArtikel;
@@ -91,7 +89,7 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Schreiben der Artikel in eine Datei.
      *
-     * @throws IOException
+     * @throws IOException Feherpruefung
      */
     public void schreibeDaten() throws IOException {
         // PersistenzManager für Schreibvorgänge öffnen
@@ -120,7 +118,8 @@ public class ArtikelVerwaltung {
     /**
      * Methode zum Suchen der Artikel via ID in der Artikelliste.
      *
-     * @param id, die die Artikel individualisiert
+     * @param id  die die Artikel individualisiert
+     * @return artikel or null
      */
     public Artikel getArtikelViaID(int id) throws ArtikelNichtGefundenException{
         for (Artikel artikel : artikelListe) {
@@ -187,7 +186,9 @@ public class ArtikelVerwaltung {
         System.out.println("+------------------------------------------------+");
 
     }
-
+    /**
+     * Methode zum Ausgeben aller Artikel.
+     */
     public List<Artikel> gibAlleArtikel() {
         return artikelListe;
     }
@@ -216,8 +217,8 @@ public class ArtikelVerwaltung {
      *
      * @param name    des Artikels, wonach alphabetisch sortiert wird
      * @param preis   des Artikels
-     * @param bestand
-     * @throws ArtikelExistiertBereitsException
+     * @param bestand wie viele
+     * @throws ArtikelExistiertBereitsException Schutz vor doppelten Artikel
      */
     public void artikelNeu(int id, String name, double preis, int bestand) throws ArtikelExistiertBereitsException {
         Artikel artikel = new Artikel(name, preis, bestand);
@@ -235,12 +236,13 @@ public class ArtikelVerwaltung {
 
     // TODO: 19.05.2021 Log Objekt erstellen
     /**
-     * Methode zum Hinzufügen neuer Massenartikel im Bestand.
+     * Methode zum Hinzufuegen neuer Massenartikel im Bestand.
      *
      * @param name    des Artikels, wonach alphabetisch sortiert wird
      * @param preis   des Artikels
-     * @param bestand
-     * @throws ArtikelExistiertBereitsException
+     * @param bestand wie viele
+     * @param packungsGroesse Verpackungsgroesse
+     * @throws ArtikelExistiertBereitsException Schutz vor doppelten Artikel
      */
     public void massenartikelNeu(String name, double preis, int bestand, int packungsGroesse)
             throws ArtikelExistiertBereitsException {
@@ -257,10 +259,10 @@ public class ArtikelVerwaltung {
     }
 
     /**
-     * Methode zum Ändern des Bestandes der Artikel.
+     * Methode zum Aendern des Bestandes der Artikel.
      *
-     * @param name       des Artikels, wonach alphabetisch sortiert wird
-     * @param newbestand
+     * @param artikel       des Artikels, wonach alphabetisch sortiert wird
+     * @param newbestand    neue Bestand
      */
     public void artikelBestandAendern(Artikel artikel, int newbestand) {
         artikel.setBestand(newbestand);
@@ -275,8 +277,6 @@ public class ArtikelVerwaltung {
 
     /**
      * Methode zum Sortieren der Artikel nach ihrer ProduktID.
-     *
-     * @import java.util.Comparator
      */
     public void produktIDSortieren() {
         // wenn der counter restlos durch zwei teilbar ist...

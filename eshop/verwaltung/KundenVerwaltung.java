@@ -23,9 +23,8 @@ public class KundenVerwaltung {
     private PersistenceManager pm = new FilePersistenceManager();
 
     /**
-     * Methode zur Erkennung von schon bestehenden Mitarbeitern
+     * Konstruktor
      *
-     * @throws IOException
      */
     public KundenVerwaltung() {
         // Fehlerbehandlung
@@ -40,9 +39,9 @@ public class KundenVerwaltung {
     }
 
     /**
-     * Methode zur Datenerfassung
+     * Methode zur Datenerfassung.
      *
-     * @throws IOException
+     * @throws IOException Fehlerpruefung
      */
     public void liesDaten() throws IOException { // Methode mit Fehlerprüfung
         // PersistenzManager für Lesevorgänge öffnen
@@ -59,9 +58,9 @@ public class KundenVerwaltung {
     }
 
     /**
-     * Methode zum Schreiben der Kunden in eine Datei.
+     * Methode zum Schreiben der Kunden in eine externe Datei.
      *
-     * @throws IOException
+     * @throws IOException Fehlerpruefung
      */
     public void schreibeDaten() throws IOException {
         // PersistenzManager für Schreibvorgänge öffnen
@@ -77,9 +76,10 @@ public class KundenVerwaltung {
     /**
      * Methode zum Einloggen der Kunden
      *
-     * @param passwort, Passwort vom Kunden
-     * @param email,    E-Mail vom Kunden
+     * @param passwort Passwort vom Kunden
+     * @param email    E-Mail vom Kunden
      * @return erfolgreiches oder gescheitertes Einloggen
+     * @throws LoginFehlgeschlagen Fehler beim Login
      */
     public Kunden logInCustomer(String passwort, String email) throws LoginFehlgeschlagen {
         // durchläuft die Array-Liste und sucht nach Kunden
@@ -96,8 +96,8 @@ public class KundenVerwaltung {
     /**
      * Methode zum Finden der Kunden
      *
-     * @param passwort, Passwort vom Kunden
-     * @param email,    E-Mail vom Kunden
+     * @param passwort Passwort vom Kunden
+     * @param email    E-Mail vom Kunden
      * @return Mitarbeiter oder nichts
      */
     public Kunden getCustomer(String passwort, String email) {
@@ -116,10 +116,10 @@ public class KundenVerwaltung {
     /**
      * Methode zum Registrieren von Kunden
      *
-     * @param name,     Name vom Kunden
-     * @param passwort, Passwort vom Kunden
-     * @param email,    E-Mail vom Kunden
-     * @param adresse,  Adresse vom Kunden
+     * @param name     Name vom Kunden
+     * @param passwort Passwort vom Kunden
+     * @param email    E-Mail vom Kunden
+     * @param adresse  Adresse vom Kunden
      */
     public void registerCustomer(String name, String email, String passwort, String adresse) {
         // schenken 15 Euro
@@ -132,8 +132,8 @@ public class KundenVerwaltung {
     /**
      * Methode zum Anzeigen des Guthabens der Kunden
      * 
-     * @param kunde, Kunde
-     * @return Richtigkeit
+     * @param kunde Kunde
+     * @return Guthaben des Kunden
      */
     public double guthabenAnzeigen(Kunden kunde) {
         // Methode wird aufgerufen und zurückgegeben
@@ -143,8 +143,8 @@ public class KundenVerwaltung {
     /**
      * Methode zum Aufalden des Guthabens der Kunden
      *
-     * @param kunde,    Kunde
-     * @param aufladen, Betrag, der aufgeladen wird vom Kunden
+     * @param kunde    Kunde
+     * @param aufladen Betrag, der aufgeladen wird vom Kunden
      */
     public void guthabenAufladen(Kunden kunde, double aufladen) {
         // Parameter des jetzigen Guthabens wird definiert
@@ -167,8 +167,8 @@ public class KundenVerwaltung {
      * Methode zum Prüfen eines sicheren Passworts (Länge, Ziffer, Groß- und
      * Kleinbuchstaben)
      * 
-     * @param password, Passwort vom Kunden
-     * @return Richtigkeit
+     * @param password Passwort vom Kunden
+     * @return true or false
      */
     public boolean valPassword(String password) {
         // sobald die Passwortlänge mehr als sieben Zeichen entspricht
@@ -190,10 +190,10 @@ public class KundenVerwaltung {
 
     /**
      * Methode zum Prüfen eines sicheren Passworts anhand von mindestens einem Groß
-     * und Klein -buchstaben sowie einer Zahl
+     * und Klein -buchstaben sowie einer Zahl.
      * 
-     * @param password, Passwort vom Kunden
-     * @return Richtigkeit
+     * @param password Passwort vom Kunden
+     * @return true or false
      */
     public boolean checkPass(String password) {
         // Variablen definieren und vorsichtshalber auf false setzen
@@ -224,6 +224,12 @@ public class KundenVerwaltung {
         return false;
     }
 
+    /**
+     * Methode zum Finden des Kunden via ID.
+     *
+     * @param id des Kunden
+     * @return kunde or null
+     */
     public Kunden getKundeViaID(int id) {
         for (Kunden kunde : kundenListe) {
             if (id == kunde.getPersonID()) {
@@ -236,12 +242,25 @@ public class KundenVerwaltung {
     // ==============================
     // Warenkorb
     // ==============================
-
+    /**
+     * Methode zum Anzeigen des Warenkorbs.
+     *
+     * @param id des Kunden
+     */
     public void warenkorbAnzeigen(int id) {
         Kunden kunde = getKundeViaID(id);
         kunde.getWarenkorb().warenkorbAnzeigen();
     }
 
+
+    /**
+     * Methode zum Legen der Artiekl in den Warenkorb.
+     *
+     * @param id des Kunden
+     * @param artikel die der Kunde in den Warenkorb hinzufuegt
+     * @param anzahl wie viele Artikel
+     * @throws BestandZuGering darf nicht mehr kaufen als wir haben
+     */
     public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering, ArtikelNichtGefundenException {
         Kunden kunde = getKundeViaID(id);
         kunde.getWarenkorb().artikelInWarenkorb(artikel, anzahl);

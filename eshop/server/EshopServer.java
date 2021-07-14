@@ -8,20 +8,23 @@ import java.net.Socket;
 import eshop.interfaces.EshopInterface;
 import eshop.verwaltung.ShopVerwaltung;
 /**
- * Klasse des Eshop Servers.Kommunikation findet zwischen Server und Client sattt.
- * Socket ist eine bidirektionale Netzwerk-Kommunikationsschnittstelle, deren Verwaltung das Betriebssystem uebernimmt.
- * Die Kommunikation findet zwischen einem Server und einem Client ueber einen definierten Port statt.
+ * Klasse des Eshop Servers.Server stellt das ServerSocket Objekt bereit, die sich mit anderen Clients verbinden koennen.Der Client hat Computerprogramme, die ablaufen sollen und der Server besitzt die Informationen und Ressourcen, welche die Programme benoetigen, um zu funktionieren.Der Client moechte einen Prozess durchfuehren und benoetigt dafuer Informationen und Ressourcen, die auf einem mit ihm verbundenen Server liegen.Also sendet er eine Anfrage (Request) an den Server und fordert diese an.Der Server verarbeitet alle Anfragen, die bei ihm eingehen, und stellt die Elemente bereit (Response), die von ihm gefordert werden.Dabei ist es dem Server ueberlassen, in welcher Reihenfolge er die Anfragen abarbeitet.
  *
  * @author Jonas, Jana, Dabina
  * - Import aus der Java Bibliotheck
  */
 public class EshopServer {
+    // Attribute
     public final static int DEFAULT_PORT = 6789;
 
     private int port;
     private ServerSocket serverSocket;
     private EshopInterface eShop;
-
+    /**
+     * Konstruktor
+     *
+     * @param optPort  default port vom Client
+     */
     public EshopServer(int optPort) {
 
         this.port = (optPort == 0) ? DEFAULT_PORT : optPort;
@@ -43,7 +46,9 @@ public class EshopServer {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Methode zum Akzeptieren der Anfrage auf Verbindung des Clients.
+     */
     public void acceptClientConnectRequests() {
 
         try {
@@ -58,7 +63,9 @@ public class EshopServer {
             System.exit(1);
         }
     }
-
+    /**
+     * Main Methode des E-shop Servers.
+     */
     public static void main(String[] args) {
         int port = 0;
         if (args.length == 1) {

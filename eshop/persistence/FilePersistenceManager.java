@@ -12,18 +12,39 @@ import java.io.PrintWriter;
 import java.time.Instant;
 import java.util.Date;
 
+/**
+ * Klasse zum Verwalten der FilePersistenceManager Schnittstelle.Realisierung einer "Mockup"-Schnittstelle zur persistenten Speicherung von Daten in Dateien.Bedeutet: einige wenige Artikel werden "generiert" und zurueckgegeben.
+ *
+ * @author Jonas, Jana, Dabina
+ * @implements PersistenceManager
+ * - Import aus der Java Bibliotheck
+ */
 public class FilePersistenceManager implements PersistenceManager {
-    private BufferedReader reader = null;
-    private PrintWriter writer = null;
-
+    private BufferedReader reader = null; // Eingabe zeilenweise lesen und das Ergebnis in einen primitiven Typ umwandeln
+    private PrintWriter writer = null;  // Druckt formatierte Darstellungen von Objekten in einen Textausgabestream
+    /**
+     * Methode zum Öffnen fürs Lesen der Datei.
+     *
+     * @param datei Datei, die eingelesen wird
+     * @throws FileNotFoundException nicht gefunden
+     */
     public void openForReading(String datei) throws FileNotFoundException {
         reader = new BufferedReader(new FileReader(datei));
     }
-
+    /**
+     * Methode zum Öffnen fürs Bearbeiten der Datei.
+     *
+     * @param datei Datei, die eingelesen wird
+     * @throws IOException Fehlerpruefung
+     */
     public void openForWriting(String datei) throws IOException {
         writer = new PrintWriter(new BufferedWriter(new FileWriter(datei)));
     }
-
+    /**
+     * Methode zum Schließen des Writers und Readers.
+     *
+     * @return true, falss erfolgreich, sonst false
+     */
     public boolean close() {
         if (writer != null)
             writer.close();
@@ -43,12 +64,13 @@ public class FilePersistenceManager implements PersistenceManager {
     }
 
     /**
-     * Methode zum Einlesen der Buchdaten aus einer externen Datenquelle.
+     * Methode zum Einlesen der Artikeldaten aus einer externen Datenquelle.
      *
-     * @return Buch-Objekt, wenn Einlesen erfolgreich, false null
+     * @throws IOException Fehlerpruefung
+     * @return Artikel-Objekt, wenn Einlesen erfolgreich, sonst null
      */
     public Artikel ladeArtikel() throws IOException {
-        // Titel einlesen
+        // Name einlesen
         String name = liesZeile();
         if (name == null) {
             // keine Daten mehr vorhanden
@@ -60,15 +82,21 @@ public class FilePersistenceManager implements PersistenceManager {
         double preis = Double.parseDouble(preisString);
 
         String bestandString = liesZeile();
-        // Codierung des Ausleihstatus in boolean umwandeln
+        // Codierung des Bestandstatus in boolean umwandeln
         int bestand = Integer.parseInt(bestandString);
 
-        // neues Buch-Objekt anlegen und zurückgeben
+        // neues Artikel-Objekt anlegen und zurückgeben
         return new Artikel(name, preis, bestand);
     }
 
+    /**
+     * Methode zum Einlesen der Massengutartikeldaten aus einer externen Datenquelle.
+     *
+     * @throws IOException Fehlerpruefung
+     * @return Massengutartikel-Objekt, wenn Einlesen erfolgreich, sonst null
+     */
     public Massengutartikel ladeMassengutartikel() throws IOException {
-        // Titel einlesen
+        // Name einlesen
         String name = liesZeile();
         if (name == null) {
             // keine Daten mehr vorhanden
@@ -89,12 +117,13 @@ public class FilePersistenceManager implements PersistenceManager {
     }
 
     /**
-     * Methode zum Schreiben der Buchdaten in eine externe Datenquelle. Das
+     * Methode zum Schreiben der Artikeldaten in eine externe Datenquelle. Das
      * Verfügbarkeitsattribut wird in der Datenquelle (Datei) als "t" oder "f"
      * codiert abgelegt.
      *
-     * @param artikel Buch-Objekt, das gespeichert werden soll
-     * @return true, wenn Schreibvorgang erfolgreich, false sonst
+     * @param artikel Artikel-Objekt, das gespeichert werden soll
+     * @throws IOException Fehlerpruefung
+     * @return true, wenn Schreibvorgang erfolgreich, sonst false
      */
     // Artikel
     // String name, double preis, int bestand
@@ -107,7 +136,13 @@ public class FilePersistenceManager implements PersistenceManager {
         schreibeZeile(artikel.getBestand() + "");
         return true;
     }
-
+    /**
+     * Methode zum Schreiben der Massengutartikeldaten in eine externe Datenquelle.
+     *
+     * @param artikel Massengutartikel-Objekt, das gespeichert werden soll
+     * @throws IOException Fehlerpruefung
+     * @return true, wenn Schreibvorgang erfolgreich, sonst false
+     */
     public boolean speichereMassengutartikel(Artikel artikel) throws IOException {
         // Titel, Nummer und Verfügbarkeit schreiben
         schreibeZeile(artikel.getName());
@@ -119,7 +154,12 @@ public class FilePersistenceManager implements PersistenceManager {
         }
         return true;
     }
-
+    /**
+     * Methode zum Einlesen der Kundendaten aus einer externen Datenquelle.
+     *
+     * @throws IOException Fehlerpruefung
+     * @return Kunde-Objekt, wenn Einlesen erfolgreich, sonst null
+     */
     public Kunden ladeKunde() throws IOException {
         String name = liesZeile();
         if (name == null) {
@@ -131,7 +171,13 @@ public class FilePersistenceManager implements PersistenceManager {
 
         return new Kunden(name, email, passwort, adresse);
     }
-
+    /**
+     * Methode zum Schreiben der Kundendaten in eine externe Datenquelle.
+     *
+     * @param kunde Kunden-Objekt, das gespeichert werden soll
+     * @throws IOException Fehlerpruefung
+     * @return true, wenn Schreibvorgang erfolgreich, sonst false
+     */
     public boolean speichereKunden(Kunden kunde) throws IOException {
         schreibeZeile(kunde.getName());
         schreibeZeile(kunde.getAdresse());
@@ -139,7 +185,12 @@ public class FilePersistenceManager implements PersistenceManager {
         schreibeZeile(kunde.getEmail());
         return true;
     }
-
+    /**
+     * Methode zum Einlesen der Mitarbeiterdaten aus einer externen Datenquelle.
+     *
+     * @throws IOException Fehlerpruefung
+     * @return Mitarbeiter-Objekt, wenn Einlesen erfolgreich, sonst null
+     */
     public Mitarbeiter ladeMitarbeiter() throws IOException {
         String name = liesZeile();
         if (name == null) {
@@ -150,12 +201,23 @@ public class FilePersistenceManager implements PersistenceManager {
 
         return new Mitarbeiter(name, email, passwort);
     }
-
+    /**
+     * Methode zum Schreiben der Logdaten in eine externe Datenquelle.
+     *
+     * @param logMsg Log-Objekt, das gespeichert werden soll
+     * @throws IOException Fehlerpruefung
+     * @return true, wenn Schreibvorgang erfolgreich, sonst false
+     */
     public boolean speichereLog(String logMsg) throws IOException {
         schreibeZeile(logMsg + "");
         return true;
     }
-
+    /**
+     * Methode zum Einlesen der Logdaten aus einer externen Datenquelle.
+     *
+     * @throws IOException Fehlerpruefung
+     * @return Log-Objekt, wenn Einlesen erfolgreich, sonst null
+     */
     public Log ladeLog() throws IOException {
         String logMsg = liesZeile();
         if (logMsg == null) {
@@ -163,7 +225,13 @@ public class FilePersistenceManager implements PersistenceManager {
         }
         return new Log(logMsg);
     }
-
+    /**
+     * Methode zum Schreiben der Mitarbeitergdaten in eine externe Datenquelle.
+     *
+     * @param mitarbeiter Log-Objekt, das gespeichert werden soll
+     * @throws IOException Fehlerpruefung
+     * @return true, wenn Schreibvorgang erfolgreich, sonst false
+     */
     public boolean speichereMitarbeiter(Mitarbeiter mitarbeiter) throws IOException {
         schreibeZeile(mitarbeiter.getName());
         schreibeZeile(mitarbeiter.getEmail());
@@ -215,17 +283,21 @@ public class FilePersistenceManager implements PersistenceManager {
      * 
      */
 
-    /*
-     * Private Hilfsmethoden
+    /**
+     * Methode zum Lesen der Zeile aus einer externen Datenquelle.
+     *
+     * @throws IOException Fehlerpruefung
+     * @return Zeile, wenn Einlesen erfolgreich, sonst null
      */
-
     private String liesZeile() throws IOException {
         if (reader != null)
             return reader.readLine();
         else
             return "";
     }
-
+    /**
+     * Methode zum Schreiben der Zeile aus einer externen Datenquelle.
+     */
     private void schreibeZeile(String daten) {
         if (writer != null)
             writer.println(daten);

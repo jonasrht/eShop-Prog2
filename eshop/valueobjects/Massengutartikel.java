@@ -21,8 +21,17 @@ package eshop.valueobjects;
 
 >>>>>>> GUI
 public class Massengutartikel extends Artikel {
+    // Attribute
     private int packungsGroeße;
 
+    /**
+     * Konstruktor
+     *
+     * @param name Produktname
+     * @param preis Preis des Produktes
+     * @param bestand Anzahl des Produktes
+     * @param packungsGroeße Groeße der Verpackung
+     */
     public Massengutartikel(String name, double preis, int bestand, int packungsGroeße){
         super(name+ " (" + packungsGroeße +" stk. )", preis, bestand*packungsGroeße);
         this.packungsGroeße = packungsGroeße;
@@ -32,7 +41,9 @@ public class Massengutartikel extends Artikel {
         super(name, preis, bestand*packungsGroeße);
         this.packungsGroeße = packungsGroeße;
     }
-
+    /**
+     * Accessor-Methoden
+     */
     public int getPackungsGroeße() {
         return packungsGroeße;
     }
