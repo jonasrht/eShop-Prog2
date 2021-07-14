@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import eshop.exceptions.BestandZuGering;
-import eshop.verwaltung.*;
-import eshop.valueobjects.Artikel;
 
 public class Warenkorb {
     private List<HashMap<Artikel, Integer>> artikelImKorb;
@@ -37,9 +35,9 @@ public class Warenkorb {
 
     /**
      *
-     * @param artikel
-     * @param anzahl
-     * @throws BestandZuGering
+     * @param artikel Artikel, welcher in den Warenkorb soll
+     * @param anzahl anzahl der Artikel
+     * @throws BestandZuGering wenn der Bestand zu gering ist
      */
     public void artikelInWarenkorb(Artikel artikel, int anzahl) throws BestandZuGering {
         System.out.println("Warenkorb 45: Artikel " + artikel.getName() + " a: " + anzahl);

@@ -2,7 +2,6 @@ package eshop.verwaltung;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import eshop.exceptions.ArtikelExistiertBereitsException;
@@ -42,7 +41,6 @@ public class ShopVerwaltung implements EshopInterface {
     }
 
     public void bestandReduzieren(int id, Artikel artikel, int entfernen) {
-        EreignisVerwaltung.ereignisEinfuegen(artikel.getProduktID(), entfernen, "Bestand reduziert", id);
         artikelVerwaltung.bestandReduzieren(artikel, entfernen);
     }
 
@@ -95,8 +93,7 @@ public class ShopVerwaltung implements EshopInterface {
     }
 
     public double guthabenAnzeigen(Kunden kunde) {
-        double g = kundenVerwaltung.guthabenAnzeigen(kunde);
-        return g;
+        return kundenVerwaltung.guthabenAnzeigen(kunde);
     }
 
     public void guthabenAufladen(Kunden kunde, double aufladen) {
@@ -104,26 +101,21 @@ public class ShopVerwaltung implements EshopInterface {
     }
 
     public boolean valPassword(String password) {
-        boolean val = kundenVerwaltung.valPassword(password);
-        return val;
+        return kundenVerwaltung.valPassword(password);
     }
 
     public boolean checkPass(String password) {
-        boolean check = kundenVerwaltung.checkPass(password);
-        return check;
+        return kundenVerwaltung.checkPass(password);
     }
 
     // =================================
     // MitarbeiterVerwaltung
     public Mitarbeiter logInEmployee(String passwort, String email) throws LoginFehlgeschlagen {
-        Mitarbeiter mitarbeiter = mitarbeiterVerwaltung.logInEmployee(passwort, email);
-        return mitarbeiter;
+        return mitarbeiterVerwaltung.logInEmployee(passwort, email);
     }
 
     public Mitarbeiter getEmployee(String passwort, String email) {
-        Mitarbeiter mitarbeiter;
-        mitarbeiter = mitarbeiterVerwaltung.getEmployee(passwort, email);
-        return mitarbeiter;
+        return  mitarbeiterVerwaltung.getEmployee(passwort, email);
     }
 
     public void registerEmployee(String name, String email, String passwort) {
@@ -202,5 +194,9 @@ public class ShopVerwaltung implements EshopInterface {
             ereignisListStr.add(ereignisStr);
         }
         return ereignisListStr;
+    }
+
+    public void ereignisEinfuegen(int artikelId, int anzahl, String ereignisMsg, int persId) {
+        ereignisVerwaltung.ereignisEinfuegen(artikelId, anzahl, ereignisMsg, persId);
     }
 }

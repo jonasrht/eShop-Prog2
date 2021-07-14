@@ -3,6 +3,7 @@ package eshop.Client.ui.gui.panels;
 import eshop.exceptions.ArtikelExistiertBereitsException;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
+import eshop.valueobjects.Massengutartikel;
 import eshop.valueobjects.Mitarbeiter;
 
 import javax.swing.*;
@@ -10,13 +11,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.Vector;
 
 public class ArtikelEinfuegenPanel extends JPanel {
 
     public interface ArtikelHinzufuegenListener {
-        public void aktikelPanelaktualisieren(java.util.List<Artikel> artikel);
-        public void zurueckArtikelHinzu();
+        void aktikelPanelaktualisieren(java.util.List<Artikel> artikel);
+        void zurueckArtikelHinzu();
     }
 
     private EshopInterface eshopInterface;
@@ -43,12 +43,7 @@ public class ArtikelEinfuegenPanel extends JPanel {
     private void erstelleEreignisse() {
         neuerArtBtn.addActionListener(new NeuerArtBtnListener());
         massenArtCheckBox.addActionListener(new MassenArtCheckListener());
-        zurueckBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                listener.zurueckArtikelHinzu();
-            }
-        });
+        zurueckBtn.addActionListener(e -> listener.zurueckArtikelHinzu());
     }
 
     private void erstelleUI() {
@@ -104,6 +99,8 @@ public class ArtikelEinfuegenPanel extends JPanel {
                     try {
                         eshopInterface.massenartikelNeu(artName, preis, bestand, packungsGroeßeInt);
                         java.util.List<Artikel> artikel = eshopInterface.gibAlleArtikel();
+                        Artikel massArtikel = artikel.get(artikel.size()-1);
+                        eshopInterface.ereignisEinfuegen(massArtikel.getProduktID(), bestand, "Neuen Massengut Artikel hinzugefügt", mitarbeiter.getPersonID());
                         listener.aktikelPanelaktualisieren(artikel);
                         artikelNameFeld.setText("");
                         artikelPreisFeld.setText("");
@@ -118,6 +115,8 @@ public class ArtikelEinfuegenPanel extends JPanel {
                 try {
                     eshopInterface.artikelNeu(mitarbeiter.getPersonID(), artName, preis, bestand);
                     java.util.List<Artikel> artikel = eshopInterface.gibAlleArtikel();
+                    Artikel meinArtikel = artikel.get(artikel.size()-1);
+                    eshopInterface.ereignisEinfuegen(meinArtikel.getProduktID(), bestand, "Neuen Artikel erstellt", mitarbeiter.getPersonID());
                     artikelNameFeld.setText("");
                     artikelPreisFeld.setText("");
                     artikelBestandFeld.setText("");

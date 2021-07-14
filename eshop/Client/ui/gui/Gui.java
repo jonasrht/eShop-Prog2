@@ -139,10 +139,16 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
     }
 
     @Override
-    public void wechselBestand() {
+    public void wechselBestand(Mitarbeiter mitarbeiter) {
         menuPanel.setVisible(false);
-        artikelBestandPanel = new ArtikelBestandPanel(eshopInterface, this);
+        artikelBestandPanel = new ArtikelBestandPanel(eshopInterface, mitarbeiter, this);
         add(artikelBestandPanel, BorderLayout.WEST);
+    }
+
+    @Override
+    public void wechselMitarbeiterAbmelden() {
+        allesAusblenden();
+        initialize();
     }
 
     @Override
@@ -208,7 +214,7 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
 
     @Override
     public void wechselLogout() {
-        eshopInterface.verbindungsAbbruch();
+        //eshopInterface.verbindungsAbbruch();
         allesAusblenden();
         initialize();
     }

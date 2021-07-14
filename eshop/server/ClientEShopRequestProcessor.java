@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import eshop.exceptions.ArtikelExistiertBereitsException;
@@ -44,6 +42,7 @@ public class ClientEShopRequestProcessor implements Runnable {
             try {
                 this.socket.close();
             } catch (IOException e2) {
+                e.printStackTrace();
             }
             System.err.println("Ausnahme bei Bereitstellung des Streams: " + e);
             return;
@@ -144,9 +143,11 @@ public class ClientEShopRequestProcessor implements Runnable {
                 sucheNachArtikel();
             } else if (input.equals("getEreignisList")) {
                 getEreignisList();
+            } else if (input.equals("ereignisEinfuegen")) {
+                ereignisEinfuegen();
             }
 
-        } while (!(input.equals("q")));
+            } while (!(input.equals("q")));
         try {
             socket.close();
         } catch (IOException e) {
@@ -159,13 +160,13 @@ public class ClientEShopRequestProcessor implements Runnable {
         int size = artikelListe.size();
         System.out.println(size);
         // Gibt die Länge der ArrayList aus
-        out.println(String.valueOf(size));
+        out.println(size);
         // Gebe alle Artikel aus
         for (Artikel artikel : artikelListe) {
-            out.println(String.valueOf(artikel.getProduktID()));
+            out.println(artikel.getProduktID());
             out.println(artikel.getName());
-            out.println(String.valueOf(artikel.getPreis()));
-            out.println(String.valueOf(artikel.getBestand()));
+            out.println(artikel.getPreis());
+            out.println(artikel.getBestand());
         }
     }
 
@@ -248,8 +249,6 @@ public class ClientEShopRequestProcessor implements Runnable {
             } else {
                 out.println("false");
             }
-
-            ;
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -470,6 +469,18 @@ public class ClientEShopRequestProcessor implements Runnable {
         out.println(ereignisListStr.size());
         for (String string : ereignisListStr) {
             out.println(string);
+        }
+    }
+
+    private void ereignisEinfuegen() {
+        try {
+            int artikelId = Integer.parseInt(in.readLine());
+            int anzahl = Integer.parseInt(in.readLine());
+            String ereignisMsg = in.readLine();
+            int persId = Integer.parseInt(in.readLine());
+            eShop.ereignisEinfuegen(artikelId, anzahl, ereignisMsg, persId);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

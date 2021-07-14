@@ -65,6 +65,7 @@ public class KundenMenuPanel extends JPanel {
         logoutBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //System.exit();
                 listener.wechselLogout();
             }
         });
@@ -87,7 +88,14 @@ public class KundenMenuPanel extends JPanel {
         add(Box.createRigidArea(new Dimension(0, 5)));
         logoutBtn = new JButton("<- Logout");
         logoutBtn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        add(logoutBtn);
 
+        // Abstand
+        Dimension fillerMinSize = new Dimension(5, 20);
+        Dimension fillerPreferedSize = new Dimension(5, Short.MAX_VALUE);
+        Dimension fillerMaxSize = new Dimension(5, Short.MAX_VALUE);
+        add(new Box.Filler(fillerMinSize, fillerPreferedSize, fillerMaxSize));
+
+        add(logoutBtn);
+        add(Box.createRigidArea(new Dimension(0, 5)));
     }
 }

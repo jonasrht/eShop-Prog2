@@ -3,7 +3,6 @@ package eshop.verwaltung;
 import eshop.persistence.FilePersistenceManager;
 import eshop.persistence.PersistenceManager;
 import eshop.valueobjects.Ereignis;
-import eshop.valueobjects.Kunden;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 public class EreignisVerwaltung {
 
     private PersistenceManager pm = new FilePersistenceManager();
-    private static List<Ereignis> ereignisList = new ArrayList<Ereignis>();
+    private List<Ereignis> ereignisList = new ArrayList<Ereignis>();
 
     public EreignisVerwaltung() {
         try {
@@ -24,12 +23,12 @@ public class EreignisVerwaltung {
 
     /**
      * Methode, die ein Ereignis in die EreignisListe einfügt
-     * @param artikelId
-     * @param anzahl
-     * @param ereignisMsg
-     * @param persId
+     * @param artikelId Artikel ID
+     * @param anzahl Anzahl der Artikel
+     * @param ereignisMsg Nachricht was für Ereignis passiert ist
+     * @param persId Personen ID
      */
-    public static void ereignisEinfuegen(int artikelId, int anzahl, String ereignisMsg, int persId) {
+    public void ereignisEinfuegen(int artikelId, int anzahl, String ereignisMsg, int persId) {
         Ereignis ereignis = new Ereignis(artikelId, anzahl, ereignisMsg, persId);
         ereignisList.add(ereignis);
     }
