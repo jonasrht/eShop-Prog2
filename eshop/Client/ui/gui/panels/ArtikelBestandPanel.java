@@ -1,8 +1,10 @@
 package eshop.Client.ui.gui.panels;
 
+import eshop.Client.ui.gui.Gui;
 import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
+import eshop.valueobjects.Mitarbeiter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,20 +15,22 @@ import java.io.IOException;
 public class ArtikelBestandPanel extends JPanel {
 
     public interface ArtikelBestandListener {
-        public void wechselMenu();
-        public void beiBestandGeaendert(java.util.List<Artikel> artikel);
+        void wechselMenu();
+        void beiBestandGeaendert(java.util.List<Artikel> artikel);
     }
     private EshopInterface eshopInterface;
     private ArtikelBestandListener listener;
+    private Mitarbeiter mitarbeiter;
 
     private JTextField artikelIDFeld;
     private JTextField neuerBestandFeld;
     private JButton bestandAendernBtn;
     private JButton zurueckBtn;
     
-    public ArtikelBestandPanel(EshopInterface eshopInterface, ArtikelBestandListener listener) {
+    public ArtikelBestandPanel(EshopInterface eshopInterface, Mitarbeiter mitarbeiter, ArtikelBestandListener listener) {
         this.eshopInterface = eshopInterface;
         this.listener = listener;
+        this.mitarbeiter = mitarbeiter;
         
         erstelleUI();
         erstelleEreignisse();
@@ -34,38 +38,10 @@ public class ArtikelBestandPanel extends JPanel {
 
     private void erstelleEreignisse() {
         // Action für Bestandändern
-        bestandAendernBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String artIDStr = artikelIDFeld.getText();
-                String neuerBestandStr = neuerBestandFeld.getText();
-
-                if (!artIDStr.isEmpty() && !neuerBestandStr.isEmpty()) {
-                    int artID = Integer.parseInt(artIDStr);
-                    int neuerBestand = Integer.parseInt(neuerBestandStr);
-                    try {
-                        Artikel artikel = eshopInterface.getArtikelViaID(artID);
-                        eshopInterface.artikelBestandAendern(artikel, neuerBestand);
-                        java.util.List<Artikel> artikelListe = eshopInterface.gibAlleArtikel();
-                        listener.beiBestandGeaendert(artikelListe);
-                    } catch (ArtikelNichtGefundenException | IOException e1) {
-                        JOptionPane.showMessageDialog(null,  e1.getMessage(),
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-
-                artikelIDFeld.setText("");
-                neuerBestandFeld.setText("");
-            }
-        });
+        bestandAendernBtn.addActionListener(e -> { bestandAendern(); });
 
         // Action für zurück Button
-        zurueckBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                listener.wechselMenu();
-            }
-        });
+        zurueckBtn.addActionListener(e -> listener.wechselMenu());
 
     }
 
@@ -94,4 +70,25 @@ public class ArtikelBestandPanel extends JPanel {
         add(Box.createRigidArea(new Dimension(0, 5)));
     }
 
+    public void bestandAendern() {
+        String artIDStr = artikelIDFeld.getText();
+        String neuerBestandStr = neuerBestandFeld.getText();
+
+        if (!artIDStr.isEmpty() && !neuerBestandStr.isEmpty()) {
+            int artID = Integer.parseInt(artIDStr);
+            int neuerBestand = Integer.parseInt(neuerBestandStr);
+            try {
+                Artikel artikel = eshopInterface.getArtikelViaID(artID);
+                eshopInterface.artikelBestandAendern(artikel, neuerBestand);
+                eshopInterface.ereignisEinfuegen(artikel.getProduktID(), neuerBestand, "Bestand geändert", mitarbeiter.getPersonID());
+                java.util.List<Artikel> artikelListe = eshopInterface.gibAlleArtikel();
+                listener.beiBestandGeaendert(artikelListe);
+            } catch (ArtikelNichtGefundenException | IOException e1) {
+                Gui.errorBox(e1.getMessage());
+            }
+        }
+
+        artikelIDFeld.setText("");
+        neuerBestandFeld.setText("");
+    }
 }

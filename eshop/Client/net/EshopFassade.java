@@ -6,14 +6,12 @@ import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
-import eshop.valueobjects.Ereignis;
 import eshop.valueobjects.Kunden;
 import eshop.valueobjects.Mitarbeiter;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class EshopFassade implements EshopInterface {
@@ -43,7 +41,7 @@ public class EshopFassade implements EshopInterface {
     }
 
     public List<Artikel> gibAlleArtikel() throws IOException {
-        List<Artikel> artikelListe = new ArrayList<Artikel>();
+        List<Artikel> artikelListe = new ArrayList<>();
         out.println("gibAlleAnzeigen");
         String sizeStr = in.readLine();
         System.out.println(sizeStr);
@@ -65,7 +63,7 @@ public class EshopFassade implements EshopInterface {
     }
 
     public List<Artikel> sucheNachArtikel(String suchName) {
-        List<Artikel> suchErgebnis = new ArrayList<Artikel>();
+        List<Artikel> suchErgebnis = new ArrayList<>();
         out.println("sucheNachArtikel");
         out.println(suchName);
         try {
@@ -167,11 +165,7 @@ public class EshopFassade implements EshopInterface {
 
         try {
             String passwordCheck = in.readLine();
-            if (passwordCheck.equals("true")) {
-                return true;
-            } else {
-                return false;
-            }
+            return passwordCheck.equals("true");
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -184,11 +178,7 @@ public class EshopFassade implements EshopInterface {
 
         try {
             String passwordCheck = in.readLine();
-            if (passwordCheck.equals("true")) {
-                return true;
-            } else {
-                return false;
-            }
+            return passwordCheck.equals("true");
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -265,7 +255,7 @@ public class EshopFassade implements EshopInterface {
     public Artikel getArtikelViaID(int id) throws ArtikelNichtGefundenException {
         out.println("getArtikelViaID");
         out.println(id);
-        Artikel artikel = null;
+        Artikel artikel;
 
         try {
             String check = in.readLine();
@@ -288,9 +278,7 @@ public class EshopFassade implements EshopInterface {
         } catch (Exception e) {
             // TODO: handle exception
         }
-        if (artikel == null) {
-            throw new ArtikelNichtGefundenException();
-        }
+
         return null;
     }
 
@@ -353,13 +341,6 @@ public class EshopFassade implements EshopInterface {
                 String rechnungStr = in.readLine();
                 rechnung.add(rechnungStr);
             }
-            // String input;
-            // while (!((input = in.readLine()).equals("stop"))) {
-            // if (input.equals("start")) {
-            // String rechnungStr = in.readLine();
-            // rechnung.add(rechnungStr);
-            // }
-            // }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -385,5 +366,14 @@ public class EshopFassade implements EshopInterface {
         }
         return ereignisListStr;
     }
+    @Override
+    public void ereignisEinfuegen(int artikelId, int anzahl, String ereignisMsg, int persId) {
+        out.println("ereignisEinfuegen");
+        out.println(artikelId);
+        out.println(anzahl);
+        out.println(ereignisMsg);
+        out.println(persId);
+    }
+
 
 }

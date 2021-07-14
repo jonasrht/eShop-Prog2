@@ -230,10 +230,8 @@ public class ArtikelVerwaltung {
         }
         // Artikel hinzufügen
         artikelListe.add(artikel);
-        EreignisVerwaltung.ereignisEinfuegen(artikel.getProduktID(), bestand, "neuen Artikel hinzugefügt", id);
     }
 
-    // TODO: 19.05.2021 Log Objekt erstellen
     /**
      * Methode zum Hinzufügen neuer Massenartikel im Bestand.
      *

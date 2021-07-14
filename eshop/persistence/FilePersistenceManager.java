@@ -9,8 +9,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.Instant;
-import java.util.Date;
 
 public class FilePersistenceManager implements PersistenceManager {
     private BufferedReader reader = null;
@@ -99,7 +97,7 @@ public class FilePersistenceManager implements PersistenceManager {
     // Artikel
     // String name, double preis, int bestand
 
-    public boolean speichereArtikel(Artikel artikel) throws IOException {
+    public boolean speichereArtikel(Artikel artikel) {
         // Titel, Nummer und Verfügbarkeit schreiben
         schreibeZeile(artikel.getName());
         // schreibeZeile(Integer.valueOf(b.getNummer()).toString());
@@ -108,7 +106,7 @@ public class FilePersistenceManager implements PersistenceManager {
         return true;
     }
 
-    public boolean speichereMassengutartikel(Artikel artikel) throws IOException {
+    public boolean speichereMassengutartikel(Artikel artikel) {
         // Titel, Nummer und Verfügbarkeit schreiben
         schreibeZeile(artikel.getName());
         // schreibeZeile(Integer.valueOf(b.getNummer()).toString());
@@ -132,7 +130,7 @@ public class FilePersistenceManager implements PersistenceManager {
         return new Kunden(name, email, passwort, adresse);
     }
 
-    public boolean speichereKunden(Kunden kunde) throws IOException {
+    public boolean speichereKunden(Kunden kunde) {
         schreibeZeile(kunde.getName());
         schreibeZeile(kunde.getAdresse());
         schreibeZeile(kunde.getPasswort());
@@ -151,7 +149,7 @@ public class FilePersistenceManager implements PersistenceManager {
         return new Mitarbeiter(name, email, passwort);
     }
 
-    public boolean speichereLog(String logMsg) throws IOException {
+    public boolean speichereLog(String logMsg) {
         schreibeZeile(logMsg + "");
         return true;
     }
@@ -164,7 +162,7 @@ public class FilePersistenceManager implements PersistenceManager {
         return new Log(logMsg);
     }
 
-    public boolean speichereMitarbeiter(Mitarbeiter mitarbeiter) throws IOException {
+    public boolean speichereMitarbeiter(Mitarbeiter mitarbeiter) {
         schreibeZeile(mitarbeiter.getName());
         schreibeZeile(mitarbeiter.getEmail());
         schreibeZeile(mitarbeiter.getPasswort());
@@ -196,24 +194,13 @@ public class FilePersistenceManager implements PersistenceManager {
         return null;
     }
 
-    public void speichereEreignis(Ereignis ereignis) throws IOException {
+    public void speichereEreignis(Ereignis ereignis) {
         schreibeZeile(ereignis.getDatum() + "");
         schreibeZeile(ereignis.getArtikelId() + "");
         schreibeZeile(ereignis.getAnzahl() + "");
         schreibeZeile(ereignis.getEreignisMsg() + "");
         schreibeZeile(ereignis.getPersId() + "");
     }
-
-    /*
-     * Wenn später mal eine Kundenverwaltung ergänzt wird:
-     * 
-     * public Kunde ladeKunde() throws IOException { // TODO: Implementieren return
-     * null; }
-     * 
-     * public boolean speichereKunde(Kunde k) throws IOException { // TODO:
-     * Implementieren return false; }
-     * 
-     */
 
     /*
      * Private Hilfsmethoden

@@ -20,12 +20,14 @@ public class Rechnung {
     private Kunden kunde;
     private List<HashMap<Artikel, Integer>> artikelListe;
     private LocalDate datum;
+    private EreignisVerwaltung ereignisVerwaltung;
 
     // Konstruktor
     public Rechnung(Kunden kunde, List<HashMap<Artikel, Integer>> artikelListe) {
         this.kunde = kunde;
         this.artikelListe = artikelListe;
         this.datum = LocalDate.now();
+        ereignisVerwaltung = new EreignisVerwaltung();
     }
 
     /**
@@ -62,7 +64,7 @@ public class Rechnung {
                     artikel.setBestand(neuerBestand);
                 }
 
-                EreignisVerwaltung.ereignisEinfuegen(artikel.getProduktID(), anzahl, "Artikel gekauft", this.kunde.getPersonID());
+                ereignisVerwaltung.ereignisEinfuegen(artikel.getProduktID(), anzahl, "Artikel gekauft", this.kunde.getPersonID());
 
                 // Preis für die Anzahl der Artikel berechnen
                 double preis = artikel.getPreis() * anzahl;

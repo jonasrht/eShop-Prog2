@@ -1,7 +1,6 @@
 package eshop.interfaces;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 import eshop.exceptions.ArtikelExistiertBereitsException;
@@ -9,7 +8,6 @@ import eshop.exceptions.ArtikelNichtGefundenException;
 import eshop.exceptions.BestandZuGering;
 import eshop.exceptions.LoginFehlgeschlagen;
 import eshop.valueobjects.Artikel;
-import eshop.valueobjects.Ereignis;
 import eshop.valueobjects.Kunden;
 import eshop.valueobjects.Mitarbeiter;
 
@@ -71,6 +69,9 @@ public interface EshopInterface {
 
     void verbindungsAbbruch();
 
+    // Ereignisverwaltung
     List<String> getEreignisList();
+
+    void ereignisEinfuegen(int artikelId, int anzahl, String ereignisMsg, int persId);
 
 }

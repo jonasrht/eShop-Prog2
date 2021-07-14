@@ -12,7 +12,7 @@ import java.util.List;
 public class KassePanel extends JPanel {
 
     public interface KasseListener {
-        public void zurueckKasse(Kunden kunde);
+        void zurueckKasse(Kunden kunde);
     }
 
     private EshopInterface eshopInterface;
