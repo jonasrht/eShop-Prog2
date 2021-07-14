@@ -8,6 +8,7 @@ import eshop.valueobjects.Artikel;
 import eshop.valueobjects.Kunden;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -50,9 +51,9 @@ public class ArtikelZumWarenkorbPanel extends JPanel {
                     int menge = Integer.parseInt(mengeStr);
                     try {
                         Artikel artikel = eshopInterface.getArtikelViaID(artikelId);
+                        System.out.println(artikel);
                         eshopInterface.artikelInWarenkorb(kundenID, artikel, menge);
                         listener.beiArtikelHinzugefügt();
-                        //Gui.infoBox("Artikel " + artikel.getName() + " " + menge + " mal zum Warenkorb hinzugefügt.", "Info");
                     } catch (ArtikelNichtGefundenException | BestandZuGering e1) {
                         Gui.errorBox(e1.getMessage());
                     }
@@ -82,6 +83,11 @@ public class ArtikelZumWarenkorbPanel extends JPanel {
         add(artikelMengeFeld);
         hinzufuegenBtn = new JButton("Zum Warenkorb hinzufügen");
         add(hinzufuegenBtn);
+        // Abstand
+        Dimension fillerMinSize = new Dimension(5, 20);
+        Dimension fillerPreferedSize = new Dimension(5, Short.MAX_VALUE);
+        Dimension fillerMaxSize = new Dimension(5, Short.MAX_VALUE);
+        add(new Box.Filler(fillerMinSize, fillerPreferedSize, fillerMaxSize));
         zurueckBtn = new JButton("<- Zurück");
         add(zurueckBtn);
     }

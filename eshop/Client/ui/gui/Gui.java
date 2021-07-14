@@ -2,17 +2,20 @@ package eshop.Client.ui.gui;
 
 import javax.swing.*;
 import eshop.Client.net.EshopFassade;
+import eshop.Client.ui.gui.menus.MenueKunde;
+import eshop.Client.ui.gui.menus.MenueMitarbeiter;
 import eshop.Client.ui.gui.panels.*;
 import eshop.interfaces.EshopInterface;
 import eshop.valueobjects.Artikel;
 import eshop.valueobjects.Kunden;
+import eshop.valueobjects.Mitarbeiter;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
-public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, ArtikelEinfuegenPanel.ArtikelHinzufuegenListener, MenuPanel.MenuPanelListener, ArtikelBestandPanel.ArtikelBestandListener, NeuerMitarbeiterPanel.NeuerMitarbeiterListener, KundenMenuPanel.KundenMenuPanelListener, ArtikelZumWarenkorbPanel.ArtikelZumWarenkorbListener, LoginPanel.LoginListener, WarenkorbPanel.WarenkorbListener, KassePanel.KasseListener {
-    
+public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, ArtikelEinfuegenPanel.ArtikelHinzufuegenListener, MenuPanel.MenuPanelListener, ArtikelBestandPanel.ArtikelBestandListener, NeuerMitarbeiterPanel.NeuerMitarbeiterListener, KundenMenuPanel.KundenMenuPanelListener, ArtikelZumWarenkorbPanel.ArtikelZumWarenkorbListener, LoginPanel.LoginListener, WarenkorbPanel.WarenkorbListener, KassePanel.KasseListener, MenueMitarbeiter.MenuMitarbeiterListener, RegisterPanel.RegisterKundeListener {
+
     private final EshopInterface eshopInterface;
 
     private JScrollPane scrollPane;
@@ -26,6 +29,10 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
     private NeuerMitarbeiterPanel neuerMitarbeiterPanel;
     private KundenMenuPanel kundenMenuPanel;
     private MenuPanel menuPanel;
+    private RegisterPanel registerPanel;
+
+    private MenueMitarbeiter menueMitarbeiter;
+    private MenueKunde menueKunde;
 
     private ArtikelTabellenPanel artikelPanel;
 
@@ -44,21 +51,30 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
         setLayout(new BorderLayout());
         loginPanel = new LoginPanel(eshopInterface, this);
 
-        add(loginPanel, BorderLayout.NORTH);
+        add(loginPanel, BorderLayout.CENTER);
 
         setSize(640, 480);
         setVisible(true);
     }
 
     // Mitarbeitermenü
-    public void initializeMitarbeiterMenu() {
-        suchPanel.setVisible(true);
-        artikelEinfuegenPanel.setVisible(false);
-        scrollPane.setVisible(true);
+    public void initializeMitarbeiterMenu(Mitarbeiter mitarbeiter) {
+        try {
+            suchPanel = new SuchPanel(eshopInterface, this);
 
-        menuPanel = new MenuPanel(eshopInterface, this);
-        add(menuPanel, BorderLayout.WEST);
-        System.out.println("Mitarbeiter");
+            List<Artikel> artikel = eshopInterface.gibAlleArtikel();
+            artikelPanel = new ArtikelTabellenPanel(artikel);
+            scrollPane = new JScrollPane(artikelPanel);
+
+            menuPanel = new MenuPanel(eshopInterface, mitarbeiter, this);
+            add(suchPanel, BorderLayout.NORTH);
+            add(menuPanel, BorderLayout.WEST);
+            add(scrollPane, BorderLayout.CENTER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        menueMitarbeiter = new MenueMitarbeiter(eshopInterface, this);
+        setJMenuBar(menueMitarbeiter);
     }
 
     // Kundenmenü
@@ -80,6 +96,8 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        menueKunde = new MenueKunde(eshopInterface);
+        setJMenuBar(menueKunde);
     }
 
 
@@ -114,10 +132,10 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
     }
 
     @Override
-    public void wechselNeuerArtikel() {
+    public void wechselNeuerArtikel(Mitarbeiter mitarbeiter) {
         menuPanel.setVisible(false);
+        artikelEinfuegenPanel = new ArtikelEinfuegenPanel(eshopInterface, mitarbeiter, this);
         add(artikelEinfuegenPanel, BorderLayout.WEST);
-        artikelEinfuegenPanel.setVisible(true);
     }
 
     @Override
@@ -166,11 +184,12 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
 
     @Override
     public void wechselWarenkorb(Kunden kunde) {
-        kundenMenuPanel.setVisible(false);
+        allesAusblenden();
+        //kundenMenuPanel.setVisible(false);
         warenkorbPanel = new WarenkorbPanel(eshopInterface, kunde, this);
-        scrollPane.setVisible(false);
+        //scrollPane.setVisible(false);
 
-        add(warenkorbPanel, BorderLayout.WEST);
+        add(warenkorbPanel);
     }
 
     @Override
@@ -211,6 +230,19 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
     public void loginErfolgreich(Kunden kunde) {
         loginPanel.setVisible(false);
         initializeKundenMenu(kunde);
+    }
+
+
+    public void loginMitarbeiterErfolgreich(Mitarbeiter mitarbeiter) {
+        allesAusblenden();
+        initializeMitarbeiterMenu(mitarbeiter);
+    }
+
+    @Override
+    public void wechselRegisterKunde() {
+        allesAusblenden();
+        registerPanel = new RegisterPanel(eshopInterface, this);
+        add(registerPanel);
     }
 
     @Override
@@ -271,5 +303,14 @@ public class Gui extends JFrame implements SuchPanel.SucheArtikelPanelListener, 
         if (menuPanel != null) {
             menuPanel.setVisible(false);
         }
+        if (registerPanel != null) {
+            registerPanel.setVisible(false);
+        }
+    }
+
+    @Override
+    public void registerKundeZurueck() {
+        allesAusblenden();
+        initialize();
     }
 }

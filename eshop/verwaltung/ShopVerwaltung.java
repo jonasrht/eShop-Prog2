@@ -37,9 +37,12 @@ public class ShopVerwaltung implements EshopInterface {
         Artikel artikel;
         artikel = artikelVerwaltung.getArtikelViaID(id);
         return artikel;
+
+
     }
 
-    public void bestandReduzieren(Artikel artikel, int entfernen) {
+    public void bestandReduzieren(int id, Artikel artikel, int entfernen) {
+        EreignisVerwaltung.ereignisEinfuegen(artikel.getProduktID(), entfernen, "Bestand reduziert", id);
         artikelVerwaltung.bestandReduzieren(artikel, entfernen);
     }
 
@@ -51,8 +54,8 @@ public class ShopVerwaltung implements EshopInterface {
         artikelVerwaltung.artikelSortieren();
     }
 
-    public void artikelNeu(String name, double preis, int bestand) throws ArtikelExistiertBereitsException {
-        artikelVerwaltung.artikelNeu(name, preis, bestand);
+    public void artikelNeu(int id, String name, double preis, int bestand) throws ArtikelExistiertBereitsException {
+        artikelVerwaltung.artikelNeu(id, name, preis, bestand);
     }
 
     public void massenartikelNeu(String name, double preis, int bestand, int packungsGroesse)
@@ -153,7 +156,7 @@ public class ShopVerwaltung implements EshopInterface {
         return warenkorb;
     }
 
-    public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering {
+    public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering, ArtikelNichtGefundenException {
         kundenVerwaltung.artikelInWarenkorb(id, artikel, anzahl);
     }
 
@@ -185,5 +188,19 @@ public class ShopVerwaltung implements EshopInterface {
             e.printStackTrace();
         }
 
+    }
+
+    // =============================
+    // EreignisVerwaltung
+    // =============================
+
+    public List<String> getEreignisList() {
+        List<String> ereignisListStr = new ArrayList<String>();
+        List<Ereignis> ereignisList = ereignisVerwaltung.getEreignisList();
+        for (Ereignis ereignis: ereignisList) {
+            String ereignisStr = ereignis.toString();
+            ereignisListStr.add(ereignisStr);
+        }
+        return ereignisListStr;
     }
 }

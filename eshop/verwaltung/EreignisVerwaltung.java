@@ -26,11 +26,11 @@ public class EreignisVerwaltung {
      * Methode, die ein Ereignis in die EreignisListe einfügt
      * @param artikelId
      * @param anzahl
-     * @param ereignisArt
+     * @param ereignisMsg
      * @param persId
      */
-    public static void ereignisEinfuegen(int artikelId, int anzahl, int ereignisArt, int persId) {
-        Ereignis ereignis = new Ereignis(artikelId, anzahl, ereignisArt, persId);
+    public static void ereignisEinfuegen(int artikelId, int anzahl, String ereignisMsg, int persId) {
+        Ereignis ereignis = new Ereignis(artikelId, anzahl, ereignisMsg, persId);
         ereignisList.add(ereignis);
     }
 

@@ -227,7 +227,7 @@ public class Cui {
                     String inputArtikelPrs = eingabe.nextLine();
                     double inputPrs = Double.parseDouble(inputArtikelPrs);
                     try {
-                        eshopInterface.artikelNeu(inputName, inputPrs, inputBst);
+                        eshopInterface.artikelNeu(mitarbeiter.getPersonID(),inputName, inputPrs, inputBst);
                     } catch (ArtikelExistiertBereitsException e) {
                         System.out.println("Fehler bei der erstellung des Artikels");
                         e.printStackTrace();

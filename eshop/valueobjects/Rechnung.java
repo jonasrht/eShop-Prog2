@@ -52,11 +52,18 @@ public class Rechnung {
                 Integer anzahl = array.get(artikel);
 
                 // Bestand aktualisieren
-                int aktuellerBestand = artikel.getBestand();
-                int neuerBestand = aktuellerBestand - anzahl;
-                artikel.setBestand(neuerBestand);
+                if (artikel instanceof Massengutartikel) {
+                    int aktuellerBestand = artikel.getBestand();
+                    int packung = ((Massengutartikel) artikel).getPackungsGroeße();
+                    int neuerBestand = aktuellerBestand - anzahl*packung;
+                    artikel.setBestand(neuerBestand);
+                } else {
+                    int aktuellerBestand = artikel.getBestand();
+                    int neuerBestand = aktuellerBestand - anzahl;
+                    artikel.setBestand(neuerBestand);
+                }
 
-                EreignisVerwaltung.ereignisEinfuegen(artikel.getProduktID(), anzahl, 3, this.kunde.getPersonID());
+                EreignisVerwaltung.ereignisEinfuegen(artikel.getProduktID(), anzahl, "Artikel gekauft", this.kunde.getPersonID());
 
                 // Preis für die Anzahl der Artikel berechnen
                 double preis = artikel.getPreis() * anzahl;

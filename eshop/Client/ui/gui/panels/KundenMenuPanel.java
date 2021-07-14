@@ -5,6 +5,7 @@ import eshop.valueobjects.Kunden;
 import eshop.valueobjects.Warenkorb;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -73,12 +74,20 @@ public class KundenMenuPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         zumWarenkorbHinzuBtn = new JButton("Artikel in den Warenkorb");
+        zumWarenkorbHinzuBtn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         add(zumWarenkorbHinzuBtn);
+        add(Box.createRigidArea(new Dimension(0, 5)));
         warenkorbAnzeigenBtn = new JButton("Warenkorb anzeigen");
+        warenkorbAnzeigenBtn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         add(warenkorbAnzeigenBtn);
+        add(Box.createRigidArea(new Dimension(0, 5)));
         zurKasseBtn = new JButton("Zur Kasse");
+        zurKasseBtn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         add(zurKasseBtn);
+        add(Box.createRigidArea(new Dimension(0, 5)));
         logoutBtn = new JButton("<- Logout");
+        logoutBtn.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         add(logoutBtn);
+
     }
 }

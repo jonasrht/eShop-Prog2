@@ -1,4 +1,5 @@
 package eshop.valueobjects;
+<<<<<<< HEAD
 //        Bei Artikeln wird nun zwischen Massengut- und Einzelartikeln unterschieden. Massengutartikel haben
 //        eine individuelle Packungsgröße, so dass Ein- und Auslagerungen nur in Vielfachen dieser Packungsgröße
 //        vorgenommen werden können. Einzelartikel entsprechen den bereits vom letzten Aufgabenblatt
@@ -16,10 +17,18 @@ package eshop.valueobjects;
  *
  * @author Jonas, Jana, Dabin
  */
+=======
+
+>>>>>>> GUI
 public class Massengutartikel extends Artikel {
     private int packungsGroeße;
 
     public Massengutartikel(String name, double preis, int bestand, int packungsGroeße){
+        super(name+ " (" + packungsGroeße +" stk. )", preis, bestand*packungsGroeße);
+        this.packungsGroeße = packungsGroeße;
+    }
+
+    public Massengutartikel(String name, double preis, int bestand, int packungsGroeße, String fromFile){
         super(name, preis, bestand*packungsGroeße);
         this.packungsGroeße = packungsGroeße;
     }
