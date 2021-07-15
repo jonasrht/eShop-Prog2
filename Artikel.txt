@@ -9,7 +9,7 @@ Yum Yum
 40
 Tofu
 1.49
-20
+8
 Moin
 11.0
 11

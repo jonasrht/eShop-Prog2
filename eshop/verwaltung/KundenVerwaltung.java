@@ -260,6 +260,7 @@ public class KundenVerwaltung {
      * @param artikel die der Kunde in den Warenkorb hinzufuegt
      * @param anzahl wie viele Artikel
      * @throws BestandZuGering darf nicht mehr kaufen als wir haben
+     * @throws ArtikelNichtGefundenException Artikel nicht gefunden
      */
     public void artikelInWarenkorb(int id, Artikel artikel, int anzahl) throws BestandZuGering, ArtikelNichtGefundenException {
         Kunden kunde = getKundeViaID(id);
